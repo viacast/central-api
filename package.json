@@ -1,12 +1,12 @@
 {
-  "name": "central-api",
+  "name": "@viacast/central-api",
   "version": "0.0.1",
   "description": "Central API",
-  "main": "index.js",
   "repository": "https://github.com/gabrieljablonski/central-api.git",
   "author": "gabrieljablonski <gabriel.g.jablonski@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^16.10.3",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
@@ -27,6 +27,11 @@
     "socket.io-client": "^4.2.0"
   },
   "scripts": {
-    "test": "ts-node-dev ./test.ts"
+    "test": "ts-node-dev ./test.ts",
+    "prepublish": "tsc"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

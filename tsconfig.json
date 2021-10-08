@@ -7,10 +7,16 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "./build",
+    "outDir": "dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "baseUrl": "src"
-   }
+    "baseUrl": "src",
+    "declaration": true
+   },
+   "exclude": [
+     "node_modules",
+     "dist",
+     "test*"
+   ]
 }

@@ -1,19 +1,8 @@
-export interface HttpClientOptions {
-  port: number;
+export interface CentralApiOptions {
+  port?: number;
   host?: string;
   prefix?: string;
-}
-
-interface HttpResponse {
-  status: number;
-  statusText: string;
-}
-
-export interface CentralHttpResponse<DataType> {
-  success: boolean;
-  message?: string;
-  data?: DataType;
-  response?: HttpResponse;
+  https?: boolean;
 }
 
 export interface AuthInfo {

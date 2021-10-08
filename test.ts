@@ -1,10 +1,17 @@
-import HttpClient from './src/HttpClient';
+import { CentralApi } from './src';
 
-const client = new HttpClient({
-  port: 4440,
-  prefix: '/v1',
-});
+const api = new CentralApi();
 
-client.authLogin('admin', 'admin').then(async r => {
-  console.log(await client.userMe());
+api.authLogin('6379', 'tstrt12').then(async () => {
+  api.socketConnect(
+    async () => {
+      console.log('socket connected');
+      api.deviceOnUpdateConfig(info => {
+        console.log(info);
+      });
+    },
+    error => {
+      console.log('connection error:', error);
+    },
+  );
 });

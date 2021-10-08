@@ -3,11 +3,10 @@ import axios, { Axios, AxiosResponse } from 'axios';
 import {
   AuthInfo,
   CentralDevice,
-  CentralHttpResponse,
   CentralService,
   CentralUser,
-  HttpClientOptions,
-} from './typings';
+} from '../typings';
+import { CentralHttpResponse, HttpClientOptions } from './typings';
 
 export default class HttpClient {
   private port: number;
@@ -15,6 +14,8 @@ export default class HttpClient {
   private host: string;
 
   private prefix: string;
+
+  private https: boolean;
 
   private axios: Axios;
 
@@ -24,6 +25,7 @@ export default class HttpClient {
     this.port = options.port;
     this.host = options.host || 'localhost';
     this.prefix = options.prefix || '';
+    this.https = options.https || false;
     this.setup();
   }
 
@@ -32,7 +34,9 @@ export default class HttpClient {
   }
 
   private setup(): void {
-    const url = `http://${this.host}:${this.port}${this.prefix}`;
+    const url = `${this.https ? 'https' : 'http'}://${this.host}:${this.port}${
+      this.prefix
+    }`;
     this.axios = axios.create({
       baseURL: url,
       headers: { 'Content-Type': 'application/json' },
@@ -64,7 +68,7 @@ export default class HttpClient {
       .then(r => {
         this.axios.defaults.headers.Authorization = `Bearer ${r.data.data.token}`;
         this._authenticated = true;
-        return { success: true, data: r.data.data };
+        return { success: true, data: r.data.data, message: r.data.message };
       })
       .catch(e => e);
   }
@@ -80,7 +84,7 @@ export default class HttpClient {
       .then(r => {
         this.axios.defaults.headers.Authorization = `Bearer ${r.data.data.token}`;
         this._authenticated = true;
-        return { success: true, data: r.data.data };
+        return { success: true, data: r.data.data, message: r.data.message };
       })
       .catch(e => e);
   }
@@ -94,7 +98,7 @@ export default class HttpClient {
         '/auth/change-password',
         { oldPassword, newPassword },
       )
-      .then(() => ({ success: true }))
+      .then(r => ({ success: true, message: r.data.message }))
       .catch(e => e);
   }
 
@@ -115,7 +119,11 @@ export default class HttpClient {
         unknown,
         AxiosResponse<CentralHttpResponse<{ devices: CentralDevice[] }>>
       >('/user/me/devices')
-      .then(r => ({ success: true, devices: r.data.data.devices }))
+      .then(r => ({
+        success: true,
+        devices: r.data.data.devices,
+        message: r.data.message,
+      }))
       .catch(e => e);
   }
 
@@ -127,7 +135,11 @@ export default class HttpClient {
         unknown,
         AxiosResponse<CentralHttpResponse<{ services: CentralService[] }>>
       >('/user/me/services')
-      .then(r => ({ success: true, services: r.data.data.services }))
+      .then(r => ({
+        success: true,
+        services: r.data.data.services,
+        message: r.data.message,
+      }))
       .catch(e => e);
   }
 
@@ -137,7 +149,11 @@ export default class HttpClient {
         unknown,
         AxiosResponse<CentralHttpResponse<{ device: CentralDevice }>>
       >('/device/me')
-      .then(r => ({ success: true, device: r.data.data.device }))
+      .then(r => ({
+        success: true,
+        device: r.data.data.device,
+        message: r.data.message,
+      }))
       .catch(e => e);
   }
 
@@ -148,8 +164,12 @@ export default class HttpClient {
       .get<
         unknown,
         AxiosResponse<CentralHttpResponse<{ services: CentralService[] }>>
-      >('/user/me/services')
-      .then(r => ({ success: true, services: r.data.data.services }))
+      >('/device/me/services')
+      .then(r => ({
+        success: true,
+        services: r.data.data.services,
+        message: r.data.message,
+      }))
       .catch(e => e);
   }
 
@@ -161,7 +181,7 @@ export default class HttpClient {
       .get<unknown, AxiosResponse<CentralHttpResponse<null>>>(
         `/service/${sourceId}/link/${targetId}`,
       )
-      .then(r => ({ success: true }))
+      .then(r => ({ success: true, message: r.data.message }))
       .catch(e => e);
   }
 }

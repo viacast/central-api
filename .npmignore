@@ -1,0 +1,10 @@
+.vscode/
+node_modules/
+build/
+src/
+.editorconfig
+.eslintignore
+package.json
+prettier.config.js
+test.ts
+tsconfig.json

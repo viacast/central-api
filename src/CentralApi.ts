@@ -23,7 +23,13 @@ export default class CentralApi {
       https: false,
     },
   ) {
-    const { port, host, prefix, https } = options;
+    const { port, host, prefix, https } = {
+      port: 4440,
+      host: 'localhost',
+      prefix: '/v1',
+      https: false,
+      ...options,
+    };
     this.http = new HttpClient({ port, host, prefix, https });
     this.socket = new SocketClient({
       port,

@@ -87,6 +87,7 @@ export default class SocketClient {
       this.eventHandlers.forEach(({ event, handler }) =>
         this.io.on(event, handler),
       );
+      this.eventHandlers = [];
       onConnect();
     });
     this.io.on('connect_error', onConnectError);

@@ -1,4 +1,4 @@
-import { CentralServiceType } from 'typings';
+import { CentralServiceType } from '../typings';
 
 export interface SocketClientOptions {
   port: number;

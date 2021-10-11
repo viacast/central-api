@@ -4,6 +4,7 @@ build/
 src/
 .editorconfig
 .eslintignore
+.eslintrc.json
 package.json
 prettier.config.js
 test.ts

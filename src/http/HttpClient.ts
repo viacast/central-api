@@ -178,8 +178,22 @@ export default class HttpClient {
     targetId: string,
   ): Promise<CentralHttpResponse<null>> {
     return this.axios
-      .get<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        `/service/${sourceId}/link/${targetId}`,
+      .put<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        `/service/${sourceId}/linked-service`,
+        { targetId },
+      )
+      .then(r => ({ success: true, message: r.data.message }))
+      .catch(e => e);
+  }
+
+  async serviceUpdateConfig(
+    id: string,
+    config: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios
+      .put<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        `/service/${id}/config`,
+        { config },
       )
       .then(r => ({ success: true, message: r.data.message }))
       .catch(e => e);

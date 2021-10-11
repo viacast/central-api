@@ -34,6 +34,8 @@ export default class SocketClient {
 
   private io: Socket;
 
+  private eventHandlers: { event: string; handler: (data: unknown) => void }[];
+
   constructor(options: SocketClientOptions) {
     this.port = options.port;
     this.host = options.host;
@@ -41,6 +43,7 @@ export default class SocketClient {
     this.timeout = options.timeout || 3000;
     this.https = options.https || false;
     this.authToken = options.authToken;
+    this.eventHandlers = [];
   }
 
   private asyncEmit<ResponseType>(
@@ -58,10 +61,7 @@ export default class SocketClient {
   }
 
   private on(event: string, handler: (data: unknown) => void): void {
-    if (!this.io) {
-      throw new Error('socket not connected');
-    }
-    this.io.on(event, handler);
+    this.eventHandlers.push({ event, handler });
   }
 
   get connected(): boolean {
@@ -83,7 +83,12 @@ export default class SocketClient {
         token: this.authToken,
       },
     });
-    this.io.on('connect', onConnect);
+    this.io.on('connect', () => {
+      this.eventHandlers.forEach(({ event, handler }) =>
+        this.io.on(event, handler),
+      );
+      onConnect();
+    });
     this.io.on('connect_error', onConnectError);
   }
 

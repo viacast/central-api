@@ -1,6 +1,6 @@
 {
   "name": "@viacast/central-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Central API",
   "repository": "https://github.com/gabrieljablonski/central-api.git",
   "author": "gabrieljablonski <gabriel.g.jablonski@gmail.com>",
@@ -28,7 +28,7 @@
   },
   "scripts": {
     "test": "ts-node-dev ./test.ts",
-    "prepublish": "tsc"
+    "build": "rm -r dist/ && tsc"
   },
   "publishConfig": {
     "access": "public",

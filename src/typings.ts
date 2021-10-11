@@ -23,8 +23,8 @@ export interface CentralAuth {
 }
 
 export enum CentralServiceType {
-  SOURCE = 'SOURCE',
-  RECEIVER = 'RECEIVER',
+  FEED = 'FEED',
+  OUTPUT = 'OUTPUT',
 }
 
 export interface CentralService {

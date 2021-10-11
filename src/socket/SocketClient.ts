@@ -3,15 +3,20 @@ import io, { Socket } from 'socket.io-client';
 import { CentralDevice } from '../typings';
 import { promisify } from '../utils';
 
-import { CentralSocketResponse, SocketClientOptions } from './typings';
+import {
+  CentralSocketResponse,
+  SocketClientOptions,
+  CentralServiceOperationModeType,
+} from './typings';
 
 enum SocketEventsToDevice {
   UPDATE_CONFIG = 'device-service-update-config',
 }
 
 enum SocketEventsFromDevice {
-  UPDATE_STATUS = 'device-update-status',
   GET_INFO = 'device-get-info',
+  UPDATE_STATUS = 'device-update-status',
+  UPDATE_SERVICE_OPERATION_MODES = 'device-update-service-operation-modes',
 }
 
 export default class SocketClient {
@@ -90,6 +95,15 @@ export default class SocketClient {
     status: Record<string, unknown>,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(SocketEventsFromDevice.UPDATE_STATUS, status);
+  }
+
+  async deviceUpdateServiceOperationModes(
+    operationModes: CentralServiceOperationModeType[],
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(
+      SocketEventsFromDevice.UPDATE_SERVICE_OPERATION_MODES,
+      operationModes,
+    );
   }
 
   deviceOnUpdateConfig(

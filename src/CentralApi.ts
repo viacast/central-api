@@ -8,7 +8,10 @@ import {
 import SocketClient from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
 import { CentralHttpResponse } from './http/typings';
-import { CentralSocketResponse } from './socket/typings';
+import {
+  CentralServiceOperationModeType,
+  CentralSocketResponse,
+} from './socket/typings';
 
 export default class CentralApi {
   private http: HttpClient;
@@ -115,6 +118,12 @@ export default class CentralApi {
     status: Record<string, unknown>,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateStatus(status);
+  }
+
+  async deviceUpdateServiceOperationModes(
+    operationModes: CentralServiceOperationModeType[],
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUpdateServiceOperationModes(operationModes);
   }
 
   deviceOnUpdateConfig(

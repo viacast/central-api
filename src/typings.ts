@@ -2,6 +2,7 @@ export interface CentralApiOptions {
   port?: number;
   host?: string;
   prefix?: string;
+  locale?: string;
   https?: boolean;
 }
 

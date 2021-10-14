@@ -18,28 +18,31 @@ export default class CentralApi {
 
   private socket: SocketClient;
 
-  constructor(
-    options: CentralApiOptions = {
-      port: 4440,
-      host: 'localhost',
-      prefix: '/v1',
-      https: false,
-    },
-  ) {
-    const { port, host, prefix, https } = {
-      port: 4440,
-      host: 'localhost',
-      prefix: '/v1',
-      https: false,
-      ...options,
-    };
-    this.http = new HttpClient({ port, host, prefix, https });
+  private locale: string;
+
+  constructor(options: CentralApiOptions) {
+    const port = options.port || 4440;
+    const host = options.host || 'localhost';
+    const prefix = options.prefix || '/v1';
+    const locale = options.locale || 'en';
+    const https = options.https || false;
+    this.http = new HttpClient({ port, host, prefix, locale, https });
     this.socket = new SocketClient({
       port,
       host,
       path: `${prefix}/socket.io`,
+      locale,
       https,
     });
+  }
+
+  get currentLocale(): string {
+    return this.locale;
+  }
+
+  setLocale(locale: string): void {
+    this.http.setLocale(locale);
+    this.socket.setLocale(locale);
   }
 
   socketConnect(

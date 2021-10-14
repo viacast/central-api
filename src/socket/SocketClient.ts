@@ -28,6 +28,8 @@ export default class SocketClient {
 
   private timeout: number;
 
+  private locale: string;
+
   private https: boolean;
 
   private authToken: string;
@@ -41,9 +43,17 @@ export default class SocketClient {
     this.host = options.host;
     this.path = options.path;
     this.timeout = options.timeout || 3000;
+    this.locale = options.locale || 'en';
     this.https = options.https || false;
     this.authToken = options.authToken;
     this.eventHandlers = [];
+  }
+
+  setLocale(locale: string): void {
+    this.locale = locale;
+    if (this.connected) {
+      this.asyncEmit('update-locale', { locale: this.locale });
+    }
   }
 
   private asyncEmit<ResponseType>(
@@ -81,6 +91,7 @@ export default class SocketClient {
       transports: ['websocket'],
       auth: {
         token: this.authToken,
+        locale: this.locale,
       },
     });
     this.io.on('connect', () => {

@@ -15,6 +15,8 @@ export default class HttpClient {
 
   private prefix: string;
 
+  private locale: string;
+
   private https: boolean;
 
   private axios: Axios;
@@ -25,6 +27,7 @@ export default class HttpClient {
     this.port = options.port;
     this.host = options.host || 'localhost';
     this.prefix = options.prefix || '';
+    this.locale = options.locale || 'en';
     this.https = options.https || false;
     this.setup();
   }
@@ -39,7 +42,10 @@ export default class HttpClient {
     }`;
     this.axios = axios.create({
       baseURL: url,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept-Language': this.locale,
+      },
     });
     this.axios.interceptors.response.use(
       config => config,
@@ -54,6 +60,10 @@ export default class HttpClient {
         });
       },
     );
+  }
+
+  setLocale(locale: string): void {
+    this.axios.defaults.headers['Accept-Language'] = locale;
   }
 
   async authLogin(

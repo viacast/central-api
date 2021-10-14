@@ -2,6 +2,7 @@ export interface HttpClientOptions {
   port: number;
   host?: string;
   prefix?: string;
+  locale?: string;
   https?: boolean;
 }
 

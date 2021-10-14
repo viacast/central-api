@@ -5,6 +5,7 @@ export interface SocketClientOptions {
   host?: string;
   path?: string;
   timeout?: number;
+  locale?: string;
   https?: boolean;
   authToken?: string;
 }

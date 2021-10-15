@@ -50,6 +50,10 @@ export default class CentralApi {
     this.socket.setToken(token);
   }
 
+  onUnauthorized(handler: () => void): void {
+    this.http.onUnauthorized(handler);
+  }
+
   socketConnect(
     onConnect: () => void,
     onConnectError: (error: Error) => void,

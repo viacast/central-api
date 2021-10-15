@@ -62,6 +62,17 @@ export default class HttpClient {
     );
   }
 
+  onUnauthorized(handler: () => void): void {
+    this.axios.interceptors.response.use(
+      config => config,
+      error => {
+        if (error.response.status === 401) {
+          handler();
+        }
+      },
+    );
+  }
+
   setLocale(locale: string): void {
     this.axios.defaults.headers['Accept-Language'] = locale;
   }

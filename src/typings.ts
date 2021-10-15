@@ -50,8 +50,8 @@ export interface CentralDevice {
 
 export interface CentralUser {
   id: string;
-  username: string;
   email: string;
+  name: string;
   auth: CentralAuth;
   devices: CentralDevice[];
   leasesOwned: CentralLease[];

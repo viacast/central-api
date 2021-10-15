@@ -66,6 +66,10 @@ export default class HttpClient {
     this.axios.defaults.headers['Accept-Language'] = locale;
   }
 
+  setToken(token: string): void {
+    this.axios.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+
   async authLogin(
     key: string,
     password: string,

@@ -45,6 +45,11 @@ export default class CentralApi {
     this.socket.setLocale(locale);
   }
 
+  setToken(token: string): void {
+    this.http.setToken(token);
+    this.socket.setToken(token);
+  }
+
   socketConnect(
     onConnect: () => void,
     onConnectError: (error: Error) => void,
@@ -58,7 +63,7 @@ export default class CentralApi {
   ): Promise<CentralHttpResponse<AuthInfo>> {
     const r = await this.http.authLogin(key, password);
     if (r.success) {
-      this.socket.setAuthToken(r.data.token);
+      this.socket.setToken(r.data.token);
     }
     return r;
   }
@@ -68,7 +73,7 @@ export default class CentralApi {
   ): Promise<CentralHttpResponse<AuthInfo>> {
     const r = await this.http.authRefreshToken(refreshToken);
     if (r.success) {
-      this.socket.setAuthToken(r.data.token);
+      this.socket.setToken(r.data.token);
     }
     return this.http.authRefreshToken(refreshToken);
   }

@@ -7,7 +7,7 @@ export interface SocketClientOptions {
   timeout?: number;
   locale?: string;
   https?: boolean;
-  authToken?: string;
+  token?: string;
 }
 
 export interface CentralSocketResponse<DataType> {

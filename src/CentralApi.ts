@@ -50,8 +50,8 @@ export default class CentralApi {
     this.socket.setToken(token);
   }
 
-  onUnauthorized(handler: () => void): void {
-    this.http.onUnauthorized(handler);
+  onUnauthorized(handler: () => void): number {
+    return this.http.onUnauthorized(handler);
   }
 
   ejectOnUnauthorized(useHandle: number): void {

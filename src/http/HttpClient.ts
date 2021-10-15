@@ -23,6 +23,8 @@ export default class HttpClient {
 
   private _authenticated: boolean;
 
+  private onUnauthorizedHandler: any;
+
   constructor(options: HttpClientOptions) {
     this.port = options.port;
     this.host = options.host || 'localhost';
@@ -62,8 +64,8 @@ export default class HttpClient {
     );
   }
 
-  onUnauthorized(handler: () => void): void {
-    this.axios.interceptors.response.use(
+  onUnauthorized(handler: () => void): number {
+    return this.axios.interceptors.response.use(
       config => config,
       error => {
         const { status, statusText, data } = error.response || {
@@ -79,6 +81,10 @@ export default class HttpClient {
         });
       },
     );
+  }
+
+  ejectOnUnauthorized(useHandle: number): void {
+    this.axios.interceptors.response.eject(useHandle);
   }
 
   setLocale(locale: string): void {

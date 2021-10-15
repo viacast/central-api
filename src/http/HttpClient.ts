@@ -66,9 +66,17 @@ export default class HttpClient {
     this.axios.interceptors.response.use(
       config => config,
       error => {
-        if (error.response.status === 401) {
+        const { status, statusText, data } = error.response || {
+          status: 500,
+          statusText: error.errno,
+        };
+        if (status === 401) {
           handler();
         }
+        return Promise.reject({
+          success: false,
+          response: { status, statusText, data },
+        });
       },
     );
   }

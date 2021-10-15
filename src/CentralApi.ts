@@ -54,6 +54,10 @@ export default class CentralApi {
     this.http.onUnauthorized(handler);
   }
 
+  ejectOnUnauthorized(useHandle: number): void {
+    this.http.ejectOnUnauthorized(useHandle);
+  }
+
   socketConnect(
     onConnect: () => void,
     onConnectError: (error: Error) => void,

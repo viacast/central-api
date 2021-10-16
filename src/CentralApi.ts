@@ -24,13 +24,15 @@ export default class CentralApi {
     const port = options.port || 4440;
     const host = options.host || 'localhost';
     const prefix = options.prefix || '/v1';
+    const timeout = options.timeout || 3000;
     const locale = options.locale || 'en';
     const https = options.https || false;
-    this.http = new HttpClient({ port, host, prefix, locale, https });
+    this.http = new HttpClient({ port, host, prefix, timeout, locale, https });
     this.socket = new SocketClient({
       port,
       host,
       path: `${prefix}/socket.io`,
+      timeout,
       locale,
       https,
     });

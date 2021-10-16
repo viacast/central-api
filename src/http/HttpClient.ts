@@ -15,6 +15,8 @@ export default class HttpClient {
 
   private prefix: string;
 
+  private timeout: number;
+
   private locale: string;
 
   private https: boolean;
@@ -29,6 +31,7 @@ export default class HttpClient {
     this.port = options.port;
     this.host = options.host || 'localhost';
     this.prefix = options.prefix || '';
+    this.timeout = options.timeout || 3000;
     this.locale = options.locale || 'en';
     this.https = options.https || false;
     this.setup();
@@ -43,6 +46,7 @@ export default class HttpClient {
       this.prefix
     }`;
     this.axios = axios.create({
+      timeout: this.timeout,
       baseURL: url,
       headers: {
         'Content-Type': 'application/json',

@@ -36,27 +36,29 @@ export interface CentralService {
   type: CentralServiceType;
   config: string;
   exclusiveLink: boolean;
-  linkedServices: CentralService[];
-  device: CentralDevice[];
+  linkedServiceIds: string[];
+  deviceId: string;
 }
 
 export interface CentralDevice {
   id: string;
   serial: string;
-  auth: CentralAuth;
-  services: CentralService[];
-  user: CentralUser;
-  leases: CentralLease[];
+  authId: string;
+  userId: string;
+  groupId: string;
+  serviceIds: string[];
+  leaseIds: string[];
 }
 
 export interface CentralUser {
   id: string;
   email: string;
   name: string;
-  auth: CentralAuth;
-  devices: CentralDevice[];
-  leasesOwned: CentralLease[];
-  leasesBorrowed: CentralLease[];
+  authId: string;
+  groupId: string;
+  deviceIds: string[];
+  leasesOwnedIds: string[];
+  leasesBorrowedIds: string[];
 }
 
 export enum CentralLeaseType {
@@ -71,7 +73,7 @@ export interface CentralLease {
   start: Date;
   expiration: Date;
   canceled: boolean;
-  owner: CentralUser;
-  borrower: CentralUser;
-  devices: CentralDevice[];
+  ownerId: string;
+  borrowerId: string;
+  deviceIds: string[];
 }

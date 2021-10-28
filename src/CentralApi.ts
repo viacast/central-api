@@ -1,4 +1,9 @@
-import { CentralDeviceStatus, CentralServiceStatus } from 'index';
+import {
+  CentralDeviceStatus,
+  CentralDeviceWithStatus,
+  CentralServiceStatus,
+  CentralServiceWithStatus,
+} from 'index';
 import {
   AuthInfo,
   CentralApiOptions,
@@ -101,13 +106,13 @@ export default class CentralApi {
   }
 
   async userMyDevices(): Promise<
-    CentralHttpResponse<{ devices: CentralDevice[] }>
+    CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
     return this.http.userMyDevices();
   }
 
   async userMyServices(): Promise<
-    CentralHttpResponse<{ services: CentralService[] }>
+    CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
   > {
     return this.http.userMyServices();
   }

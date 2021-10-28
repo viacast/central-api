@@ -1,4 +1,5 @@
 import axios, { Axios, AxiosResponse } from 'axios';
+import { CentralDeviceWithStatus, CentralServiceWithStatus } from 'index';
 
 import {
   AuthInfo,
@@ -24,8 +25,6 @@ export default class HttpClient {
   private axios: Axios;
 
   private _authenticated: boolean;
-
-  private onUnauthorizedHandler: any;
 
   constructor(options: HttpClientOptions) {
     this.port = options.port;
@@ -155,12 +154,14 @@ export default class HttpClient {
   }
 
   async userMyDevices(): Promise<
-    CentralHttpResponse<{ devices: CentralDevice[] }>
+    CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
     return this.axios
       .get<
         unknown,
-        AxiosResponse<CentralHttpResponse<{ devices: CentralDevice[] }>>
+        AxiosResponse<
+          CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
+        >
       >('/user/me/devices')
       .then(r => ({
         success: true,
@@ -171,12 +172,14 @@ export default class HttpClient {
   }
 
   async userMyServices(): Promise<
-    CentralHttpResponse<{ services: CentralService[] }>
+    CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
   > {
     return this.axios
       .get<
         unknown,
-        AxiosResponse<CentralHttpResponse<{ services: CentralService[] }>>
+        AxiosResponse<
+          CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
+        >
       >('/user/me/services')
       .then(r => ({
         success: true,

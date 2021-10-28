@@ -29,6 +29,18 @@ export enum CentralServiceType {
   OUTPUT = 'OUTPUT',
 }
 
+export enum CentralServiceStatusType {
+  OFF = 'OFF',
+  READY = 'READY',
+  LIVE = 'LIVE',
+}
+
+export enum CentralDeviceStatusType {
+  OFF = 'OFF',
+  ON = 'ON',
+  REBOOTING = 'REBOOTING',
+}
+
 export interface CentralService {
   id: string;
   name: string;
@@ -40,6 +52,11 @@ export interface CentralService {
   deviceId: string;
 }
 
+export interface CentralServiceStatus {
+  status: CentralServiceStatusType;
+  info: Record<string, unknown>;
+}
+
 export interface CentralDevice {
   id: string;
   serial: string;
@@ -48,6 +65,11 @@ export interface CentralDevice {
   groupId: string;
   serviceIds: string[];
   leaseIds: string[];
+}
+
+export interface CentralDeviceStatus {
+  status: CentralServiceStatusType;
+  info: Record<string, unknown>;
 }
 
 export interface CentralUser {

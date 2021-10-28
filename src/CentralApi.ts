@@ -1,3 +1,4 @@
+import { CentralDeviceStatus, CentralServiceStatus } from 'index';
 import {
   AuthInfo,
   CentralApiOptions,
@@ -133,15 +134,31 @@ export default class CentralApi {
   }
 
   async deviceUpdateStatus(
-    status: Record<string, unknown>,
+    status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateStatus(status);
+  }
+
+  async deviceUpdateServiceStatus(
+    status: CentralServiceStatus,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUpdateServiceStatus(status);
   }
 
   async deviceUpdateServiceOperationModes(
     operationModes: CentralServiceOperationModeType[],
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateServiceOperationModes(operationModes);
+  }
+
+  deviceOnStatusUpdated(callback: (status: CentralDeviceStatus) => void): void {
+    return this.socket.deviceOnStatusUpdated(callback);
+  }
+
+  deviceOnServiceStatusUpdated(
+    callback: (status: CentralServiceStatus) => void,
+  ): void {
+    return this.socket.deviceOnServiceStatusUpdated(callback);
   }
 
   deviceOnUpdateConfig(

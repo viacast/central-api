@@ -150,7 +150,7 @@ export default class HttpClient {
       .get<unknown, AxiosResponse<CentralHttpResponse<{ user: CentralUser }>>>(
         '/user/me',
       )
-      .then(r => ({ success: true, user: r.data.data.user }))
+      .then(r => ({ success: true, data: { user: r.data.data.user } }))
       .catch(e => e);
   }
 
@@ -164,8 +164,8 @@ export default class HttpClient {
       >('/user/me/devices')
       .then(r => ({
         success: true,
-        devices: r.data.data.devices,
         message: r.data.message,
+        data: { devices: r.data.data.devices },
       }))
       .catch(e => e);
   }
@@ -180,8 +180,8 @@ export default class HttpClient {
       >('/user/me/services')
       .then(r => ({
         success: true,
-        services: r.data.data.services,
         message: r.data.message,
+        data: { services: r.data.data.services },
       }))
       .catch(e => e);
   }
@@ -194,8 +194,8 @@ export default class HttpClient {
       >('/device/me')
       .then(r => ({
         success: true,
-        device: r.data.data.device,
         message: r.data.message,
+        data: { device: r.data.data.device },
       }))
       .catch(e => e);
   }
@@ -210,8 +210,8 @@ export default class HttpClient {
       >('/device/me/services')
       .then(r => ({
         success: true,
-        services: r.data.data.services,
         message: r.data.message,
+        data: { services: r.data.data.services },
       }))
       .catch(e => e);
   }

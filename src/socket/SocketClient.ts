@@ -1,3 +1,4 @@
+import { CentralDeviceStatus, CentralServiceStatus } from 'index';
 import io, { Socket } from 'socket.io-client';
 
 import { CentralDevice } from '../typings';
@@ -9,14 +10,14 @@ import {
   CentralServiceOperationModeType,
 } from './typings';
 
-enum SocketEventsToDevice {
-  UPDATE_CONFIG = 'device-service-update-config',
-}
-
-enum SocketEventsFromDevice {
+export enum DeviceSocketEvents {
   GET_INFO = 'device-get-info',
   UPDATE_STATUS = 'device-update-status',
   UPDATE_SERVICE_OPERATION_MODES = 'device-update-service-operation-modes',
+  UPDATE_SERVICE_STATUS = 'device-update-service-status',
+  UPDATE_CONFIG = 'device-service-update-config',
+  STATUS_UPDATED = 'device-status-updated',
+  SERVICE_STATUS_UPDATED = 'device-service-status-updated',
 }
 
 export default class SocketClient {
@@ -105,27 +106,47 @@ export default class SocketClient {
   }
 
   async deviceGetInfo(): Promise<CentralSocketResponse<CentralDevice>> {
-    return this.asyncEmit<CentralDevice>(SocketEventsFromDevice.GET_INFO);
+    return this.asyncEmit<CentralDevice>(DeviceSocketEvents.GET_INFO);
   }
 
   async deviceUpdateStatus(
-    status: Record<string, unknown>,
+    status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEventsFromDevice.UPDATE_STATUS, status);
+    return this.asyncEmit<null>(DeviceSocketEvents.UPDATE_STATUS, {
+      status,
+    });
+  }
+
+  async deviceUpdateServiceStatus(
+    status: CentralServiceStatus,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(DeviceSocketEvents.UPDATE_SERVICE_STATUS, {
+      status,
+    });
   }
 
   async deviceUpdateServiceOperationModes(
     operationModes: CentralServiceOperationModeType[],
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(
-      SocketEventsFromDevice.UPDATE_SERVICE_OPERATION_MODES,
-      operationModes,
+      DeviceSocketEvents.UPDATE_SERVICE_OPERATION_MODES,
+      { operationModes },
     );
+  }
+
+  deviceOnStatusUpdated(callback: (status: CentralDeviceStatus) => void): void {
+    this.on(DeviceSocketEvents.STATUS_UPDATED, callback);
+  }
+
+  deviceOnServiceStatusUpdated(
+    callback: (status: CentralServiceStatus) => void,
+  ): void {
+    this.on(DeviceSocketEvents.SERVICE_STATUS_UPDATED, callback);
   }
 
   deviceOnUpdateConfig(
     callback: (info: { serviceName: string; config: string }) => void,
   ): void {
-    this.on(SocketEventsToDevice.UPDATE_CONFIG, callback);
+    this.on(DeviceSocketEvents.UPDATE_CONFIG, callback);
   }
 }

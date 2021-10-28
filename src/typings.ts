@@ -41,12 +41,25 @@ export enum CentralDeviceStatusType {
   REBOOTING = 'REBOOTING',
 }
 
-export interface CentralService {
+export interface CentralGroup {
+  id: string;
+  displayName: string;
+}
+
+export interface CentralServiceOperationMode {
   id: string;
   name: string;
   displayName: string;
   type: CentralServiceType;
+  configLayout: string;
+}
+
+export interface CentralService {
+  id: string;
+  name: string;
+  displayName: string;
   config: string;
+  operationMode: CentralServiceOperationMode;
   exclusiveLink: boolean;
   linkedServiceIds: string[];
   deviceId: string;
@@ -59,12 +72,13 @@ export interface CentralServiceStatus {
 
 export interface CentralDevice {
   id: string;
+  displayName: string;
   serial: string;
-  authId: string;
   userId: string;
-  groupId: string;
+  group: CentralGroup;
   serviceIds: string[];
   leaseIds: string[];
+  operationModes: CentralServiceOperationMode[];
 }
 
 export interface CentralDeviceStatus {
@@ -76,8 +90,7 @@ export interface CentralUser {
   id: string;
   email: string;
   name: string;
-  authId: string;
-  groupId: string;
+  group: CentralGroup;
   deviceIds: string[];
   leasesOwnedIds: string[];
   leasesBorrowedIds: string[];

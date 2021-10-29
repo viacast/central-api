@@ -9,15 +9,13 @@ import {
   CentralApiOptions,
   CentralDevice,
   CentralService,
+  CentralServiceOperationMode,
   CentralUser,
 } from './typings';
 import SocketClient from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
 import { CentralHttpResponse } from './http/typings';
-import {
-  CentralServiceOperationModeType,
-  CentralSocketResponse,
-} from './socket/typings';
+import { CentralSocketResponse } from './socket/typings';
 
 export default class CentralApi {
   private http: HttpClient;
@@ -151,7 +149,7 @@ export default class CentralApi {
   }
 
   async deviceUpdateServiceOperationModes(
-    operationModes: CentralServiceOperationModeType[],
+    operationModes: CentralServiceOperationMode[],
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateServiceOperationModes(operationModes);
   }

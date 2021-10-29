@@ -1,14 +1,10 @@
 import { CentralDeviceStatus, CentralServiceStatus } from 'index';
 import io, { Socket } from 'socket.io-client';
 
-import { CentralDevice } from '../typings';
+import { CentralDevice, CentralServiceOperationMode } from '../typings';
 import { promisify } from '../utils';
 
-import {
-  CentralSocketResponse,
-  SocketClientOptions,
-  CentralServiceOperationModeType,
-} from './typings';
+import { CentralSocketResponse, SocketClientOptions } from './typings';
 
 export enum DeviceSocketEvents {
   GET_INFO = 'device-get-info',
@@ -126,7 +122,7 @@ export default class SocketClient {
   }
 
   async deviceUpdateServiceOperationModes(
-    operationModes: CentralServiceOperationModeType[],
+    operationModes: CentralServiceOperationMode[],
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(
       DeviceSocketEvents.UPDATE_SERVICE_OPERATION_MODES,

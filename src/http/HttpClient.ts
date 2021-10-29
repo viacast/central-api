@@ -232,6 +232,19 @@ export default class HttpClient {
       .catch(e => e);
   }
 
+  async serviceUpdate(
+    id: string,
+    newService: Partial<CentralService>,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios
+      .patch<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        `/service/${id}`,
+        { ...newService },
+      )
+      .then(r => ({ success: true, message: r.data.message }))
+      .catch(e => e);
+  }
+
   async serviceUpdateConfig(
     id: string,
     config: string,

@@ -1,4 +1,8 @@
-import { CentralDeviceStatus, CentralServiceStatus } from 'index';
+import {
+  CentralDeviceStatus,
+  CentralService,
+  CentralServiceStatus,
+} from 'index';
 import io, { Socket } from 'socket.io-client';
 
 import { CentralDevice, CentralServiceOperationMode } from '../typings';
@@ -12,6 +16,8 @@ export enum DeviceSocketEvents {
   UPDATE_SERVICE_OPERATION_MODES = 'device-update-service-operation-modes',
   UPDATE_SERVICE_STATUS = 'device-update-service-status',
   UPDATE_CONFIG = 'device-service-update-config',
+  DEVICE_UPDATED = 'device-updated',
+  SERVICE_UPDATED = 'device-service-updated',
   STATUS_UPDATED = 'device-status-updated',
   SERVICE_STATUS_UPDATED = 'device-service-status-updated',
 }
@@ -140,9 +146,17 @@ export default class SocketClient {
     this.on(DeviceSocketEvents.SERVICE_STATUS_UPDATED, callback);
   }
 
+  deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
+    this.on(DeviceSocketEvents.DEVICE_UPDATED, callback);
+  }
+
   deviceOnUpdateConfig(
     callback: (info: { serviceName: string; config: string }) => void,
   ): void {
     this.on(DeviceSocketEvents.UPDATE_CONFIG, callback);
+  }
+
+  serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
+    this.on(DeviceSocketEvents.SERVICE_UPDATED, callback);
   }
 }

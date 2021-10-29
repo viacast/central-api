@@ -125,13 +125,6 @@ export default class CentralApi {
     return this.http.deviceMyServices();
   }
 
-  async serviceLink(
-    sourceId: string,
-    targetId: string,
-  ): Promise<CentralHttpResponse<null>> {
-    return this.http.serviceLink(sourceId, targetId);
-  }
-
   async deviceGetInfo(): Promise<CentralSocketResponse<CentralDevice>> {
     return this.socket.deviceGetInfo();
   }
@@ -164,9 +157,31 @@ export default class CentralApi {
     return this.socket.deviceOnServiceStatusUpdated(callback);
   }
 
+  deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
+    return this.socket.deviceOnUpdate(callback);
+  }
+
   deviceOnUpdateConfig(
     callback: (info: { serviceName: string; config: string }) => void,
   ): void {
     return this.socket.deviceOnUpdateConfig(callback);
+  }
+
+  async serviceLink(
+    sourceId: string,
+    targetId: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.serviceLink(sourceId, targetId);
+  }
+
+  async serviceUpdate(
+    id: string,
+    newService: Partial<CentralService>,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.serviceUpdate(id, newService);
+  }
+
+  serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
+    return this.socket.serviceOnUpdate(callback);
   }
 }

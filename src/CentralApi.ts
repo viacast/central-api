@@ -175,10 +175,9 @@ export default class CentralApi {
   }
 
   async serviceUpdate(
-    id: string,
-    newService: Partial<CentralService>,
+    service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<null>> {
-    return this.http.serviceUpdate(id, newService);
+    return this.http.serviceUpdate(service);
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {

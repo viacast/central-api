@@ -85,7 +85,10 @@ export default class SocketClient {
     return this.io?.connected || false;
   }
 
-  connect(onConnect: () => void, onConnectError: (error: Error) => void): void {
+  connect(
+    onConnect?: () => void,
+    onConnectError?: (error: Error) => void,
+  ): void {
     this.io?.disconnect();
     const url = `${this.https ? 'https' : 'http'}://${this.host}:${this.port}`;
     this.io = io(url, {
@@ -102,9 +105,18 @@ export default class SocketClient {
         this.io.on(event, handler),
       );
       this.eventHandlers = [];
-      onConnect();
+      onConnect?.();
     });
     this.io.on('connect_error', onConnectError);
+  }
+
+  tryConnect(
+    onConnect?: () => void,
+    onConnectError?: (error: Error) => void,
+  ): void {
+    if (!this.connected) {
+      this.connect(onConnect, onConnectError);
+    }
   }
 
   async deviceGetInfo(): Promise<CentralSocketResponse<CentralDevice>> {

@@ -67,6 +67,7 @@ export interface CentralService {
 
 export interface CentralServiceStatus {
   status: CentralServiceStatusType;
+  id?: string;
   info?: Record<string, unknown>;
 }
 
@@ -86,6 +87,7 @@ export interface CentralDevice {
 
 export interface CentralDeviceStatus {
   status: CentralDeviceStatusType;
+  id?: string;
   info?: Record<string, unknown>;
 }
 

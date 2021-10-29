@@ -10,16 +10,16 @@ import { promisify } from '../utils';
 
 import { CentralSocketResponse, SocketClientOptions } from './typings';
 
-export enum DeviceSocketEvents {
-  GET_INFO = 'device-get-info',
-  UPDATE_STATUS = 'device-update-status',
-  UPDATE_SERVICE_OPERATION_MODES = 'device-update-service-operation-modes',
-  UPDATE_SERVICE_STATUS = 'device-update-service-status',
-  UPDATE_CONFIG = 'device-service-update-config',
+export enum SocketEvents {
+  GET_DEVICE_INFO = 'get-device-info',
+  UPDATE_SERVICE_OPERATION_MODES = 'update-service-operation-modes',
+  UPDATE_DEVICE_STATUS = 'update-device-status',
+  UPDATE_SERVICE_STATUS = 'update-service-status',
+  UPDATE_SERVICE_CONFIG = 'update-service-config',
   DEVICE_UPDATED = 'device-updated',
-  SERVICE_UPDATED = 'device-service-updated',
-  STATUS_UPDATED = 'device-status-updated',
-  SERVICE_STATUS_UPDATED = 'device-service-status-updated',
+  SERVICE_UPDATED = 'service-updated',
+  DEVICE_STATUS_UPDATED = 'device-status-updated',
+  SERVICE_STATUS_UPDATED = 'service-status-updated',
 }
 
 export default class SocketClient {
@@ -78,7 +78,11 @@ export default class SocketClient {
   }
 
   private on(event: string, handler: (data: unknown) => void): void {
-    this.eventHandlers.push({ event, handler });
+    if (this.connected) {
+      this.io.on(event, handler);
+    } else {
+      this.eventHandlers.push({ event, handler });
+    }
   }
 
   get connected(): boolean {
@@ -120,13 +124,13 @@ export default class SocketClient {
   }
 
   async deviceGetInfo(): Promise<CentralSocketResponse<CentralDevice>> {
-    return this.asyncEmit<CentralDevice>(DeviceSocketEvents.GET_INFO);
+    return this.asyncEmit<CentralDevice>(SocketEvents.GET_DEVICE_INFO);
   }
 
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(DeviceSocketEvents.UPDATE_STATUS, {
+    return this.asyncEmit<null>(SocketEvents.UPDATE_DEVICE_STATUS, {
       status,
     });
   }
@@ -134,7 +138,7 @@ export default class SocketClient {
   async deviceUpdateServiceStatus(
     status: CentralServiceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(DeviceSocketEvents.UPDATE_SERVICE_STATUS, {
+    return this.asyncEmit<null>(SocketEvents.UPDATE_SERVICE_STATUS, {
       status,
     });
   }
@@ -142,33 +146,44 @@ export default class SocketClient {
   async deviceUpdateServiceOperationModes(
     operationModes: CentralServiceOperationMode[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(
-      DeviceSocketEvents.UPDATE_SERVICE_OPERATION_MODES,
-      { operationModes },
-    );
+    return this.asyncEmit<null>(SocketEvents.UPDATE_SERVICE_OPERATION_MODES, {
+      operationModes,
+    });
   }
 
   deviceOnStatusUpdated(callback: (status: CentralDeviceStatus) => void): void {
-    this.on(DeviceSocketEvents.STATUS_UPDATED, callback);
+    this.on(SocketEvents.DEVICE_STATUS_UPDATED, callback);
   }
 
   deviceOnServiceStatusUpdated(
     callback: (status: CentralServiceStatus) => void,
   ): void {
-    this.on(DeviceSocketEvents.SERVICE_STATUS_UPDATED, callback);
+    this.on(SocketEvents.SERVICE_STATUS_UPDATED, callback);
   }
 
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
-    this.on(DeviceSocketEvents.DEVICE_UPDATED, callback);
+    this.on(SocketEvents.DEVICE_UPDATED, callback);
+  }
+
+  deviceOnUpdateStatus(
+    callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
+  ): void {
+    this.on(SocketEvents.DEVICE_STATUS_UPDATED, callback);
   }
 
   deviceOnUpdateConfig(
     callback: (info: { serviceName: string; config: string }) => void,
   ): void {
-    this.on(DeviceSocketEvents.UPDATE_CONFIG, callback);
+    this.on(SocketEvents.UPDATE_SERVICE_CONFIG, callback);
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
-    this.on(DeviceSocketEvents.SERVICE_UPDATED, callback);
+    this.on(SocketEvents.SERVICE_UPDATED, callback);
+  }
+
+  serviceOnUpdateStatus(
+    callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
+  ): void {
+    this.on(SocketEvents.SERVICE_STATUS_UPDATED, callback);
   }
 }

@@ -32,6 +32,7 @@ export enum CentralServiceType {
 export enum CentralServiceStatusType {
   OFF = 'OFF',
   READY = 'READY',
+  LOAD = 'LOAD',
   LIVE = 'LIVE',
 }
 

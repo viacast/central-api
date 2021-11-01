@@ -3,8 +3,6 @@ import {
   CentralDeviceWithStatus,
   CentralServiceStatus,
   CentralServiceWithStatus,
-} from 'index';
-import {
   AuthInfo,
   CentralApiOptions,
   CentralDevice,

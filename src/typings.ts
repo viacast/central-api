@@ -82,7 +82,7 @@ export interface CentralDevice {
   group: CentralGroup;
   serviceIds: string[];
   leaseIds: string[];
-  operationModes: CentralServiceOperationMode[];
+  serviceOperationModes: CentralServiceOperationMode[];
 }
 
 export interface CentralDeviceStatus {

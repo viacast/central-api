@@ -148,16 +148,6 @@ export default class CentralApi {
     return this.socket.deviceUpdateServiceOperationModes(operationModes);
   }
 
-  deviceOnStatusUpdated(callback: (status: CentralDeviceStatus) => void): void {
-    return this.socket.deviceOnStatusUpdated(callback);
-  }
-
-  deviceOnServiceStatusUpdated(
-    callback: (status: CentralServiceStatus) => void,
-  ): void {
-    return this.socket.deviceOnServiceStatusUpdated(callback);
-  }
-
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
     return this.socket.deviceOnUpdate(callback);
   }

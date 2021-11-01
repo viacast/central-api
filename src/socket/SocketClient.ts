@@ -11,7 +11,6 @@ import { promisify } from '../utils';
 import { CentralSocketResponse, SocketClientOptions } from './typings';
 
 export enum SocketEvents {
-  GET_DEVICE_INFO = 'get-device-info',
   UPDATE_SERVICE_OPERATION_MODES = 'update-service-operation-modes',
   UPDATE_DEVICE_STATUS = 'update-device-status',
   UPDATE_SERVICE_STATUS = 'update-service-status',
@@ -121,10 +120,6 @@ export default class SocketClient {
     if (!this.connected) {
       this.connect(onConnect, onConnectError);
     }
-  }
-
-  async deviceGetInfo(): Promise<CentralSocketResponse<CentralDevice>> {
-    return this.asyncEmit<CentralDevice>(SocketEvents.GET_DEVICE_INFO);
   }
 
   async deviceUpdateStatus(

@@ -132,10 +132,6 @@ export default class CentralApi {
     return this.http.deviceMyServices();
   }
 
-  async deviceGetInfo(): Promise<CentralSocketResponse<CentralDevice>> {
-    return this.socket.deviceGetInfo();
-  }
-
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {

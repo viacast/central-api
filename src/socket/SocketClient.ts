@@ -146,16 +146,6 @@ export default class SocketClient {
     });
   }
 
-  deviceOnStatusUpdated(callback: (status: CentralDeviceStatus) => void): void {
-    this.on(SocketEvents.DEVICE_STATUS_UPDATED, callback);
-  }
-
-  deviceOnServiceStatusUpdated(
-    callback: (status: CentralServiceStatus) => void,
-  ): void {
-    this.on(SocketEvents.SERVICE_STATUS_UPDATED, callback);
-  }
-
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
     this.on(SocketEvents.DEVICE_UPDATED, callback);
   }
@@ -163,7 +153,10 @@ export default class SocketClient {
   deviceOnUpdateStatus(
     callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
   ): void {
-    this.on(SocketEvents.DEVICE_STATUS_UPDATED, callback);
+    this.on(
+      SocketEvents.DEVICE_STATUS_UPDATED,
+      (r: { status: Partial<CentralDeviceStatus> }) => callback(r.status),
+    );
   }
 
   deviceOnUpdateConfig(
@@ -173,12 +166,18 @@ export default class SocketClient {
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
-    this.on(SocketEvents.SERVICE_UPDATED, callback);
+    this.on(
+      SocketEvents.SERVICE_UPDATED,
+      (r: { service: Partial<CentralService> }) => callback(r.service),
+    );
   }
 
   serviceOnUpdateStatus(
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
   ): void {
-    this.on(SocketEvents.SERVICE_STATUS_UPDATED, callback);
+    this.on(
+      SocketEvents.SERVICE_STATUS_UPDATED,
+      (r: { status: Partial<CentralServiceStatus> }) => callback(r.status),
+    );
   }
 }

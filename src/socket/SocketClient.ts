@@ -121,6 +121,12 @@ export default class SocketClient {
     }
   }
 
+  disconnect(): void {
+    if (this.connected) {
+      this.io.disconnect();
+    }
+  }
+
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {

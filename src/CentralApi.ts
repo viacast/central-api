@@ -62,6 +62,13 @@ export default class CentralApi {
     this.http.ejectOnUnauthorized(useHandle);
   }
 
+  socketConnect(
+    onConnect?: () => void,
+    onConnectError?: (error: Error) => void,
+  ): void {
+    return this.socket.connect(onConnect, onConnectError);
+  }
+
   socketTryConnect(
     onConnect?: () => void,
     onConnectError?: (error: Error) => void,
@@ -69,11 +76,8 @@ export default class CentralApi {
     return this.socket.tryConnect(onConnect, onConnectError);
   }
 
-  socketConnect(
-    onConnect?: () => void,
-    onConnectError?: (error: Error) => void,
-  ): void {
-    return this.socket.connect(onConnect, onConnectError);
+  socketDisconnect(): void {
+    return this.socket.disconnect();
   }
 
   async authLogin(

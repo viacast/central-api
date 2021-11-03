@@ -14,7 +14,6 @@ export enum SocketEvents {
   UPDATE_SERVICE_OPERATION_MODES = 'update-service-operation-modes',
   UPDATE_DEVICE_STATUS = 'update-device-status',
   UPDATE_SERVICE_STATUS = 'update-service-status',
-  UPDATE_SERVICE_CONFIG = 'update-service-config',
   DEVICE_UPDATED = 'device-updated',
   SERVICE_UPDATED = 'service-updated',
   DEVICE_STATUS_UPDATED = 'device-status-updated',
@@ -157,12 +156,6 @@ export default class SocketClient {
       SocketEvents.DEVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralDeviceStatus> }) => callback(r.status),
     );
-  }
-
-  deviceOnUpdateConfig(
-    callback: (info: { serviceName: string; config: string }) => void,
-  ): void {
-    this.on(SocketEvents.UPDATE_SERVICE_CONFIG, callback);
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {

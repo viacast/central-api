@@ -219,19 +219,6 @@ export default class HttpClient {
       .catch(e => e);
   }
 
-  async serviceLink(
-    sourceId: string,
-    targetId: string,
-  ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .put<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        `/service/${sourceId}/linked-service`,
-        { targetId },
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
-  }
-
   async serviceUpdate(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<null>> {
@@ -239,19 +226,6 @@ export default class HttpClient {
       .patch<unknown, AxiosResponse<CentralHttpResponse<null>>>(
         `/service/${service.id}`,
         { ...service },
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
-  }
-
-  async serviceUpdateConfig(
-    id: string,
-    config: string,
-  ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .put<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        `/service/${id}/config`,
-        { config },
       )
       .then(r => ({ success: true, message: r.data.message }))
       .catch(e => e);

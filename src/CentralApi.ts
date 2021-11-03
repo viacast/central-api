@@ -158,19 +158,6 @@ export default class CentralApi {
     return this.socket.deviceOnUpdateStatus(callback);
   }
 
-  deviceOnUpdateConfig(
-    callback: (info: { serviceName: string; config: string }) => void,
-  ): void {
-    return this.socket.deviceOnUpdateConfig(callback);
-  }
-
-  async serviceLink(
-    sourceId: string,
-    targetId: string,
-  ): Promise<CentralHttpResponse<null>> {
-    return this.http.serviceLink(sourceId, targetId);
-  }
-
   async serviceUpdate(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<null>> {

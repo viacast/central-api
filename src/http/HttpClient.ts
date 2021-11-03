@@ -225,7 +225,7 @@ export default class HttpClient {
     return this.axios
       .patch<unknown, AxiosResponse<CentralHttpResponse<null>>>(
         `/service/${service.id}`,
-        { ...service },
+        { service },
       )
       .then(r => ({ success: true, message: r.data.message }))
       .catch(e => e);

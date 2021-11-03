@@ -61,6 +61,7 @@ export interface CentralService {
   displayName: string;
   config: string;
   operationMode: CentralServiceOperationMode;
+  operationModeId: string;
   exclusiveLink: boolean;
   linkedServiceIds: string[];
   deviceId: string;

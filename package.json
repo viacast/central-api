@@ -1,6 +1,6 @@
 {
   "name": "@viacast/central-api",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "Central API",
   "repository": "https://github.com/gabrieljablonski/central-api.git",
   "author": "gabrieljablonski <gabriel.g.jablonski@gmail.com>",

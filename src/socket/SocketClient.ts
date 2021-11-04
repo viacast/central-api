@@ -78,9 +78,8 @@ export default class SocketClient {
   private on(event: string, handler: (data: unknown) => void): void {
     if (this.connected) {
       this.io.on(event, handler);
-    } else {
-      this.eventHandlers.push({ event, handler });
     }
+    this.eventHandlers.push({ event, handler });
   }
 
   get connected(): boolean {
@@ -103,10 +102,10 @@ export default class SocketClient {
       },
     });
     this.io.on('connect', () => {
-      this.eventHandlers.forEach(({ event, handler }) =>
-        this.io.on(event, handler),
-      );
-      this.eventHandlers = [];
+      this.eventHandlers.forEach(({ event, handler }) => {
+        this.io.off(event, handler);
+        this.io.on(event, handler);
+      });
       onConnect?.();
     });
     this.io.on('connect_error', onConnectError);
@@ -145,10 +144,15 @@ export default class SocketClient {
 
   async deviceUpdateServiceOperationModes(
     operationModes: CentralServiceOperationMode[],
-  ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvents.UPDATE_SERVICE_OPERATION_MODES, {
-      operationModes,
-    });
+  ): Promise<
+    CentralSocketResponse<{ operationModes: CentralServiceOperationMode[] }>
+  > {
+    return this.asyncEmit<{ operationModes: CentralServiceOperationMode[] }>(
+      SocketEvents.UPDATE_SERVICE_OPERATION_MODES,
+      {
+        operationModes,
+      },
+    );
   }
 
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {

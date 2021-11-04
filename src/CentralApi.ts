@@ -148,7 +148,9 @@ export default class CentralApi {
 
   async deviceUpdateServiceOperationModes(
     operationModes: CentralServiceOperationMode[],
-  ): Promise<CentralSocketResponse<null>> {
+  ): Promise<
+    CentralSocketResponse<{ operationModes: CentralServiceOperationMode[] }>
+  > {
     return this.socket.deviceUpdateServiceOperationModes(operationModes);
   }
 

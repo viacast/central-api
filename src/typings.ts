@@ -100,6 +100,7 @@ export interface CentralUser {
   id: string;
   email: string;
   name: string;
+  organization: string;
   group: CentralGroup;
   deviceIds: string[];
   leasesOwnedIds: string[];

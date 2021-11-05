@@ -91,6 +91,16 @@ export default class CentralApi {
     return r;
   }
 
+  async authRequestVerificationCode(): Promise<CentralHttpResponse<null>> {
+    return this.http.authRequestVerificationCode();
+  }
+
+  async authSubmitVerificationCode(
+    code: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.authSubmitVerificationCode(code);
+  }
+
   async authRefreshToken(
     refreshToken: string,
   ): Promise<CentralHttpResponse<AuthInfo>> {

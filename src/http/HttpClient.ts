@@ -115,6 +115,27 @@ export default class HttpClient {
       .catch(e => e);
   }
 
+  async authRequestVerificationCode(): Promise<CentralHttpResponse<null>> {
+    return this.axios
+      .get<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        '/auth/verification-code',
+      )
+      .then(r => ({ success: true, message: r.data.message }))
+      .catch(e => e);
+  }
+
+  async authSubmitVerificationCode(
+    code: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios
+      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        '/auth/verification-code',
+        { code },
+      )
+      .then(r => ({ success: true, message: r.data.message }))
+      .catch(e => e);
+  }
+
   async authRefreshToken(
     refreshToken: string,
   ): Promise<CentralHttpResponse<AuthInfo>> {
@@ -136,7 +157,7 @@ export default class HttpClient {
     newPassword: string,
   ): Promise<CentralHttpResponse<null>> {
     return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<AuthInfo>>>(
+      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
         '/auth/change-password',
         { oldPassword, newPassword },
       )

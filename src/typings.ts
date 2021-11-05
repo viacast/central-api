@@ -8,8 +8,9 @@ export interface CentralApiOptions {
 }
 
 export interface AuthInfo {
-  token: string;
-  refreshToken: string;
+  verified: boolean;
+  token?: string;
+  refreshToken?: string;
 }
 
 export enum AuthRole {

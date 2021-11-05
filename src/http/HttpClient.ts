@@ -171,7 +171,7 @@ export default class HttpClient {
     return this.axios
       .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
         '/user/register',
-        { user },
+        { ...user },
       )
       .then(r => ({ success: true, message: r.data.message }))
       .catch(e => e);

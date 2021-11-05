@@ -165,6 +165,18 @@ export default class HttpClient {
       .catch(e => e);
   }
 
+  async userRegister(
+    user: Partial<CentralUser> & { password: string },
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios
+      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        '/user/register',
+        { user },
+      )
+      .then(r => ({ success: true, message: r.data.message }))
+      .catch(e => e);
+  }
+
   async userMe(): Promise<CentralHttpResponse<{ user: CentralUser }>> {
     return this.axios
       .get<unknown, AxiosResponse<CentralHttpResponse<{ user: CentralUser }>>>(

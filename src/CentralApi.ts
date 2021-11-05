@@ -118,6 +118,12 @@ export default class CentralApi {
     return this.http.authChangePassword(oldPassword, newPassword);
   }
 
+  async userRegister(
+    user: Partial<CentralUser> & { password: string },
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.userRegister(user);
+  }
+
   async userMe(): Promise<CentralHttpResponse<{ user: CentralUser }>> {
     return this.http.userMe();
   }

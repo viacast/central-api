@@ -61,6 +61,7 @@ export default class HttpClient {
         };
         return Promise.reject({
           success: false,
+          message: data?.message,
           response: { status, statusText, data },
         });
       },
@@ -80,6 +81,7 @@ export default class HttpClient {
         }
         return Promise.reject({
           success: false,
+          message: data?.message,
           response: { status, statusText, data },
         });
       },

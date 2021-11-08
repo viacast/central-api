@@ -119,7 +119,7 @@ export default class CentralApi {
   }
 
   async userRegister(
-    user: Partial<CentralUser> & { password: string; hcaptchaToken: string },
+    user: Partial<CentralUser> & { password: string; captchaToken: string },
   ): Promise<CentralHttpResponse<null>> {
     return this.http.userRegister(user);
   }

@@ -166,7 +166,7 @@ export default class HttpClient {
   }
 
   async userRegister(
-    user: Partial<CentralUser> & { password: string; hcaptchaToken: string },
+    user: Partial<CentralUser> & { password: string; captchaToken: string },
   ): Promise<CentralHttpResponse<null>> {
     return this.axios
       .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(

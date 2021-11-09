@@ -5,7 +5,7 @@ const api = new CentralApi({
   host: 'localhost',
 });
 
-api.authLogin('admin@viacast.tv', 'admin123').then(async r => {
+api.authLogin('0872', 'pSN72UsM4c6Eb2aS4sZB3Q').then(async r => {
   console.log('logged in', r);
   api.onUnauthorized(() => {
     console.log('unauthorized');

@@ -163,6 +163,20 @@ export default class CentralApi {
     return this.http.deviceKeygen(serial, forceNew);
   }
 
+  async deviceRequestOwnership(
+    serial: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceRequestOwnership(serial);
+  }
+
+  async deviceSubmitOwnershipCode(
+    serial: string,
+    code: string,
+    takeOwnership = false,
+  ): Promise<CentralHttpResponse<{ device: CentralDevice } | null>> {
+    return this.http.deviceSubmitOwnershipCode(serial, code, takeOwnership);
+  }
+
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
@@ -191,6 +205,12 @@ export default class CentralApi {
     callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
   ): void {
     return this.socket.deviceOnUpdateStatus(callback);
+  }
+
+  deviceOnRequestOwnership(
+    callback: (code: { code: string; expiration: number }) => void,
+  ): void {
+    return this.socket.deviceOnRequestOwnership(callback);
   }
 
   async serviceUpdate(

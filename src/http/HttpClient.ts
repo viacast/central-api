@@ -53,7 +53,13 @@ export default class HttpClient {
       },
     });
     this.axios.interceptors.response.use(
-      config => config,
+      ({
+        data: { success, message, data },
+      }: AxiosResponse<CentralHttpResponse<unknown>>) => ({
+        success,
+        message,
+        data,
+      }),
       error => {
         const { status, statusText, data } = error.response || {
           status: 500,
@@ -105,196 +111,159 @@ export default class HttpClient {
     password: string,
   ): Promise<CentralHttpResponse<AuthInfo>> {
     return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<AuthInfo>>>(
-        '/auth/login',
-        { key, password },
-      )
-      .then(r => {
-        this.axios.defaults.headers.Authorization = `Bearer ${r.data.data.token}`;
-        this._authenticated = true;
-        return { success: true, data: r.data.data, message: r.data.message };
+      .post<unknown, CentralHttpResponse<AuthInfo>>('/auth/login', {
+        key,
+        password,
       })
-      .catch(e => e);
+      .then(r => {
+        this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
+        this._authenticated = true;
+        return r;
+      });
   }
 
   async authRequestVerificationCode(): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .get<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        '/auth/verification-code',
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
+    return this.axios.get<unknown, CentralHttpResponse<null>>(
+      '/auth/verification-code',
+    );
   }
 
   async authSubmitVerificationCode(
     code: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        '/auth/verification-code',
-        { code },
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
+    return this.axios.post<unknown, CentralHttpResponse<null>>(
+      '/auth/verification-code',
+      {
+        code,
+      },
+    );
   }
 
   async authRefreshToken(
     refreshToken: string,
   ): Promise<CentralHttpResponse<AuthInfo>> {
     return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<AuthInfo>>>(
-        '/auth/refresh-token',
-        { refreshToken },
-      )
-      .then(r => {
-        this.axios.defaults.headers.Authorization = `Bearer ${r.data.data.token}`;
-        this._authenticated = true;
-        return { success: true, data: r.data.data, message: r.data.message };
+      .post<unknown, CentralHttpResponse<AuthInfo>>('/auth/refresh-token', {
+        refreshToken,
       })
-      .catch(e => e);
+      .then(r => {
+        this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
+        this._authenticated = true;
+        return r;
+      });
   }
 
   async authChangePassword(
     oldPassword: string,
     newPassword: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        '/auth/change-password',
-        { oldPassword, newPassword },
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
+    return this.axios.post<unknown, CentralHttpResponse<null>>(
+      '/auth/change-password',
+      {
+        oldPassword,
+        newPassword,
+      },
+    );
   }
 
   async userRegister(
     user: Partial<CentralUser> & { password: string; captchaToken: string },
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        '/user/register',
-        { ...user },
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
+    return this.axios.post<unknown, CentralHttpResponse<null>>(
+      '/user/register',
+      { ...user },
+    );
   }
 
   async userMe(): Promise<CentralHttpResponse<{ user: CentralUser }>> {
-    return this.axios
-      .get<unknown, AxiosResponse<CentralHttpResponse<{ user: CentralUser }>>>(
-        '/user/me',
-      )
-      .then(r => ({ success: true, data: { user: r.data.data.user } }))
-      .catch(e => e);
+    return this.axios.get<unknown, CentralHttpResponse<{ user: CentralUser }>>(
+      '/user/me',
+    );
   }
 
   async userMyDevices(): Promise<
     CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
-    return this.axios
-      .get<
-        unknown,
-        AxiosResponse<
-          CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
-        >
-      >('/user/me/devices')
-      .then(r => ({
-        success: true,
-        message: r.data.message,
-        data: { devices: r.data.data.devices },
-      }))
-      .catch(e => e);
+    return this.axios.get<
+      unknown,
+      CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
+    >('/user/me/devices');
   }
 
   async userMyServices(): Promise<
     CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
   > {
-    return this.axios
-      .get<
-        unknown,
-        AxiosResponse<
-          CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
-        >
-      >('/user/me/services')
-      .then(r => ({
-        success: true,
-        message: r.data.message,
-        data: { services: r.data.data.services },
-      }))
-      .catch(e => e);
+    return this.axios.get<
+      unknown,
+      CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
+    >('/user/me/services');
   }
 
   async deviceRegister(
     device: Partial<CentralDevice> & { key: string },
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        '/device/register',
-        { ...device },
-      )
-      .then(r => ({
-        success: true,
-        message: r.data.message,
-      }))
-      .catch(e => e);
+    return this.axios.post<unknown, CentralHttpResponse<null>>(
+      '/device/register',
+      {
+        ...device,
+      },
+    );
   }
 
   async deviceMe(): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
-    return this.axios
-      .get<
-        unknown,
-        AxiosResponse<CentralHttpResponse<{ device: CentralDevice }>>
-      >('/device/me')
-      .then(r => ({
-        success: true,
-        message: r.data.message,
-        data: { device: r.data.data.device },
-      }))
-      .catch(e => e);
+    return this.axios.get<
+      unknown,
+      CentralHttpResponse<{ device: CentralDevice }>
+    >('/device/me');
   }
 
   async deviceMyServices(): Promise<
     CentralHttpResponse<{ services: CentralService[] }>
   > {
-    return this.axios
-      .get<
-        unknown,
-        AxiosResponse<CentralHttpResponse<{ services: CentralService[] }>>
-      >('/device/me/services')
-      .then(r => ({
-        success: true,
-        message: r.data.message,
-        data: { services: r.data.data.services },
-      }))
-      .catch(e => e);
+    return this.axios.get<
+      unknown,
+      CentralHttpResponse<{ services: CentralService[] }>
+    >('/device/me/services');
   }
 
   async deviceKeygen(
     serial: string,
     forceNew: boolean,
   ): Promise<CentralHttpResponse<{ serial: string; key: string }>> {
-    return this.axios
-      .post<
-        unknown,
-        AxiosResponse<CentralHttpResponse<{ serial: string; key: string }>>
-      >('/device/keygen', { serial, forceNew })
-      .then(({ data: { message, data } }) => ({
-        success: true,
-        message,
-        data,
-      }))
-      .catch(e => e);
+    return this.axios.post<
+      unknown,
+      CentralHttpResponse<{ serial: string; key: string }>
+    >('/device/keygen', { serial, forceNew });
+  }
+
+  async deviceRequestOwnership(
+    serial: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.post<unknown, CentralHttpResponse<null>>(
+      '/device/request-ownership',
+      { serial },
+    );
+  }
+
+  async deviceSubmitOwnershipCode(
+    serial: string,
+    code: string,
+    takeOwnership: boolean,
+  ): Promise<CentralHttpResponse<{ device: CentralDevice } | null>> {
+    return this.axios.post<
+      unknown,
+      CentralHttpResponse<{ device: CentralDevice } | null>
+    >('/device/submit-ownership-code', { serial, code, takeOwnership });
   }
 
   async serviceUpdate(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios
-      .patch<unknown, AxiosResponse<CentralHttpResponse<null>>>(
-        `/service/${service.id}`,
-        { service },
-      )
-      .then(r => ({ success: true, message: r.data.message }))
-      .catch(e => e);
+    return this.axios.patch<unknown, CentralHttpResponse<null>>(
+      `/service/${service.id}`,
+      {
+        service,
+      },
+    );
   }
 }

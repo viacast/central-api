@@ -13,11 +13,12 @@ import { CentralSocketResponse, SocketClientOptions } from './typings';
 export enum SocketEvents {
   UPDATE_SERVICE_OPERATION_MODES = 'update-service-operation-modes',
   UPDATE_DEVICE_STATUS = 'update-device-status',
-  UPDATE_SERVICE_STATUS = 'update-service-status',
   DEVICE_UPDATED = 'device-updated',
-  SERVICE_UPDATED = 'service-updated',
   DEVICE_STATUS_UPDATED = 'device-status-updated',
+  UPDATE_SERVICE_STATUS = 'update-service-status',
+  SERVICE_UPDATED = 'service-updated',
   SERVICE_STATUS_UPDATED = 'service-status-updated',
+  DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
 }
 
 export default class SocketClient {
@@ -165,6 +166,15 @@ export default class SocketClient {
     this.on(
       SocketEvents.DEVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralDeviceStatus> }) => callback(r.status),
+    );
+  }
+
+  deviceOnRequestOwnership(
+    callback: (code: { code: string; expiration: number }) => void,
+  ): void {
+    this.on(
+      SocketEvents.DEVICE_REQUEST_OWNERSHIP,
+      (r: { code: { code: string; expiration: number } }) => callback(r.code),
     );
   }
 

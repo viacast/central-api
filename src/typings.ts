@@ -82,7 +82,7 @@ export interface CentralDevice {
   displayName: string;
   serial: string;
   userId: string;
-  type: string;
+  model: string;
   group: CentralGroup;
   serviceIds: string[];
   leaseIds: string[];

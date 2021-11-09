@@ -15,6 +15,7 @@ export interface AuthInfo {
 
 export enum AuthRole {
   ADMIN = 'ADMIN',
+  KEYGEN = 'KEYGEN',
   USER = 'USER',
   DEVICE = 'DEVICE',
 }

@@ -140,6 +140,12 @@ export default class CentralApi {
     return this.http.userMyServices();
   }
 
+  async deviceRegister(
+    device: Partial<CentralDevice> & { key: string },
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceRegister(device);
+  }
+
   async deviceMe(): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
     return this.http.deviceMe();
   }
@@ -148,6 +154,13 @@ export default class CentralApi {
     CentralHttpResponse<{ services: CentralService[] }>
   > {
     return this.http.deviceMyServices();
+  }
+
+  async deviceKeygen(
+    serial: string,
+    forceNew: boolean,
+  ): Promise<CentralHttpResponse<{ serial: string; key: string }>> {
+    return this.http.deviceKeygen(serial, forceNew);
   }
 
   async deviceUpdateStatus(

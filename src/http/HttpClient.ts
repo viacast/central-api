@@ -224,6 +224,21 @@ export default class HttpClient {
       .catch(e => e);
   }
 
+  async deviceRegister(
+    device: Partial<CentralDevice> & { key: string },
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios
+      .post<unknown, AxiosResponse<CentralHttpResponse<null>>>(
+        '/device/register',
+        { ...device },
+      )
+      .then(r => ({
+        success: true,
+        message: r.data.message,
+      }))
+      .catch(e => e);
+  }
+
   async deviceMe(): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
     return this.axios
       .get<
@@ -250,6 +265,23 @@ export default class HttpClient {
         success: true,
         message: r.data.message,
         data: { services: r.data.data.services },
+      }))
+      .catch(e => e);
+  }
+
+  async deviceKeygen(
+    serial: string,
+    forceNew: boolean,
+  ): Promise<CentralHttpResponse<{ serial: string; key: string }>> {
+    return this.axios
+      .post<
+        unknown,
+        AxiosResponse<CentralHttpResponse<{ serial: string; key: string }>>
+      >('/device/keygen', { serial, forceNew })
+      .then(({ data: { message, data } }) => ({
+        success: true,
+        message,
+        data,
       }))
       .catch(e => e);
   }

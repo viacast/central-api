@@ -116,8 +116,10 @@ export default class HttpClient {
         password,
       })
       .then(r => {
-        this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
-        this._authenticated = true;
+        if (r.success) {
+          this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
+          this._authenticated = true;
+        }
         return r;
       });
   }
@@ -147,8 +149,10 @@ export default class HttpClient {
         refreshToken,
       })
       .then(r => {
-        this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
-        this._authenticated = true;
+        if (r.success) {
+          this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
+          this._authenticated = true;
+        }
         return r;
       });
   }

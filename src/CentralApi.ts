@@ -120,7 +120,7 @@ export default class CentralApi {
 
   async userRegister(
     user: Partial<CentralUser> & { password: string; captchaToken: string },
-  ): Promise<CentralHttpResponse<null>> {
+  ): Promise<CentralHttpResponse<{ user: CentralUser }>> {
     return this.http.userRegister(user);
   }
 
@@ -142,7 +142,7 @@ export default class CentralApi {
 
   async deviceRegister(
     device: Partial<CentralDevice> & { key: string },
-  ): Promise<CentralHttpResponse<null>> {
+  ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
     return this.http.deviceRegister(device);
   }
 

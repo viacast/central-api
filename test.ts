@@ -10,8 +10,8 @@ api.authLogin('0872', 'pSN72UsM4c6Eb2aS4sZB3Q').then(async r => {
   api.onUnauthorized(() => {
     console.log('unauthorized');
   });
-  setTimeout(() => {
-    api.deviceMe();
+  setTimeout(async () => {
+    console.log(await api.deviceMe());
   }, 1000);
   // api.socketConnect(
   //   async () => {

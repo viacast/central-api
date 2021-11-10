@@ -172,8 +172,8 @@ export default class HttpClient {
 
   async userRegister(
     user: Partial<CentralUser> & { password: string; captchaToken: string },
-  ): Promise<CentralHttpResponse<null>> {
-    return this.axios.post<unknown, CentralHttpResponse<null>>(
+  ): Promise<CentralHttpResponse<{ user: CentralUser }>> {
+    return this.axios.post<unknown, CentralHttpResponse<{ user: CentralUser }>>(
       '/user/register',
       { ...user },
     );
@@ -205,13 +205,13 @@ export default class HttpClient {
 
   async deviceRegister(
     device: Partial<CentralDevice> & { key: string },
-  ): Promise<CentralHttpResponse<null>> {
-    return this.axios.post<unknown, CentralHttpResponse<null>>(
-      '/device/register',
-      {
-        ...device,
-      },
-    );
+  ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
+    return this.axios.post<
+      unknown,
+      CentralHttpResponse<{ device: CentralDevice }>
+    >('/device/register', {
+      ...device,
+    });
   }
 
   async deviceMe(): Promise<CentralHttpResponse<{ device: CentralDevice }>> {

@@ -65,11 +65,11 @@ export default class HttpClient {
           status: 500,
           statusText: error.errno,
         };
-        return Promise.reject({
+        return {
           success: false,
           message: data?.message,
           response: { status, statusText, data },
-        });
+        };
       },
     );
   }

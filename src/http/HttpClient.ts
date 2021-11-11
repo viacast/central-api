@@ -237,7 +237,7 @@ export default class HttpClient {
       unknown,
       CentralHttpResponse<{ device: CentralDevice }>
     >(`/device/me`, {
-      device,
+      ...device,
     });
   }
 
@@ -248,7 +248,7 @@ export default class HttpClient {
       unknown,
       CentralHttpResponse<{ device: CentralDevice }>
     >(`/device/${device.id}`, {
-      device,
+      ...device,
     });
   }
 
@@ -300,7 +300,7 @@ export default class HttpClient {
       unknown,
       CentralHttpResponse<{ service: CentralService }>
     >(`/service/${service.id}`, {
-      service,
+      ...service,
     });
   }
 }

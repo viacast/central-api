@@ -289,7 +289,7 @@ export default class HttpClient {
       unknown,
       CentralHttpResponse<{ service: CentralService }>
     >(`/service/register`, {
-      service,
+      ...service,
     });
   }
 

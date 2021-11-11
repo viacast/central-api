@@ -50,7 +50,7 @@ export interface CentralGroup {
 }
 
 export interface CentralServiceOperationMode {
-  id: string;
+  id?: string;
   name: string;
   displayName: string;
   type: CentralServiceType;

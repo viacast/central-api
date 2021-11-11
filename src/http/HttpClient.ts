@@ -230,6 +230,28 @@ export default class HttpClient {
     >('/device/me/services');
   }
 
+  async deviceUpdateMe(
+    device: Partial<CentralDevice>,
+  ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
+    return this.axios.patch<
+      unknown,
+      CentralHttpResponse<{ device: CentralDevice }>
+    >(`/device/me`, {
+      device,
+    });
+  }
+
+  async deviceUpdate(
+    device: Partial<CentralDevice>,
+  ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
+    return this.axios.patch<
+      unknown,
+      CentralHttpResponse<{ device: CentralDevice }>
+    >(`/device/${device.id}`, {
+      device,
+    });
+  }
+
   async deviceKeygen(
     serial: string,
     forceNew: boolean,
@@ -260,14 +282,25 @@ export default class HttpClient {
     >('/device/submit-ownership-code', { serial, code, takeOwnership });
   }
 
+  async serviceRegister(
+    service: Partial<CentralService>,
+  ): Promise<CentralHttpResponse<{ service: CentralService }>> {
+    return this.axios.post<
+      unknown,
+      CentralHttpResponse<{ service: CentralService }>
+    >(`/service/register`, {
+      service,
+    });
+  }
+
   async serviceUpdate(
     service: Partial<CentralService>,
-  ): Promise<CentralHttpResponse<null>> {
-    return this.axios.patch<unknown, CentralHttpResponse<null>>(
-      `/service/${service.id}`,
-      {
-        service,
-      },
-    );
+  ): Promise<CentralHttpResponse<{ service: CentralService }>> {
+    return this.axios.patch<
+      unknown,
+      CentralHttpResponse<{ service: CentralService }>
+    >(`/service/${service.id}`, {
+      service,
+    });
   }
 }

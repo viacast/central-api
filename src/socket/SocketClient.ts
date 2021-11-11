@@ -11,7 +11,6 @@ import { promisify } from '../utils';
 import { CentralSocketResponse, SocketClientOptions } from './typings';
 
 export enum SocketEvents {
-  UPDATE_SERVICE_OPERATION_MODES = 'update-service-operation-modes',
   UPDATE_DEVICE_STATUS = 'update-device-status',
   DEVICE_UPDATED = 'device-updated',
   DEVICE_STATUS_UPDATED = 'device-status-updated',
@@ -141,19 +140,6 @@ export default class SocketClient {
     return this.asyncEmit<null>(SocketEvents.UPDATE_SERVICE_STATUS, {
       status,
     });
-  }
-
-  async deviceUpdateServiceOperationModes(
-    operationModes: CentralServiceOperationMode[],
-  ): Promise<
-    CentralSocketResponse<{ operationModes: CentralServiceOperationMode[] }>
-  > {
-    return this.asyncEmit<{ operationModes: CentralServiceOperationMode[] }>(
-      SocketEvents.UPDATE_SERVICE_OPERATION_MODES,
-      {
-        operationModes,
-      },
-    );
   }
 
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {

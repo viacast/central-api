@@ -177,24 +177,22 @@ export default class CentralApi {
     return this.http.deviceSubmitOwnershipCode(serial, code, takeOwnership);
   }
 
+  async deviceUpdateMe(
+    device: Partial<CentralDevice>,
+  ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
+    return this.http.deviceUpdateMe(device);
+  }
+
+  async deviceUpdate(
+    device: Partial<CentralDevice>,
+  ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
+    return this.http.deviceUpdate(device);
+  }
+
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateStatus(status);
-  }
-
-  async deviceUpdateServiceStatus(
-    status: CentralServiceStatus,
-  ): Promise<CentralSocketResponse<null>> {
-    return this.socket.deviceUpdateServiceStatus(status);
-  }
-
-  async deviceUpdateServiceOperationModes(
-    operationModes: CentralServiceOperationMode[],
-  ): Promise<
-    CentralSocketResponse<{ operationModes: CentralServiceOperationMode[] }>
-  > {
-    return this.socket.deviceUpdateServiceOperationModes(operationModes);
   }
 
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
@@ -213,10 +211,22 @@ export default class CentralApi {
     return this.socket.deviceOnRequestOwnership(callback);
   }
 
+  async serviceRegister(
+    service: Partial<CentralService>,
+  ): Promise<CentralHttpResponse<{ service: CentralService }>> {
+    return this.http.serviceRegister(service);
+  }
+
   async serviceUpdate(
     service: Partial<CentralService>,
-  ): Promise<CentralHttpResponse<null>> {
+  ): Promise<CentralHttpResponse<{ service: CentralService }>> {
     return this.http.serviceUpdate(service);
+  }
+
+  async serviceUpdateStatus(
+    status: CentralServiceStatus,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUpdateServiceStatus(status);
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {

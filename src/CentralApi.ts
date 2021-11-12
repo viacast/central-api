@@ -1,4 +1,3 @@
-import { ToggleRunningAction } from 'index';
 import {
   CentralDeviceStatus,
   CentralDeviceWithStatus,
@@ -9,6 +8,7 @@ import {
   CentralDevice,
   CentralService,
   CentralUser,
+  ToggleRunningAction,
 } from './typings';
 import SocketClient from './socket/SocketClient';
 import HttpClient from './http/HttpClient';

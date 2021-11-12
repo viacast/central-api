@@ -1,3 +1,4 @@
+import { ToggleRunningAction } from 'index';
 import {
   CentralDeviceStatus,
   CentralDeviceWithStatus,
@@ -7,7 +8,6 @@ import {
   CentralApiOptions,
   CentralDevice,
   CentralService,
-  CentralServiceOperationMode,
   CentralUser,
 } from './typings';
 import SocketClient from './socket/SocketClient';
@@ -229,6 +229,13 @@ export default class CentralApi {
     return this.socket.deviceUpdateServiceStatus(status);
   }
 
+  async serviceToggleRunning(
+    id: string,
+    action: ToggleRunningAction,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.serviceToggleRunning(id, action);
+  }
+
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
     return this.socket.serviceOnUpdate(callback);
   }
@@ -237,5 +244,11 @@ export default class CentralApi {
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
   ): void {
     return this.socket.serviceOnUpdateStatus(callback);
+  }
+
+  serviceOnToggleRunning(
+    callback: (args: { id: string; action: ToggleRunningAction }) => void,
+  ): void {
+    return this.socket.serviceOnToggleRunning(callback);
   }
 }

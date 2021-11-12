@@ -1,5 +1,9 @@
 import axios, { Axios, AxiosResponse } from 'axios';
-import { CentralDeviceWithStatus, CentralServiceWithStatus } from 'index';
+import {
+  CentralDeviceWithStatus,
+  CentralServiceWithStatus,
+  ToggleRunningAction,
+} from 'index';
 
 import {
   AuthInfo,
@@ -125,20 +129,15 @@ export default class HttpClient {
   }
 
   async authRequestVerificationCode(): Promise<CentralHttpResponse<null>> {
-    return this.axios.get<unknown, CentralHttpResponse<null>>(
-      '/auth/verification-code',
-    );
+    return this.axios.get('/auth/verification-code');
   }
 
   async authSubmitVerificationCode(
     code: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios.post<unknown, CentralHttpResponse<null>>(
-      '/auth/verification-code',
-      {
-        code,
-      },
-    );
+    return this.axios.post('/auth/verification-code', {
+      code,
+    });
   }
 
   async authRefreshToken(
@@ -161,82 +160,56 @@ export default class HttpClient {
     oldPassword: string,
     newPassword: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios.post<unknown, CentralHttpResponse<null>>(
-      '/auth/change-password',
-      {
-        oldPassword,
-        newPassword,
-      },
-    );
+    return this.axios.post('/auth/change-password', {
+      oldPassword,
+      newPassword,
+    });
   }
 
   async userRegister(
     user: Partial<CentralUser> & { password: string; captchaToken: string },
   ): Promise<CentralHttpResponse<{ user: CentralUser }>> {
-    return this.axios.post<unknown, CentralHttpResponse<{ user: CentralUser }>>(
-      '/user/register',
-      { ...user },
-    );
+    return this.axios.post('/user/register', { ...user });
   }
 
   async userMe(): Promise<CentralHttpResponse<{ user: CentralUser }>> {
-    return this.axios.get<unknown, CentralHttpResponse<{ user: CentralUser }>>(
-      '/user/me',
-    );
+    return this.axios.get('/user/me');
   }
 
   async userMyDevices(): Promise<
     CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
-    return this.axios.get<
-      unknown,
-      CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
-    >('/user/me/devices');
+    return this.axios.get('/user/me/devices');
   }
 
   async userMyServices(): Promise<
     CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
   > {
-    return this.axios.get<
-      unknown,
-      CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
-    >('/user/me/services');
+    return this.axios.get('/user/me/services');
   }
 
   async deviceRegister(
     device: Partial<CentralDevice> & { key: string },
   ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
-    return this.axios.post<
-      unknown,
-      CentralHttpResponse<{ device: CentralDevice }>
-    >('/device/register', {
+    return this.axios.post('/device/register', {
       ...device,
     });
   }
 
   async deviceMe(): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
-    return this.axios.get<
-      unknown,
-      CentralHttpResponse<{ device: CentralDevice }>
-    >('/device/me');
+    return this.axios.get('/device/me');
   }
 
   async deviceMyServices(): Promise<
     CentralHttpResponse<{ services: CentralService[] }>
   > {
-    return this.axios.get<
-      unknown,
-      CentralHttpResponse<{ services: CentralService[] }>
-    >('/device/me/services');
+    return this.axios.get('/device/me/services');
   }
 
   async deviceUpdateMe(
     device: Partial<CentralDevice>,
   ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
-    return this.axios.patch<
-      unknown,
-      CentralHttpResponse<{ device: CentralDevice }>
-    >(`/device/me`, {
+    return this.axios.patch(`/device/me`, {
       ...device,
     });
   }
@@ -244,10 +217,7 @@ export default class HttpClient {
   async deviceUpdate(
     device: Partial<CentralDevice>,
   ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
-    return this.axios.patch<
-      unknown,
-      CentralHttpResponse<{ device: CentralDevice }>
-    >(`/device/${device.id}`, {
+    return this.axios.patch(`/device/${device.id}`, {
       ...device,
     });
   }
@@ -256,19 +226,13 @@ export default class HttpClient {
     serial: string,
     forceNew: boolean,
   ): Promise<CentralHttpResponse<{ serial: string; key: string }>> {
-    return this.axios.post<
-      unknown,
-      CentralHttpResponse<{ serial: string; key: string }>
-    >('/device/keygen', { serial, forceNew });
+    return this.axios.post('/device/keygen', { serial, forceNew });
   }
 
   async deviceRequestOwnership(
     serial: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios.post<unknown, CentralHttpResponse<null>>(
-      '/device/request-ownership',
-      { serial },
-    );
+    return this.axios.post('/device/request-ownership', { serial });
   }
 
   async deviceSubmitOwnershipCode(
@@ -276,19 +240,17 @@ export default class HttpClient {
     code: string,
     takeOwnership: boolean,
   ): Promise<CentralHttpResponse<{ device: CentralDevice } | null>> {
-    return this.axios.post<
-      unknown,
-      CentralHttpResponse<{ device: CentralDevice } | null>
-    >('/device/submit-ownership-code', { serial, code, takeOwnership });
+    return this.axios.post('/device/submit-ownership-code', {
+      serial,
+      code,
+      takeOwnership,
+    });
   }
 
   async serviceRegister(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {
-    return this.axios.post<
-      unknown,
-      CentralHttpResponse<{ service: CentralService }>
-    >(`/service/register`, {
+    return this.axios.post(`/service/register`, {
       ...service,
     });
   }
@@ -296,11 +258,15 @@ export default class HttpClient {
   async serviceUpdate(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {
-    return this.axios.patch<
-      unknown,
-      CentralHttpResponse<{ service: CentralService }>
-    >(`/service/${service.id}`, {
+    return this.axios.patch(`/service/${service.id}`, {
       ...service,
     });
+  }
+
+  async serviceToggleRunning(
+    id: string,
+    action: ToggleRunningAction,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.patch(`/service/${id}/running`, { action });
   }
 }

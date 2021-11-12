@@ -2,10 +2,11 @@ import {
   CentralDeviceStatus,
   CentralService,
   CentralServiceStatus,
+  ToggleRunningAction,
 } from 'index';
 import io, { Socket } from 'socket.io-client';
 
-import { CentralDevice, CentralServiceOperationMode } from '../typings';
+import { CentralDevice } from '../typings';
 import { promisify } from '../utils';
 
 import { CentralSocketResponse, SocketClientOptions } from './typings';
@@ -18,6 +19,7 @@ export enum SocketEvents {
   SERVICE_UPDATED = 'service-updated',
   SERVICE_STATUS_UPDATED = 'service-status-updated',
   DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
+  SERVICE_TOGGLE_RUNNING = 'service-toggle-running',
 }
 
 export default class SocketClient {
@@ -181,5 +183,11 @@ export default class SocketClient {
       SocketEvents.SERVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralServiceStatus> }) => callback(r.status),
     );
+  }
+
+  serviceOnToggleRunning(
+    callback: (args: { id: string; action: ToggleRunningAction }) => void,
+  ): void {
+    this.on(SocketEvents.SERVICE_TOGGLE_RUNNING, callback);
   }
 }

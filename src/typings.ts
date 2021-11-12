@@ -49,6 +49,8 @@ export interface CentralGroup {
   displayName: string;
 }
 
+export type ToggleRunningAction = 'start' | 'stop' | 'restart';
+
 export interface CentralServiceOperationMode {
   id?: string;
   name: string;

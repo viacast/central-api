@@ -195,7 +195,12 @@ export default class CentralApi {
     return this.socket.deviceUpdateStatus(status);
   }
 
-  deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
+  deviceOnUpdate(
+    callback: (args: {
+      device: Partial<CentralDevice>;
+      updatedFields: Record<string, boolean>;
+    }) => void,
+  ): void {
     return this.socket.deviceOnUpdate(callback);
   }
 
@@ -229,7 +234,12 @@ export default class CentralApi {
     return this.socket.deviceUpdateServiceStatus(status);
   }
 
-  serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
+  serviceOnUpdate(
+    callback: (args: {
+      service: Partial<CentralService>;
+      updatedFields: Record<string, boolean>;
+    }) => void,
+  ): void {
     return this.socket.serviceOnUpdate(callback);
   }
 

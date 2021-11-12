@@ -142,13 +142,11 @@ export default class SocketClient {
     });
   }
 
-  deviceOnUpdate(
-    callback: (args: {
-      device: Partial<CentralDevice>;
-      updatedFields: Record<string, boolean>;
-    }) => void,
-  ): void {
-    this.on(SocketEvents.DEVICE_UPDATED, callback);
+  deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
+    this.on(
+      SocketEvents.DEVICE_UPDATED,
+      (r: { device: Partial<CentralDevice> }) => callback(r.device),
+    );
   }
 
   deviceOnUpdateStatus(
@@ -169,13 +167,11 @@ export default class SocketClient {
     );
   }
 
-  serviceOnUpdate(
-    callback: (args: {
-      service: Partial<CentralService>;
-      updatedFields: Record<string, boolean>;
-    }) => void,
-  ): void {
-    this.on(SocketEvents.SERVICE_UPDATED, callback);
+  serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
+    this.on(
+      SocketEvents.SERVICE_UPDATED,
+      (r: { service: Partial<CentralService> }) => callback(r.service),
+    );
   }
 
   serviceOnUpdateStatus(

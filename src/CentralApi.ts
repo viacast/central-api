@@ -226,7 +226,7 @@ export default class CentralApi {
   async serviceUpdateStatus(
     status: CentralServiceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.deviceUpdateServiceStatus(status);
+    return this.socket.serviceUpdateStatus(status);
   }
 
   async serviceToggleRunning(

@@ -12,7 +12,7 @@ import { promisify } from '../utils';
 import {
   CentralSocketResponse,
   SocketClientOptions,
-  SocketEvents,
+  SocketEvent,
 } from './typings';
 
 export default class SocketClient {
@@ -48,7 +48,7 @@ export default class SocketClient {
   setLocale(locale: string): void {
     this.locale = locale;
     if (this.connected) {
-      this.asyncEmit('update-locale', { locale: this.locale });
+      // this.asyncEmit('update-locale', { locale: this.locale });
     }
   }
 
@@ -57,7 +57,7 @@ export default class SocketClient {
   }
 
   private asyncEmit<ResponseType>(
-    event: string,
+    event: SocketEvent,
     data?: unknown,
   ): Promise<CentralSocketResponse<ResponseType>> {
     const { promise, resolve, reject } =
@@ -124,22 +124,14 @@ export default class SocketClient {
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvents.UPDATE_DEVICE_STATUS, {
-      status,
-    });
-  }
-
-  async deviceUpdateServiceStatus(
-    status: CentralServiceStatus,
-  ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvents.UPDATE_SERVICE_STATUS, {
+    return this.asyncEmit<null>(SocketEvent.UPDATE_DEVICE_STATUS, {
       status,
     });
   }
 
   deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
     this.on(
-      SocketEvents.DEVICE_UPDATED,
+      SocketEvent.DEVICE_UPDATED,
       (r: { device: Partial<CentralDevice> }) => callback(r.device),
     );
   }
@@ -148,7 +140,7 @@ export default class SocketClient {
     callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
   ): void {
     this.on(
-      SocketEvents.DEVICE_STATUS_UPDATED,
+      SocketEvent.DEVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralDeviceStatus> }) => callback(r.status),
     );
   }
@@ -157,14 +149,22 @@ export default class SocketClient {
     callback: (code: { code: string; expiration: number }) => void,
   ): void {
     this.on(
-      SocketEvents.DEVICE_REQUEST_OWNERSHIP,
+      SocketEvent.DEVICE_REQUEST_OWNERSHIP,
       (r: { code: { code: string; expiration: number } }) => callback(r.code),
     );
   }
 
+  async serviceUpdateStatus(
+    status: CentralServiceStatus,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(SocketEvent.UPDATE_SERVICE_STATUS, {
+      status,
+    });
+  }
+
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
     this.on(
-      SocketEvents.SERVICE_UPDATED,
+      SocketEvent.SERVICE_UPDATED,
       (r: { service: Partial<CentralService> }) => callback(r.service),
     );
   }
@@ -173,7 +173,7 @@ export default class SocketClient {
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
   ): void {
     this.on(
-      SocketEvents.SERVICE_STATUS_UPDATED,
+      SocketEvent.SERVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralServiceStatus> }) => callback(r.status),
     );
   }
@@ -181,6 +181,6 @@ export default class SocketClient {
   serviceOnToggleRunning(
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
   ): void {
-    this.on(SocketEvents.SERVICE_TOGGLE_RUNNING, callback);
+    this.on(SocketEvent.SERVICE_TOGGLE_RUNNING, callback);
   }
 }

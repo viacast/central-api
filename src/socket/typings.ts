@@ -14,7 +14,7 @@ export interface CentralSocketResponse<DataType> {
   data?: DataType;
 }
 
-export enum SocketEvents {
+export enum SocketEvent {
   UPDATE_DEVICE_STATUS = 'update-device-status',
   DEVICE_UPDATED = 'device-updated',
   DEVICE_STATUS_UPDATED = 'device-status-updated',

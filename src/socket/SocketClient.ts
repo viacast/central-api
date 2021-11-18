@@ -9,18 +9,11 @@ import io, { Socket } from 'socket.io-client';
 import { CentralDevice } from '../typings';
 import { promisify } from '../utils';
 
-import { CentralSocketResponse, SocketClientOptions } from './typings';
-
-export enum SocketEvents {
-  UPDATE_DEVICE_STATUS = 'update-device-status',
-  DEVICE_UPDATED = 'device-updated',
-  DEVICE_STATUS_UPDATED = 'device-status-updated',
-  UPDATE_SERVICE_STATUS = 'update-service-status',
-  SERVICE_UPDATED = 'service-updated',
-  SERVICE_STATUS_UPDATED = 'service-status-updated',
-  DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
-  SERVICE_TOGGLE_RUNNING = 'service-toggle-running',
-}
+import {
+  CentralSocketResponse,
+  SocketClientOptions,
+  SocketEvents,
+} from './typings';
 
 export default class SocketClient {
   private port: number;
@@ -43,8 +36,8 @@ export default class SocketClient {
 
   constructor(options: SocketClientOptions) {
     this.port = options.port;
-    this.host = options.host;
-    this.path = options.path;
+    this.host = options.host || 'localhost';
+    this.path = options.path || '/socket.io';
     this.timeout = options.timeout || 3000;
     this.locale = options.locale || 'en';
     this.https = options.https || false;

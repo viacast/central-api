@@ -71,6 +71,7 @@ export interface CentralReceiver {
   id: string;
   maxStreams: number;
   streams: CentralStream[];
+  hosts: string[];
 }
 
 export interface CentralService {
@@ -104,7 +105,7 @@ export interface CentralDevice {
   serviceIds: string[];
   leaseIds: string[];
   subservices: CentralSubservice[];
-  receiver: CentralReceiver;
+  receiver: Partial<CentralReceiver>;
 }
 
 export interface CentralDeviceStatus {

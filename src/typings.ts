@@ -56,6 +56,7 @@ export interface CentralSubservice {
   id?: string;
   name: string;
   displayName: string;
+  serviceName: string;
   type: CentralServiceType;
   configLayout: string;
 }

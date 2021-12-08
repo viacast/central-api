@@ -29,6 +29,7 @@ export interface CentralAuth {
 export enum CentralServiceType {
   FEED = 'FEED',
   OUTPUT = 'OUTPUT',
+  STATIC = 'STATIC',
 }
 
 export enum CentralServiceStatusType {
@@ -51,7 +52,7 @@ export interface CentralGroup {
 
 export type ToggleRunningAction = 'start' | 'stop' | 'restart';
 
-export interface CentralServiceOperationMode {
+export interface CentralSubservice {
   id?: string;
   name: string;
   displayName: string;
@@ -59,16 +60,30 @@ export interface CentralServiceOperationMode {
   configLayout: string;
 }
 
+export interface CentralStream {
+  id: string;
+  label: string;
+  port: number;
+  enabled: boolean;
+}
+
+export interface CentralReceiver {
+  id: string;
+  maxStreams: number;
+  streams: CentralStream[];
+}
+
 export interface CentralService {
   id: string;
   name: string;
   displayName: string;
   config: string;
-  operationMode: CentralServiceOperationMode;
-  operationModeId: string;
-  exclusiveLink: boolean;
-  linkedServiceIds: string[];
+  configLayout: string;
+  subservice: CentralSubservice;
+  subserviceId: string;
+  subserviceConfig: string;
   deviceId: string;
+  stream: CentralStream;
 }
 
 export interface CentralServiceStatus {
@@ -88,7 +103,8 @@ export interface CentralDevice {
   group: CentralGroup;
   serviceIds: string[];
   leaseIds: string[];
-  serviceOperationModes: CentralServiceOperationMode[];
+  subservices: CentralSubservice[];
+  receiver: CentralReceiver;
 }
 
 export interface CentralDeviceStatus {

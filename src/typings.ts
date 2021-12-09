@@ -86,6 +86,7 @@ export interface CentralService {
   subserviceConfig: string;
   deviceId: string;
   stream: CentralStream;
+  streamId: string;
 }
 
 export interface CentralServiceStatus {

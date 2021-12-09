@@ -66,6 +66,7 @@ export interface CentralStream {
   label: string;
   port: number;
   enabled: boolean;
+  index: number;
 }
 
 export interface CentralReceiver {

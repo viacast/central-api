@@ -103,7 +103,7 @@ export interface CentralDevice {
   id: string;
   displayName: string;
   serial: string;
-  userId: string;
+  user: CentralUser;
   model: string;
   group: CentralGroup;
   serviceIds: string[];

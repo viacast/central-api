@@ -204,9 +204,13 @@ export default class SocketClient {
     );
   }
 
-  serviceOnUpdatePreview(callback: (preview: string) => void): void {
-    this.on(SocketEvent.SERVICE_PREVIEW_UPDATED, (r: { preview: string }) =>
-      callback(r.preview),
+  serviceOnUpdatePreview(
+    callback: (preview: string, serviceId: string) => void,
+  ): void {
+    this.on(
+      SocketEvent.SERVICE_PREVIEW_UPDATED,
+      (r: { preview: string; serviceId: string }) =>
+        callback(r.preview, r.serviceId),
     );
   }
 

@@ -15,12 +15,16 @@ export interface CentralSocketResponse<DataType> {
 }
 
 export enum SocketEvent {
-  UPDATE_DEVICE_STATUS = 'update-device-status',
+  DEVICE_UPDATE_STATUS = 'device-update-status',
   DEVICE_UPDATED = 'device-updated',
   DEVICE_STATUS_UPDATED = 'device-status-updated',
-  UPDATE_SERVICE_STATUS = 'update-service-status',
+  SERVICE_UPDATE_STATUS = 'service-update-status',
   SERVICE_UPDATED = 'service-updated',
   SERVICE_STATUS_UPDATED = 'service-status-updated',
+  SERVICE_SUBSCRIBE_PREVIEW = 'service-subscribe-preview',
+  SERVICE_UNSUBSCRIBE_PREVIEW = 'service-unsubscribe-preview',
+  SERVICE_UPDATE_PREVIEW = 'service-update-preview',
+  SERVICE_PREVIEW_UPDATED = 'service-preview-updated',
   DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
   SERVICE_TOGGLE_RUNNING = 'service-toggle-running',
 }

@@ -236,6 +236,24 @@ export default class CentralApi {
     return this.http.serviceToggleRunning(id, action);
   }
 
+  async serviceUpdatePreview(
+    preview: string,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.serviceUpdatePreview(preview);
+  }
+
+  async serviceSubscribePreview(
+    serviceId: string,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.serviceSubscribePreview(serviceId);
+  }
+
+  async serviceUnsubscribePreview(
+    serviceId?: string,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.serviceUnsubscribePreview(serviceId);
+  }
+
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
     return this.socket.serviceOnUpdate(callback);
   }
@@ -244,6 +262,10 @@ export default class CentralApi {
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
   ): void {
     return this.socket.serviceOnUpdateStatus(callback);
+  }
+
+  serviceOnUpdatePreview(callback: (preview: string) => void): void {
+    return this.socket.serviceOnUpdatePreview(callback);
   }
 
   serviceOnToggleRunning(

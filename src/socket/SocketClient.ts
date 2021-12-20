@@ -124,7 +124,7 @@ export default class SocketClient {
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.UPDATE_DEVICE_STATUS, {
+    return this.asyncEmit<null>(SocketEvent.DEVICE_UPDATE_STATUS, {
       status,
     });
   }
@@ -157,8 +157,32 @@ export default class SocketClient {
   async serviceUpdateStatus(
     status: CentralServiceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.UPDATE_SERVICE_STATUS, {
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_STATUS, {
       status,
+    });
+  }
+
+  async serviceUpdatePreview(
+    preview: string,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_PREVIEW, {
+      preview,
+    });
+  }
+
+  async serviceSubscribePreview(
+    serviceId: string,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(SocketEvent.SERVICE_SUBSCRIBE_PREVIEW, {
+      serviceId,
+    });
+  }
+
+  async serviceUnsubscribePreview(
+    serviceId?: string,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UNSUBSCRIBE_PREVIEW, {
+      serviceId,
     });
   }
 
@@ -175,6 +199,12 @@ export default class SocketClient {
     this.on(
       SocketEvent.SERVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralServiceStatus> }) => callback(r.status),
+    );
+  }
+
+  serviceOnUpdatePreview(callback: (preview: string) => void): void {
+    this.on(SocketEvent.SERVICE_PREVIEW_UPDATED, (r: { preview: string }) =>
+      callback(r.preview),
     );
   }
 

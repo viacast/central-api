@@ -265,7 +265,9 @@ export default class CentralApi {
     return this.socket.serviceOnUpdateStatus(callback);
   }
 
-  serviceOnUpdatePreview(callback: (preview: string) => void): void {
+  serviceOnUpdatePreview(
+    callback: (preview: string, serviceId: string) => void,
+  ): void {
     return this.socket.serviceOnUpdatePreview(callback);
   }
 

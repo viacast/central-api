@@ -237,9 +237,10 @@ export default class CentralApi {
   }
 
   async serviceUpdatePreview(
+    serviceId: string,
     preview: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.serviceUpdatePreview(preview);
+    return this.socket.serviceUpdatePreview(serviceId, preview);
   }
 
   async serviceSubscribePreview(

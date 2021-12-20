@@ -163,9 +163,11 @@ export default class SocketClient {
   }
 
   async serviceUpdatePreview(
+    serviceId: string,
     preview: string,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_PREVIEW, {
+      serviceId,
       preview,
     });
   }

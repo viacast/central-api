@@ -243,6 +243,13 @@ export default class CentralApi {
     return this.socket.serviceUpdatePreview(serviceId, preview);
   }
 
+  async serviceUpdateVu(
+    serviceId: string,
+    volumes: number[],
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.serviceUpdateVu(serviceId, volumes);
+  }
+
   async serviceSubscribePreview(
     serviceId: string,
   ): Promise<CentralSocketResponse<null>> {
@@ -269,6 +276,12 @@ export default class CentralApi {
     callback: (preview: string, serviceId: string) => void,
   ): void {
     return this.socket.serviceOnUpdatePreview(callback);
+  }
+
+  serviceOnUpdateVu(
+    callback: (volumes: number[], serviceId: string) => void,
+  ): void {
+    return this.socket.serviceOnUpdateVu(callback);
   }
 
   serviceOnToggleRunning(

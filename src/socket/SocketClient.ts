@@ -173,6 +173,16 @@ export default class SocketClient {
     });
   }
 
+  async serviceUpdateVu(
+    serviceId: string,
+    volumes: number[],
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_VU, {
+      serviceId,
+      volumes,
+    });
+  }
+
   async serviceSubscribePreview(
     serviceId: string,
   ): Promise<CentralSocketResponse<null>> {
@@ -212,6 +222,16 @@ export default class SocketClient {
       SocketEvent.SERVICE_PREVIEW_UPDATED,
       (r: { preview: string; serviceId: string }) =>
         callback(r.preview, r.serviceId),
+    );
+  }
+
+  serviceOnUpdateVu(
+    callback: (volumes: number[], serviceId: string) => void,
+  ): void {
+    this.on(
+      SocketEvent.SERVICE_VU_UPDATED,
+      (r: { volumes: number[]; serviceId: string }) =>
+        callback(r.volumes, r.serviceId),
     );
   }
 

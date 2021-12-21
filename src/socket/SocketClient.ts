@@ -72,6 +72,7 @@ export default class SocketClient {
 
   private on(event: string, handler: (data: unknown) => void): void {
     if (this.connected) {
+      this.io.off(event, handler);
       this.io.on(event, handler);
     }
     this.eventHandlers.push({ event, handler });

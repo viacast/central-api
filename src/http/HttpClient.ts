@@ -83,7 +83,7 @@ export default class HttpClient {
   ): number {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.axios.interceptors.response.use((config: any) => {
-      if (config.response.status === 401) {
+      if (!config.success && config.response.status === 401) {
         handler(config);
       }
       return config;

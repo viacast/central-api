@@ -78,24 +78,16 @@ export default class HttpClient {
     );
   }
 
-  onUnauthorized(handler: () => void): number {
-    return this.axios.interceptors.response.use(
-      config => config,
-      error => {
-        const { status, statusText, data } = error.response || {
-          status: 500,
-          statusText: error.errno,
-        };
-        if (status === 401) {
-          handler();
-        }
-        return Promise.reject({
-          success: false,
-          message: data?.message,
-          response: { status, statusText, data },
-        });
-      },
-    );
+  onUnauthorized(
+    handler: (response: CentralHttpResponse<unknown>) => void,
+  ): number {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return this.axios.interceptors.response.use((config: any) => {
+      if (config.response.status === 401) {
+        handler(config);
+      }
+      return config;
+    });
   }
 
   ejectOnUnauthorized(useHandle: number): void {

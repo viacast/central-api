@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "axios": "^0.22.0",
+    "emittery": "^0.10.0",
     "socket.io-client": "^4.2.0"
   },
   "scripts": {

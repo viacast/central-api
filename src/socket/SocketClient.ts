@@ -1,3 +1,4 @@
+import Emittery = require('emittery');
 import {
   CentralDeviceStatus,
   CentralService,
@@ -34,6 +35,8 @@ export default class SocketClient {
 
   private eventHandlers: { event: string; handler: (data: unknown) => void }[];
 
+  private emitter: Emittery;
+
   constructor(options: SocketClientOptions) {
     this.port = options.port;
     this.host = options.host || 'localhost';
@@ -43,6 +46,7 @@ export default class SocketClient {
     this.https = options.https || false;
     this.token = options.token;
     this.eventHandlers = [];
+    this.emitter = new Emittery();
   }
 
   setLocale(locale: string): void {
@@ -103,6 +107,7 @@ export default class SocketClient {
         this.io.on(event, handler);
       });
       onConnect?.();
+      this.emitter.emit('connected');
     });
     this.io.on('connect_error', onConnectError);
   }
@@ -120,6 +125,15 @@ export default class SocketClient {
     if (this.connected) {
       this.io.disconnect();
     }
+  }
+
+  waitConnected(): Promise<void> {
+    const { promise, resolve } = promisify<void>();
+    if (this.connected) {
+      resolve();
+      return promise;
+    }
+    return this.emitter.once('connected');
   }
 
   async deviceUpdateStatus(

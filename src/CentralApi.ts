@@ -80,6 +80,10 @@ export default class CentralApi {
     return this.socket.disconnect();
   }
 
+  socketWaitConnected(): Promise<void> {
+    return this.socket.waitConnected();
+  }
+
   async authLogin(
     key: string,
     password: string,

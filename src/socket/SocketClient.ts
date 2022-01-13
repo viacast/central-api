@@ -177,39 +177,39 @@ export default class SocketClient {
     });
   }
 
-  async streamUpdatePreview(
-    streamId: string,
+  async serviceUpdatePreview(
+    serviceId: string,
     preview: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.STREAM_UPDATE_PREVIEW, {
-      streamId,
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_PREVIEW, {
+      serviceId,
       preview,
     });
   }
 
-  async streamUpdateVu(
-    streamId: string,
+  async serviceUpdateVu(
+    serviceId: string,
     volumes: number[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.STREAM_UPDATE_VU, {
-      streamId,
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_VU, {
+      serviceId,
       volumes,
     });
   }
 
-  async streamSubscribePreview(
-    streamId: string,
+  async serviceSubscribePreview(
+    serviceId: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.STREAM_SUBSCRIBE_PREVIEW, {
-      streamId,
+    return this.asyncEmit<null>(SocketEvent.SERVICE_SUBSCRIBE_PREVIEW, {
+      serviceId,
     });
   }
 
-  async streamUnsubscribePreview(
-    streamId?: string,
+  async serviceUnsubscribePreview(
+    serviceId?: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.STREAM_UNSUBSCRIBE_PREVIEW, {
-      streamId,
+    return this.asyncEmit<null>(SocketEvent.SERVICE_UNSUBSCRIBE_PREVIEW, {
+      serviceId,
     });
   }
 
@@ -229,23 +229,23 @@ export default class SocketClient {
     );
   }
 
-  streamOnUpdatePreview(
-    callback: (preview: string, streamId: string) => void,
+  serviceOnUpdatePreview(
+    callback: (preview: string, serviceId: string) => void,
   ): void {
     this.on(
-      SocketEvent.STREAM_PREVIEW_UPDATED,
-      (r: { preview: string; streamId: string }) =>
-        callback(r.preview, r.streamId),
+      SocketEvent.SERVICE_PREVIEW_UPDATED,
+      (r: { preview: string; serviceId: string }) =>
+        callback(r.preview, r.serviceId),
     );
   }
 
-  streamOnUpdateVu(
-    callback: (volumes: number[], streamId: string) => void,
+  serviceOnUpdateVu(
+    callback: (volumes: number[], serviceId: string) => void,
   ): void {
     this.on(
-      SocketEvent.STREAM_VU_UPDATED,
-      (r: { volumes: number[]; streamId: string }) =>
-        callback(r.volumes, r.streamId),
+      SocketEvent.SERVICE_VU_UPDATED,
+      (r: { volumes: number[]; serviceId: string }) =>
+        callback(r.volumes, r.serviceId),
     );
   }
 

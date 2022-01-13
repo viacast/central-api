@@ -240,30 +240,30 @@ export default class CentralApi {
     return this.http.serviceToggleRunning(id, action);
   }
 
-  async streamUpdatePreview(
+  async serviceUpdatePreview(
     serviceId: string,
     preview: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.streamUpdatePreview(serviceId, preview);
+    return this.socket.serviceUpdatePreview(serviceId, preview);
   }
 
-  async streamUpdateVu(
-    streamId: string,
+  async serviceUpdateVu(
+    serviceId: string,
     volumes: number[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.streamUpdateVu(streamId, volumes);
+    return this.socket.serviceUpdateVu(serviceId, volumes);
   }
 
-  async streamSubscribePreview(
-    streamId: string,
+  async serviceSubscribePreview(
+    serviceId: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.streamSubscribePreview(streamId);
+    return this.socket.serviceSubscribePreview(serviceId);
   }
 
-  async streamUnsubscribePreview(
-    streamId?: string,
+  async serviceUnsubscribePreview(
+    serviceId?: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.streamUnsubscribePreview(streamId);
+    return this.socket.serviceUnsubscribePreview(serviceId);
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
@@ -276,16 +276,16 @@ export default class CentralApi {
     return this.socket.serviceOnUpdateStatus(callback);
   }
 
-  streamOnUpdatePreview(
-    callback: (preview: string, streamId: string) => void,
+  serviceOnUpdatePreview(
+    callback: (preview: string, serviceId: string) => void,
   ): void {
-    return this.socket.streamOnUpdatePreview(callback);
+    return this.socket.serviceOnUpdatePreview(callback);
   }
 
-  streamOnUpdateVu(
-    callback: (volumes: number[], streamId: string) => void,
+  serviceOnUpdateVu(
+    callback: (volumes: number[], serviceId: string) => void,
   ): void {
-    return this.socket.streamOnUpdateVu(callback);
+    return this.socket.serviceOnUpdateVu(callback);
   }
 
   serviceOnToggleRunning(

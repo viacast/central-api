@@ -127,13 +127,23 @@ export default class SocketClient {
     }
   }
 
-  waitConnected(): Promise<void> {
-    const { promise, resolve } = promisify<void>();
+  waitConnected(howLong?: number): Promise<void> {
+    const { promise, resolve, reject } = promisify<void>();
     if (this.connected) {
       resolve();
       return promise;
     }
-    return this.emitter.once('connected');
+    if (howLong === undefined) {
+      return this.emitter.once('connected');
+    }
+    const timeout = setTimeout(() => {
+      reject('timeout');
+    }, howLong);
+    this.emitter.once('connected').then(() => {
+      clearTimeout(timeout);
+      resolve();
+    });
+    return promise;
   }
 
   async deviceUpdateStatus(

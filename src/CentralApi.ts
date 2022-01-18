@@ -44,6 +44,10 @@ export default class CentralApi {
     return this.locale;
   }
 
+  get socketConnected(): boolean {
+    return this.socket.connected;
+  }
+
   setLocale(locale: string): void {
     this.http.setLocale(locale);
     this.socket.setLocale(locale);
@@ -80,8 +84,8 @@ export default class CentralApi {
     return this.socket.disconnect();
   }
 
-  socketWaitConnected(): Promise<void> {
-    return this.socket.waitConnected();
+  socketWaitConnected(howLong?: number): Promise<void> {
+    return this.socket.waitConnected(howLong);
   }
 
   async authLogin(

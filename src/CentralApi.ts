@@ -259,15 +259,15 @@ export default class CentralApi {
   }
 
   async serviceSubscribePreview(
-    serviceId: string,
+    serviceIds: string | string[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.serviceSubscribePreview(serviceId);
+    return this.socket.serviceSubscribePreview(serviceIds);
   }
 
   async serviceUnsubscribePreview(
-    serviceId?: string,
+    serviceIds?: string | string[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.serviceUnsubscribePreview(serviceId);
+    return this.socket.serviceUnsubscribePreview(serviceIds);
   }
 
   serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {

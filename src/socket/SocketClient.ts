@@ -208,18 +208,18 @@ export default class SocketClient {
   }
 
   async serviceSubscribePreview(
-    serviceId: string,
+    serviceIds: string | string[],
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(SocketEvent.SERVICE_SUBSCRIBE_PREVIEW, {
-      serviceId,
+      serviceIds,
     });
   }
 
   async serviceUnsubscribePreview(
-    serviceId?: string,
+    serviceIds?: string | string[],
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(SocketEvent.SERVICE_UNSUBSCRIBE_PREVIEW, {
-      serviceId,
+      serviceIds,
     });
   }
 

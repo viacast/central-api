@@ -10,7 +10,7 @@ import {
   CentralUser,
   ToggleRunningAction,
 } from './typings';
-import SocketClient from './socket/SocketClient';
+import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
 import { CentralHttpResponse } from './http/typings';
 import { CentralSocketResponse } from './socket/typings';
@@ -203,19 +203,21 @@ export default class CentralApi {
     return this.socket.deviceUpdateStatus(status);
   }
 
-  deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
+  deviceOnUpdate(
+    callback: (device: Partial<CentralDevice>) => void,
+  ): SocketEventOff {
     return this.socket.deviceOnUpdate(callback);
   }
 
   deviceOnUpdateStatus(
     callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
-  ): void {
+  ): SocketEventOff {
     return this.socket.deviceOnUpdateStatus(callback);
   }
 
   deviceOnRequestOwnership(
     callback: (code: { code: string; expiration: number }) => void,
-  ): void {
+  ): SocketEventOff {
     return this.socket.deviceOnRequestOwnership(callback);
   }
 
@@ -270,31 +272,33 @@ export default class CentralApi {
     return this.socket.serviceUnsubscribePreview(serviceIds);
   }
 
-  serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
+  serviceOnUpdate(
+    callback: (service: Partial<CentralService>) => void,
+  ): SocketEventOff {
     return this.socket.serviceOnUpdate(callback);
   }
 
   serviceOnUpdateStatus(
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
-  ): void {
+  ): SocketEventOff {
     return this.socket.serviceOnUpdateStatus(callback);
   }
 
   serviceOnUpdatePreview(
     callback: (preview: string, serviceId: string) => void,
-  ): void {
+  ): SocketEventOff {
     return this.socket.serviceOnUpdatePreview(callback);
   }
 
   serviceOnUpdateVu(
     callback: (volumes: number[], serviceId: string) => void,
-  ): void {
+  ): SocketEventOff {
     return this.socket.serviceOnUpdateVu(callback);
   }
 
   serviceOnToggleRunning(
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
-  ): void {
+  ): SocketEventOff {
     return this.socket.serviceOnToggleRunning(callback);
   }
 }

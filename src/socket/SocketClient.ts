@@ -16,6 +16,8 @@ import {
   SocketEvent,
 } from './typings';
 
+export type SocketEventOff = () => void;
+
 export default class SocketClient {
   private port: number;
 
@@ -74,12 +76,19 @@ export default class SocketClient {
     return promise;
   }
 
-  private on(event: string, handler: (data: unknown) => void): void {
+  private on(
+    event: string,
+    handler: (data: unknown) => void,
+    exclusive = true,
+  ): SocketEventOff {
     if (this.connected) {
-      this.io.off(event);
+      if (exclusive) {
+        this.io.off(event);
+      }
       this.io.on(event, handler);
     }
     this.eventHandlers.push({ event, handler });
+    return () => this.io.off(event, handler);
   }
 
   get connected(): boolean {
@@ -154,8 +163,10 @@ export default class SocketClient {
     });
   }
 
-  deviceOnUpdate(callback: (device: Partial<CentralDevice>) => void): void {
-    this.on(
+  deviceOnUpdate(
+    callback: (device: Partial<CentralDevice>) => void,
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.DEVICE_UPDATED,
       (r: { device: Partial<CentralDevice> }) => callback(r.device),
     );
@@ -163,8 +174,8 @@ export default class SocketClient {
 
   deviceOnUpdateStatus(
     callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
-  ): void {
-    this.on(
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.DEVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralDeviceStatus> }) => callback(r.status),
     );
@@ -172,8 +183,8 @@ export default class SocketClient {
 
   deviceOnRequestOwnership(
     callback: (code: { code: string; expiration: number }) => void,
-  ): void {
-    this.on(
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.DEVICE_REQUEST_OWNERSHIP,
       (r: { code: { code: string; expiration: number } }) => callback(r.code),
     );
@@ -223,8 +234,10 @@ export default class SocketClient {
     });
   }
 
-  serviceOnUpdate(callback: (service: Partial<CentralService>) => void): void {
-    this.on(
+  serviceOnUpdate(
+    callback: (service: Partial<CentralService>) => void,
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.SERVICE_UPDATED,
       (r: { service: Partial<CentralService> }) => callback(r.service),
     );
@@ -232,8 +245,8 @@ export default class SocketClient {
 
   serviceOnUpdateStatus(
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
-  ): void {
-    this.on(
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.SERVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralServiceStatus> }) => callback(r.status),
     );
@@ -241,8 +254,8 @@ export default class SocketClient {
 
   serviceOnUpdatePreview(
     callback: (preview: string, serviceId: string) => void,
-  ): void {
-    this.on(
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.SERVICE_PREVIEW_UPDATED,
       (r: { preview: string; serviceId: string }) =>
         callback(r.preview, r.serviceId),
@@ -251,17 +264,18 @@ export default class SocketClient {
 
   serviceOnUpdateVu(
     callback: (volumes: number[], serviceId: string) => void,
-  ): void {
-    this.on(
+  ): SocketEventOff {
+    return this.on(
       SocketEvent.SERVICE_VU_UPDATED,
       (r: { volumes: number[]; serviceId: string }) =>
         callback(r.volumes, r.serviceId),
+      false,
     );
   }
 
   serviceOnToggleRunning(
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
-  ): void {
-    this.on(SocketEvent.SERVICE_TOGGLE_RUNNING, callback);
+  ): SocketEventOff {
+    return this.on(SocketEvent.SERVICE_TOGGLE_RUNNING, callback);
   }
 }

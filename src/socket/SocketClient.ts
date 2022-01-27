@@ -259,6 +259,7 @@ export default class SocketClient {
       SocketEvent.SERVICE_PREVIEW_UPDATED,
       (r: { preview: string; serviceId: string }) =>
         callback(r.preview, r.serviceId),
+      false,
     );
   }
 

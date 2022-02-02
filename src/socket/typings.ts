@@ -27,6 +27,7 @@ export enum SocketEvent {
   SERVICE_PREVIEW_UPDATED = 'service-preview-updated',
   SERVICE_UPDATE_VU = 'service-update-vu',
   SERVICE_VU_UPDATED = 'service-vu-updated',
+  GROUP_UPDATED = 'group-updated',
   DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
   SERVICE_TOGGLE_RUNNING = 'service-toggle-running',
 }

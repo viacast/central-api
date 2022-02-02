@@ -8,6 +8,7 @@ import {
 import {
   AuthInfo,
   CentralDevice,
+  CentralGroup,
   CentralService,
   CentralUser,
 } from '../typings';
@@ -178,6 +179,12 @@ export default class HttpClient {
     CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
   > {
     return this.axios.get('/user/me/services');
+  }
+
+  async userMyGroups(): Promise<
+    CentralHttpResponse<{ groups: CentralGroup[] }>
+  > {
+    return this.axios.get('/user/me/groups');
   }
 
   async deviceRegister(

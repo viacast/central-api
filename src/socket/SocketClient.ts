@@ -7,7 +7,7 @@ import {
 } from 'index';
 import io, { Socket } from 'socket.io-client';
 
-import { CentralDevice } from '../typings';
+import { CentralDevice, CentralGroup } from '../typings';
 import { promisify } from '../utils';
 
 import {
@@ -278,5 +278,14 @@ export default class SocketClient {
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
   ): SocketEventOff {
     return this.on(SocketEvent.SERVICE_TOGGLE_RUNNING, callback);
+  }
+
+  groupOnUpdate(
+    callback: (group: Partial<CentralGroup>) => void,
+  ): SocketEventOff {
+    return this.on(
+      SocketEvent.GROUP_UPDATED,
+      (r: { group: Partial<CentralGroup> }) => callback(r.group),
+    );
   }
 }

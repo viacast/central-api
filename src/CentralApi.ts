@@ -9,6 +9,7 @@ import {
   CentralService,
   CentralUser,
   ToggleRunningAction,
+  CentralGroup,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -146,6 +147,12 @@ export default class CentralApi {
     CentralHttpResponse<{ services: CentralServiceWithStatus[] }>
   > {
     return this.http.userMyServices();
+  }
+
+  async userMyGroups(): Promise<
+    CentralHttpResponse<{ groups: CentralGroup[] }>
+  > {
+    return this.http.userMyGroups();
   }
 
   async deviceRegister(
@@ -300,5 +307,11 @@ export default class CentralApi {
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
   ): SocketEventOff {
     return this.socket.serviceOnToggleRunning(callback);
+  }
+
+  groupOnUpdate(
+    callback: (group: Partial<CentralGroup>) => void,
+  ): SocketEventOff {
+    return this.socket.groupOnUpdate(callback);
   }
 }

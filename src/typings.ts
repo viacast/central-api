@@ -49,6 +49,8 @@ export enum CentralDeviceStatusType {
 export interface CentralGroup {
   id: string;
   displayName: string;
+  users: CentralUser[];
+  deviceIds: string[];
 }
 
 export type ToggleRunningAction = 'start' | 'stop' | 'restart';

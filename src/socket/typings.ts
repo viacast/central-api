@@ -30,4 +30,5 @@ export enum SocketEvent {
   GROUP_UPDATED = 'group-updated',
   DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
   SERVICE_TOGGLE_RUNNING = 'service-toggle-running',
+  USER_UPDATED = 'user-updated',
 }

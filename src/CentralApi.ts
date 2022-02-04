@@ -137,6 +137,12 @@ export default class CentralApi {
     return this.http.userMe();
   }
 
+  async userUpdateMe(
+    user: Partial<CentralUser>,
+  ): Promise<CentralHttpResponse<{ user: CentralUser }>> {
+    return this.http.userUpdateMe(user);
+  }
+
   async userMyDevices(): Promise<
     CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
@@ -313,5 +319,9 @@ export default class CentralApi {
     callback: (group: Partial<CentralGroup>) => void,
   ): SocketEventOff {
     return this.socket.groupOnUpdate(callback);
+  }
+
+  userOnUpdate(callback: (user: Partial<CentralUser>) => void): SocketEventOff {
+    return this.socket.userOnUpdate(callback);
   }
 }

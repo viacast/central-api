@@ -169,6 +169,12 @@ export default class HttpClient {
     return this.axios.get('/user/me');
   }
 
+  async userUpdateMe(
+    user: Partial<CentralUser>,
+  ): Promise<CentralHttpResponse<{ user: CentralUser }>> {
+    return this.axios.patch('/user/me', { ...user });
+  }
+
   async userMyDevices(): Promise<
     CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {

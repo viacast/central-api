@@ -161,6 +161,10 @@ export default class CentralApi {
     return this.http.userMyGroups();
   }
 
+  userOnUpdate(callback: (user: Partial<CentralUser>) => void): SocketEventOff {
+    return this.socket.userOnUpdate(callback);
+  }
+
   async deviceRegister(
     device: Partial<CentralDevice> & { key: string },
   ): Promise<CentralHttpResponse<{ device: CentralDevice }>> {
@@ -315,13 +319,43 @@ export default class CentralApi {
     return this.socket.serviceOnToggleRunning(callback);
   }
 
+  async groupUpdate(
+    group: Partial<CentralGroup>,
+  ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {
+    return this.http.groupUpdate(group);
+  }
+
+  async groupAddDevices(
+    groupId: string,
+    deviceIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.groupAddDevices(groupId, deviceIds);
+  }
+
+  async groupRemoveDevices(
+    groupId: string,
+    deviceIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.groupRemoveDevices(groupId, deviceIds);
+  }
+
+  async groupAddUsers(
+    groupId: string,
+    userIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.groupAddUsers(groupId, userIds);
+  }
+
+  async groupRemoveUsers(
+    groupId: string,
+    userIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.groupRemoveUsers(groupId, userIds);
+  }
+
   groupOnUpdate(
     callback: (group: Partial<CentralGroup>) => void,
   ): SocketEventOff {
     return this.socket.groupOnUpdate(callback);
-  }
-
-  userOnUpdate(callback: (user: Partial<CentralUser>) => void): SocketEventOff {
-    return this.socket.userOnUpdate(callback);
   }
 }

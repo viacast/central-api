@@ -274,4 +274,40 @@ export default class HttpClient {
   ): Promise<CentralHttpResponse<null>> {
     return this.axios.patch(`/service/${id}/running`, { action });
   }
+
+  async groupUpdate(
+    group: Partial<CentralGroup>,
+  ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {
+    return this.axios.patch(`/group/${group.id}`, { ...group });
+  }
+
+  async groupAddDevices(
+    groupId: string,
+    deviceIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.patch(`/group/${groupId}/devices`, { deviceIds });
+  }
+
+  async groupRemoveDevices(
+    groupId: string,
+    deviceIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.delete(`/group/${groupId}/devices`, {
+      data: { deviceIds },
+    });
+  }
+
+  async groupAddUsers(
+    groupId: string,
+    userIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.patch(`/group/${groupId}/users`, { userIds });
+  }
+
+  async groupRemoveUsers(
+    groupId: string,
+    userIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.delete(`/group/${groupId}/users`, { data: { userIds } });
+  }
 }

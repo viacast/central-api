@@ -51,6 +51,7 @@ export interface CentralGroup {
   displayName: string;
   users: CentralUser[];
   deviceIds: string[];
+  owner: CentralUser;
   ownerId: string;
 }
 

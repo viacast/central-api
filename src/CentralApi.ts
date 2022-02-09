@@ -319,6 +319,12 @@ export default class CentralApi {
     return this.socket.serviceOnToggleRunning(callback);
   }
 
+  async groupCreate(
+    group: Partial<CentralGroup>,
+  ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {
+    return this.http.groupCreate(group);
+  }
+
   async groupUpdate(
     group: Partial<CentralGroup>,
   ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {
@@ -351,6 +357,10 @@ export default class CentralApi {
     userIds: string[],
   ): Promise<CentralHttpResponse<null>> {
     return this.http.groupRemoveUsers(groupId, userIds);
+  }
+
+  async groupDelete(groupId: string): Promise<CentralHttpResponse<null>> {
+    return this.http.groupDelete(groupId);
   }
 
   groupOnUpdate(

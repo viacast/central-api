@@ -275,6 +275,12 @@ export default class HttpClient {
     return this.axios.patch(`/service/${id}/running`, { action });
   }
 
+  async groupCreate(
+    group: Partial<CentralGroup>,
+  ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {
+    return this.axios.post(`/group/create`, { ...group });
+  }
+
   async groupUpdate(
     group: Partial<CentralGroup>,
   ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {
@@ -309,5 +315,9 @@ export default class HttpClient {
     userIds: string[],
   ): Promise<CentralHttpResponse<null>> {
     return this.axios.delete(`/group/${groupId}/users`, { data: { userIds } });
+  }
+
+  async groupDelete(groupId: string): Promise<CentralHttpResponse<null>> {
+    return this.axios.delete(`/group/${groupId}`);
   }
 }

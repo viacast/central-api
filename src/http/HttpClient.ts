@@ -287,20 +287,11 @@ export default class HttpClient {
     return this.axios.patch(`/group/${group.id}`, { ...group });
   }
 
-  async groupAddDevices(
+  async groupUpdateDevices(
     groupId: string,
     deviceIds: string[],
   ): Promise<CentralHttpResponse<null>> {
     return this.axios.patch(`/group/${groupId}/devices`, { deviceIds });
-  }
-
-  async groupRemoveDevices(
-    groupId: string,
-    deviceIds: string[],
-  ): Promise<CentralHttpResponse<null>> {
-    return this.axios.delete(`/group/${groupId}/devices`, {
-      data: { deviceIds },
-    });
   }
 
   async groupAddUsers(

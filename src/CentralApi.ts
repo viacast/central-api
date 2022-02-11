@@ -331,18 +331,11 @@ export default class CentralApi {
     return this.http.groupUpdate(group);
   }
 
-  async groupAddDevices(
+  async groupUpdateDevices(
     groupId: string,
     deviceIds: string[],
   ): Promise<CentralHttpResponse<null>> {
-    return this.http.groupAddDevices(groupId, deviceIds);
-  }
-
-  async groupRemoveDevices(
-    groupId: string,
-    deviceIds: string[],
-  ): Promise<CentralHttpResponse<null>> {
-    return this.http.groupRemoveDevices(groupId, deviceIds);
+    return this.http.groupUpdateDevices(groupId, deviceIds);
   }
 
   async groupAddUsers(

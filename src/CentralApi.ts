@@ -352,6 +352,24 @@ export default class CentralApi {
     return this.http.groupRemoveUser(groupId, userId);
   }
 
+  async groupGetUserDevices(
+    groupId: string,
+    userId: string,
+    onlyIds?: boolean,
+  ): Promise<
+    CentralHttpResponse<{ devices?: CentralDevice[]; deviceIds: string[] }>
+  > {
+    return this.http.groupGetUserDevices(groupId, userId, onlyIds);
+  }
+
+  async groupUpdateUserDevices(
+    groupId: string,
+    userId: string,
+    deviceIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.groupUpdateUserDevices(groupId, userId, deviceIds);
+  }
+
   async groupDelete(groupId: string): Promise<CentralHttpResponse<null>> {
     return this.http.groupDelete(groupId);
   }

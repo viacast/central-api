@@ -298,14 +298,36 @@ export default class HttpClient {
     groupId: string,
     email: string,
   ): Promise<CentralHttpResponse<{ userId: string }>> {
-    return this.axios.patch(`/group/${groupId}/users`, { email });
+    return this.axios.post(`/group/${groupId}/user`, { email });
   }
 
   async groupRemoveUser(
     groupId: string,
     userId: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios.delete(`/group/${groupId}/users/${userId}`);
+    return this.axios.delete(`/group/${groupId}/user/${userId}`);
+  }
+
+  async groupGetUserDevices(
+    groupId: string,
+    userId: string,
+    onlyIds?: boolean,
+  ): Promise<
+    CentralHttpResponse<{ devices?: CentralDevice[]; deviceIds: string[] }>
+  > {
+    return this.axios.get(`/group/${groupId}/user/${userId}/devices`, {
+      data: { onlyIds },
+    });
+  }
+
+  async groupUpdateUserDevices(
+    groupId: string,
+    userId: string,
+    deviceIds: string[],
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.patch(`/group/${groupId}/user/${userId}/devices`, {
+      deviceIds,
+    });
   }
 
   async groupDelete(groupId: string): Promise<CentralHttpResponse<null>> {

@@ -87,7 +87,6 @@ export interface CentralService {
   displayName: string;
   config: string;
   configLayout: string;
-  subservice: CentralSubservice;
   subserviceId: string;
   subserviceConfig: string;
   deviceId: string;
@@ -111,7 +110,6 @@ export interface CentralDevice {
   model: string;
   group: CentralGroup;
   serviceIds: string[];
-  leaseIds: string[];
   subservices: CentralSubservice[];
   receiver: Partial<CentralReceiver>;
 }
@@ -131,23 +129,32 @@ export interface CentralUser {
   organization: string;
   group: CentralGroup;
   deviceIds: string[];
-  leasesOwnedIds: string[];
-  leasesBorrowedIds: string[];
 }
 
-export enum CentralLeaseType {
-  EXCLUSIVE = 'EXCLUSIVE',
-  NON_EXCLUSIVE = 'NON_EXCLUSIVE',
+export interface ServiceConfigOption {
+  value: string;
+  label: string;
 }
 
-export interface CentralLease {
-  id: string;
-  annotations: string;
-  type: CentralLeaseType;
-  start: Date;
-  expiration: Date;
-  canceled: boolean;
-  ownerId: string;
-  borrowerId: string;
-  deviceIds: string[];
+export interface ServiceConfigSlider {
+  min?: string;
+  max?: string;
+  step?: string;
+  unit?: string;
+  scale?: string;
+  range?: boolean;
+}
+
+export interface ServiceConfigField {
+  name: string;
+  label: string;
+  type?: 'boolean' | 'select' | 'slider' | 'stream' | 'subservice';
+  easy?: boolean;
+  hidden?: boolean;
+  slider?: ServiceConfigSlider;
+  option?: ServiceConfigOption[];
+}
+
+export interface ServiceConfig {
+  config: { field: ServiceConfigField[] };
 }

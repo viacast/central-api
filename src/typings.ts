@@ -72,6 +72,7 @@ export interface CentralStream {
   port: number;
   enabled: boolean;
   index: number;
+  serviceIds: string[];
 }
 
 export interface CentralReceiver {

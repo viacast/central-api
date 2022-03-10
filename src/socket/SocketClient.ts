@@ -12,8 +12,10 @@ import { promisify } from '../utils';
 
 import {
   CentralSocketResponse,
+  DeviceSocketEvent,
+  ServerSocketEvent,
+  UserSocketEvent,
   SocketClientOptions,
-  SocketEvent,
 } from './typings';
 
 export type SocketEventOff = () => void;
@@ -158,7 +160,7 @@ export default class SocketClient {
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.DEVICE_UPDATE_STATUS, {
+    return this.asyncEmit<null>(DeviceSocketEvent.DEVICE_UPDATE_STATUS, {
       status,
     });
   }
@@ -167,7 +169,7 @@ export default class SocketClient {
     callback: (device: Partial<CentralDevice>) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.DEVICE_UPDATED,
+      ServerSocketEvent.DEVICE_UPDATED,
       (r: { device: Partial<CentralDevice> }) => callback(r.device),
     );
   }
@@ -176,7 +178,7 @@ export default class SocketClient {
     callback: (deviceStatus: Partial<CentralDeviceStatus>) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.DEVICE_STATUS_UPDATED,
+      ServerSocketEvent.DEVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralDeviceStatus> }) => callback(r.status),
     );
   }
@@ -185,7 +187,7 @@ export default class SocketClient {
     callback: (code: { code: string; expiration: number }) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.DEVICE_REQUEST_OWNERSHIP,
+      ServerSocketEvent.DEVICE_REQUEST_OWNERSHIP,
       (r: { code: { code: string; expiration: number } }) => callback(r.code),
     );
   }
@@ -193,7 +195,7 @@ export default class SocketClient {
   async serviceUpdateStatus(
     status: CentralServiceStatus,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_STATUS, {
+    return this.asyncEmit<null>(DeviceSocketEvent.SERVICE_UPDATE_STATUS, {
       status,
     });
   }
@@ -202,7 +204,7 @@ export default class SocketClient {
     serviceId: string,
     preview: string,
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_PREVIEW, {
+    return this.asyncEmit<null>(DeviceSocketEvent.SERVICE_UPDATE_PREVIEW, {
       serviceId,
       preview,
     });
@@ -212,7 +214,7 @@ export default class SocketClient {
     serviceId: string,
     volumes: number[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.SERVICE_UPDATE_VU, {
+    return this.asyncEmit<null>(DeviceSocketEvent.SERVICE_UPDATE_VU, {
       serviceId,
       volumes,
     });
@@ -221,7 +223,7 @@ export default class SocketClient {
   async serviceSubscribePreview(
     serviceIds: string | string[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.SERVICE_SUBSCRIBE_PREVIEW, {
+    return this.asyncEmit<null>(UserSocketEvent.SERVICE_SUBSCRIBE_PREVIEW, {
       serviceIds,
     });
   }
@@ -229,7 +231,7 @@ export default class SocketClient {
   async serviceUnsubscribePreview(
     serviceIds?: string | string[],
   ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(SocketEvent.SERVICE_UNSUBSCRIBE_PREVIEW, {
+    return this.asyncEmit<null>(UserSocketEvent.SERVICE_UNSUBSCRIBE_PREVIEW, {
       serviceIds,
     });
   }
@@ -238,7 +240,7 @@ export default class SocketClient {
     callback: (service: Partial<CentralService>) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.SERVICE_UPDATED,
+      ServerSocketEvent.SERVICE_UPDATED,
       (r: { service: Partial<CentralService> }) => callback(r.service),
     );
   }
@@ -247,7 +249,7 @@ export default class SocketClient {
     callback: (serviceStatus: Partial<CentralServiceStatus>) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.SERVICE_STATUS_UPDATED,
+      ServerSocketEvent.SERVICE_STATUS_UPDATED,
       (r: { status: Partial<CentralServiceStatus> }) => callback(r.status),
     );
   }
@@ -256,7 +258,7 @@ export default class SocketClient {
     callback: (preview: string, serviceId: string) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.SERVICE_PREVIEW_UPDATED,
+      ServerSocketEvent.SERVICE_PREVIEW_UPDATED,
       (r: { preview: string; serviceId: string }) =>
         callback(r.preview, r.serviceId),
       false,
@@ -267,7 +269,7 @@ export default class SocketClient {
     callback: (volumes: number[], serviceId: string) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.SERVICE_VU_UPDATED,
+      ServerSocketEvent.SERVICE_VU_UPDATED,
       (r: { volumes: number[]; serviceId: string }) =>
         callback(r.volumes, r.serviceId),
       false,
@@ -277,21 +279,21 @@ export default class SocketClient {
   serviceOnToggleRunning(
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
   ): SocketEventOff {
-    return this.on(SocketEvent.SERVICE_TOGGLE_RUNNING, callback);
+    return this.on(ServerSocketEvent.SERVICE_TOGGLE_RUNNING, callback);
   }
 
   groupOnUpdate(
     callback: (group: Partial<CentralGroup>) => void,
   ): SocketEventOff {
     return this.on(
-      SocketEvent.GROUP_UPDATED,
+      ServerSocketEvent.GROUP_UPDATED,
       (r: { group: Partial<CentralGroup> }) => callback(r.group),
     );
   }
 
   userOnUpdate(callback: (user: Partial<CentralUser>) => void): SocketEventOff {
     return this.on(
-      SocketEvent.USER_UPDATED,
+      ServerSocketEvent.USER_UPDATED,
       (r: { user: Partial<CentralUser> }) => callback(r.user),
     );
   }

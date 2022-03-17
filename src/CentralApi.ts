@@ -279,7 +279,7 @@ export default class CentralApi {
 
   async serviceSubscribePreview(
     serviceIds: string | string[],
-  ): Promise<CentralSocketResponse<null>> {
+  ): Promise<CentralSocketResponse<{ subscriptions: string[] }>> {
     return this.socket.serviceSubscribePreview(serviceIds);
   }
 

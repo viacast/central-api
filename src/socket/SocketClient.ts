@@ -65,7 +65,7 @@ export default class SocketClient {
   }
 
   private asyncEmit<ResponseType>(
-    event: SocketEvent,
+    event: DeviceSocketEvent | UserSocketEvent,
     data?: unknown,
   ): Promise<CentralSocketResponse<ResponseType>> {
     const { promise, resolve, reject } =
@@ -222,10 +222,13 @@ export default class SocketClient {
 
   async serviceSubscribePreview(
     serviceIds: string | string[],
-  ): Promise<CentralSocketResponse<null>> {
-    return this.asyncEmit<null>(UserSocketEvent.SERVICE_SUBSCRIBE_PREVIEW, {
-      serviceIds,
-    });
+  ): Promise<CentralSocketResponse<{ subscriptions: string[] }>> {
+    return this.asyncEmit<{ subscriptions: string[] }>(
+      UserSocketEvent.SERVICE_SUBSCRIBE_PREVIEW,
+      {
+        serviceIds,
+      },
+    );
   }
 
   async serviceUnsubscribePreview(

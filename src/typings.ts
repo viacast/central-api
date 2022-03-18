@@ -80,7 +80,7 @@ export interface CentralReceiver {
   maxStreams: number;
   hosts: string;
   streams?: CentralStream[];
-  streamIds?: CentralStream[];
+  streamIds?: string[];
 }
 
 export interface CentralService {

@@ -10,6 +10,7 @@ import {
   CentralUser,
   ToggleRunningAction,
   CentralGroup,
+  CentralStream,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -147,6 +148,12 @@ export default class CentralApi {
     CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
     return this.http.userMyDevices();
+  }
+
+  async userMyStreams(): Promise<
+    CentralHttpResponse<{ streams: CentralStream[] }>
+  > {
+    return this.http.userMyStreams();
   }
 
   async userMyServices(): Promise<

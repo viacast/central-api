@@ -10,6 +10,7 @@ import {
   CentralDevice,
   CentralGroup,
   CentralService,
+  CentralStream,
   CentralUser,
 } from '../typings';
 import { CentralHttpResponse, HttpClientOptions } from './typings';
@@ -179,6 +180,12 @@ export default class HttpClient {
     CentralHttpResponse<{ devices: CentralDeviceWithStatus[] }>
   > {
     return this.axios.get('/user/me/devices');
+  }
+
+  async userMyStreams(): Promise<
+    CentralHttpResponse<{ streams: CentralStream[] }>
+  > {
+    return this.axios.get('/user/me/streams');
   }
 
   async userMyServices(): Promise<

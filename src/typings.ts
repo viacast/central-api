@@ -78,8 +78,9 @@ export interface CentralStream {
 export interface CentralReceiver {
   id: string;
   maxStreams: number;
-  streams: CentralStream[];
   hosts: string;
+  streams?: CentralStream[];
+  streamsIds?: CentralStream[];
 }
 
 export interface CentralService {

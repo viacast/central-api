@@ -298,7 +298,7 @@ export default class HttpClient {
   async groupGetPermissionTypes(): Promise<
     CentralHttpResponse<{ permissions: { value: string; label: string }[] }>
   > {
-    return this.axios.patch(`/group/permissions`);
+    return this.axios.get(`/group/permissions`);
   }
 
   async groupUpdateDevices(

@@ -8,6 +8,7 @@ import {
 import {
   AuthInfo,
   CentralDevice,
+  CentralDevicePermissions,
   CentralGroup,
   CentralService,
   CentralStream,
@@ -294,6 +295,12 @@ export default class HttpClient {
     return this.axios.patch(`/group/${group.id}`, { ...group });
   }
 
+  async groupGetPermissionTypes(): Promise<
+    CentralHttpResponse<{ permissions: { value: string; label: string }[] }>
+  > {
+    return this.axios.patch(`/group/permissions`);
+  }
+
   async groupUpdateDevices(
     groupId: string,
     deviceIds: string[],
@@ -318,22 +325,21 @@ export default class HttpClient {
   async groupGetUserDevices(
     groupId: string,
     userId: string,
-    onlyIds?: boolean,
   ): Promise<
-    CentralHttpResponse<{ devices?: CentralDevice[]; deviceIds: string[] }>
+    CentralHttpResponse<{
+      devices: { id: string; permissions: CentralDevicePermissions[] }[];
+    }>
   > {
-    return this.axios.get(`/group/${groupId}/user/${userId}/devices`, {
-      data: { onlyIds },
-    });
+    return this.axios.get(`/group/${groupId}/user/${userId}/devices`);
   }
 
   async groupUpdateUserDevices(
     groupId: string,
     userId: string,
-    deviceIds: string[],
+    devices: { id: string; permissions: CentralDevicePermissions[] }[],
   ): Promise<CentralHttpResponse<null>> {
     return this.axios.patch(`/group/${groupId}/user/${userId}/devices`, {
-      deviceIds,
+      devices,
     });
   }
 

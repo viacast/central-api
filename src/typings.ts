@@ -46,6 +46,11 @@ export enum CentralDeviceStatusType {
   REBOOTING = 'REBOOTING',
 }
 
+export enum CentralDevicePermissions {
+  SERVICES = 'SERVICES',
+  STREAMS = 'STREAMS',
+}
+
 export interface CentralGroup {
   id: string;
   displayName: string;

@@ -11,6 +11,7 @@ import {
   ToggleRunningAction,
   CentralGroup,
   CentralStream,
+  CentralDevicePermissions,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -338,6 +339,12 @@ export default class CentralApi {
     return this.http.groupUpdate(group);
   }
 
+  async groupGetPermissionTypes(): Promise<
+    CentralHttpResponse<{ permissions: { value: string; label: string }[] }>
+  > {
+    return this.http.groupGetPermissionTypes();
+  }
+
   async groupUpdateDevices(
     groupId: string,
     deviceIds: string[],
@@ -362,19 +369,20 @@ export default class CentralApi {
   async groupGetUserDevices(
     groupId: string,
     userId: string,
-    onlyIds?: boolean,
   ): Promise<
-    CentralHttpResponse<{ devices?: CentralDevice[]; deviceIds: string[] }>
+    CentralHttpResponse<{
+      devices: { id: string; permissions: CentralDevicePermissions[] }[];
+    }>
   > {
-    return this.http.groupGetUserDevices(groupId, userId, onlyIds);
+    return this.http.groupGetUserDevices(groupId, userId);
   }
 
   async groupUpdateUserDevices(
     groupId: string,
     userId: string,
-    deviceIds: string[],
+    devices: { id: string; permissions: CentralDevicePermissions[] }[],
   ): Promise<CentralHttpResponse<null>> {
-    return this.http.groupUpdateUserDevices(groupId, userId, deviceIds);
+    return this.http.groupUpdateUserDevices(groupId, userId, devices);
   }
 
   async groupDelete(groupId: string): Promise<CentralHttpResponse<null>> {

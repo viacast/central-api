@@ -246,6 +246,10 @@ export default class CentralApi {
     return this.socket.deviceOnRequestOwnership(callback);
   }
 
+  async deviceRefreshClient(id: string): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceRefreshClient(id);
+  }
+
   async serviceRegister(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {

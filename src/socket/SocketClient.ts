@@ -1,13 +1,15 @@
 import Emittery = require('emittery');
+import io, { Socket } from 'socket.io-client';
+
 import {
+  CentralDevice,
+  CentralGroup,
+  CentralUser,
   CentralDeviceStatus,
   CentralService,
   CentralServiceStatus,
   ToggleRunningAction,
-} from 'index';
-import io, { Socket } from 'socket.io-client';
-
-import { CentralDevice, CentralGroup, CentralUser } from '../typings';
+} from '../typings';
 import { promisify } from '../utils';
 
 import {

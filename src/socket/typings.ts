@@ -16,6 +16,7 @@ export interface CentralSocketResponse<DataType> {
 
 export enum ServerSocketEvent {
   DEVICE_UPDATED = 'device-updated',
+  DEVICE_REFRESH_CLIENT = 'device-refresh-client',
   DEVICE_STATUS_UPDATED = 'device-status-updated',
   SERVICE_UPDATED = 'service-updated',
   SERVICE_STATUS_UPDATED = 'service-status-updated',

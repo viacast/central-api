@@ -260,6 +260,10 @@ export default class HttpClient {
     });
   }
 
+  async deviceRefreshClient(id: string): Promise<CentralHttpResponse<null>> {
+    return this.axios.patch(`/device/${id}/refresh-client`);
+  }
+
   async serviceRegister(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {

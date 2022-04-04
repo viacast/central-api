@@ -228,6 +228,10 @@ export default class CentralApi {
     return this.socket.deviceUpdateStatus(status);
   }
 
+  async deviceRefreshClient(id: string): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceRefreshClient(id);
+  }
+
   deviceOnUpdate(
     callback: (device: Partial<CentralDevice>) => void,
   ): SocketEventOff {
@@ -244,6 +248,10 @@ export default class CentralApi {
     callback: (code: { code: string; expiration: number }) => void,
   ): SocketEventOff {
     return this.socket.deviceOnRequestOwnership(callback);
+  }
+
+  deviceOnRefreshClient(callback: () => void): SocketEventOff {
+    return this.socket.deviceOnRefreshClient(callback);
   }
 
   async serviceRegister(

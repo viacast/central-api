@@ -194,6 +194,10 @@ export default class SocketClient {
     );
   }
 
+  deviceOnRefreshClient(callback: () => void): SocketEventOff {
+    return this.on(ServerSocketEvent.DEVICE_REFRESH_CLIENT, () => callback());
+  }
+
   async serviceUpdateStatus(
     status: CentralServiceStatus,
   ): Promise<CentralSocketResponse<null>> {

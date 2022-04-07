@@ -34,8 +34,9 @@ export enum CentralServiceType {
 
 export enum CentralServiceStatusType {
   OFF = 'OFF',
-  STANDBY = 'STANDBY',
   LOAD = 'LOAD',
+  NO_VIDEO = 'NO_VIDEO',
+  STANDBY = 'STANDBY',
   LIVE = 'LIVE',
   ERROR = 'ERROR',
 }

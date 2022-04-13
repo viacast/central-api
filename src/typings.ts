@@ -47,11 +47,6 @@ export enum CentralDeviceStatusType {
   REBOOTING = 'REBOOTING',
 }
 
-export enum CentralDevicePermissions {
-  SERVICES = 'SERVICES',
-  STREAMS = 'STREAMS',
-}
-
 export interface CentralGroup {
   id: string;
   displayName: string;
@@ -59,6 +54,13 @@ export interface CentralGroup {
   deviceIds: string[];
   owner: CentralUser;
   ownerId: string;
+  roles: CentralGroupRole;
+}
+
+export interface CentralGroupRole {
+  id: string;
+  name: string;
+  description: string;
 }
 
 export type ToggleRunningAction = 'start' | 'stop' | 'restart';

@@ -347,12 +347,6 @@ export default class CentralApi {
     return this.http.groupUpdate(group);
   }
 
-  async groupGetPermissionTypes(): Promise<
-    CentralHttpResponse<{ permissions: { value: string; label: string }[] }>
-  > {
-    return this.http.groupGetPermissionTypes();
-  }
-
   async groupUpdateDevices(
     groupId: string,
     deviceIds: string[],

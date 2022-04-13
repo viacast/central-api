@@ -8,7 +8,6 @@ import {
 import {
   AuthInfo,
   CentralDevice,
-  CentralDevicePermissions,
   CentralGroup,
   CentralService,
   CentralStream,
@@ -325,7 +324,7 @@ export default class HttpClient {
     userId: string,
   ): Promise<
     CentralHttpResponse<{
-      devices: { id: string; permissions: CentralDevicePermissions[] }[];
+      devices: { id: string; roleId: string }[];
     }>
   > {
     return this.axios.get(`/group/${groupId}/user/${userId}/devices`);
@@ -334,7 +333,7 @@ export default class HttpClient {
   async groupUpdateUserDevices(
     groupId: string,
     userId: string,
-    devices: { id: string; permissions: CentralDevicePermissions[] }[],
+    devices: { id: string; roleId: string }[],
   ): Promise<CentralHttpResponse<null>> {
     return this.axios.patch(`/group/${groupId}/user/${userId}/devices`, {
       devices,

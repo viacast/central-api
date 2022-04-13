@@ -11,7 +11,6 @@ import {
   ToggleRunningAction,
   CentralGroup,
   CentralStream,
-  CentralDevicePermissions,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -373,7 +372,7 @@ export default class CentralApi {
     userId: string,
   ): Promise<
     CentralHttpResponse<{
-      devices: { id: string; permissions: CentralDevicePermissions[] }[];
+      devices: { id: string; roleId: string }[];
     }>
   > {
     return this.http.groupGetUserDevices(groupId, userId);
@@ -382,7 +381,7 @@ export default class CentralApi {
   async groupUpdateUserDevices(
     groupId: string,
     userId: string,
-    devices: { id: string; permissions: CentralDevicePermissions[] }[],
+    devices: { id: string; roleId: string }[],
   ): Promise<CentralHttpResponse<null>> {
     return this.http.groupUpdateUserDevices(groupId, userId, devices);
   }

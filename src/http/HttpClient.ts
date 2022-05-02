@@ -305,11 +305,11 @@ export default class HttpClient {
     return this.axios.patch(`/group/${groupId}/devices`, { deviceIds });
   }
 
-  async groupAddUser(
+  async groupAddUsers(
     groupId: string,
-    email: string,
-  ): Promise<CentralHttpResponse<{ userId: string }>> {
-    return this.axios.post(`/group/${groupId}/user`, { email });
+    emails: string[],
+  ): Promise<CentralHttpResponse<{ userIds: string[] }>> {
+    return this.axios.post(`/group/${groupId}/user`, { emails });
   }
 
   async groupRemoveUser(

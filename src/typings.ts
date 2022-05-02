@@ -55,6 +55,7 @@ export interface CentralGroup {
   owner: CentralUser;
   ownerId: string;
   roles: CentralGroupRole[];
+  defaultRoleId: string;
 }
 
 export interface CentralGroupRole {

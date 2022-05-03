@@ -47,6 +47,11 @@ export enum CentralDeviceStatusType {
   REBOOTING = 'REBOOTING',
 }
 
+export interface CentralGroupUserRole {
+  userId: string;
+  roleId: string;
+}
+
 export interface CentralGroup {
   id: string;
   displayName: string;
@@ -56,7 +61,7 @@ export interface CentralGroup {
   ownerId: string;
   roles: CentralGroupRole[];
   defaultRoleId: string;
-  userRoles?: { userId: string; roleId: string };
+  userRoles?: CentralGroupUserRole[];
 }
 
 export interface CentralGroupRole {

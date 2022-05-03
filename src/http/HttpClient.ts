@@ -308,8 +308,12 @@ export default class HttpClient {
   async groupAddUsers(
     groupId: string,
     emails: string[],
+    roleId?: string,
   ): Promise<CentralHttpResponse<{ userIds: string[] }>> {
-    return this.axios.post(`/group/${groupId}/user`, { emails });
+    return this.axios.post(`/group/${groupId}/user`, {
+      emails,
+      roleId: roleId || undefined,
+    });
   }
 
   async groupRemoveUser(

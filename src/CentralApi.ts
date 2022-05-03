@@ -356,8 +356,9 @@ export default class CentralApi {
   async groupAddUsers(
     groupId: string,
     emails: string[],
+    roleId?: string,
   ): Promise<CentralHttpResponse<{ userIds: string[] }>> {
-    return this.http.groupAddUsers(groupId, emails);
+    return this.http.groupAddUsers(groupId, emails, roleId);
   }
 
   async groupRemoveUser(

@@ -368,6 +368,14 @@ export default class CentralApi {
     return this.http.groupRemoveUser(groupId, userId);
   }
 
+  async groupUpdateUserRole(
+    groupId: string,
+    userId: string,
+    roleId: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.groupUpdateUserRole(groupId, userId, roleId);
+  }
+
   async groupGetUserDevices(
     groupId: string,
     userId: string,

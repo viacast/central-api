@@ -323,6 +323,14 @@ export default class HttpClient {
     return this.axios.delete(`/group/${groupId}/user/${userId}`);
   }
 
+  async groupUpdateUserRole(
+    groupId: string,
+    userId: string,
+    roleId: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.patch(`/group/${groupId}/user/${userId}`, { roleId });
+  }
+
   async groupGetUserDevices(
     groupId: string,
     userId: string,

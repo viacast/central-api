@@ -309,7 +309,7 @@ export default class HttpClient {
     groupId: string,
     emails: string[],
     roleId?: string,
-  ): Promise<CentralHttpResponse<{ userIds: string[] }>> {
+  ): Promise<CentralHttpResponse<{ addedUsers: Partial<CentralUser>[] }>> {
     return this.axios.post(`/group/${groupId}/user`, {
       emails,
       roleId: roleId || undefined,

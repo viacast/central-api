@@ -357,7 +357,7 @@ export default class CentralApi {
     groupId: string,
     emails: string[],
     roleId?: string,
-  ): Promise<CentralHttpResponse<{ userIds: string[] }>> {
+  ): Promise<CentralHttpResponse<{ addedUsers: Partial<CentralUser>[] }>> {
     return this.http.groupAddUsers(groupId, emails, roleId);
   }
 

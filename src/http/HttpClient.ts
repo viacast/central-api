@@ -364,10 +364,8 @@ export default class HttpClient {
   ): Promise<
     CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
   > {
-    return this.axios.request({
-      method: 'GET',
-      url: '/device-audit-report',
-      data: {
+    return this.axios.get(`device-audit-report`, {
+      params: {
         deviceId,
         from,
         to,

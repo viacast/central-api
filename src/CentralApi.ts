@@ -413,6 +413,17 @@ export default class CentralApi {
   ): Promise<
     CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
   > {
-    return this.http.deviceAuditGetDeviceReports(deviceId, from, to);
+    return this.http
+      .deviceAuditGetDeviceReports(deviceId, from, to)
+      .then(r => ({
+        ...r,
+        data: {
+          ...r.data,
+          deviceAuditReports: r.data.deviceAuditReports.map(rr => ({
+            ...rr,
+            when: new Date(rr.when),
+          })),
+        },
+      }));
   }
 }

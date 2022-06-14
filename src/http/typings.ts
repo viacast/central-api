@@ -10,6 +10,7 @@ export interface HttpClientOptions {
 interface HttpResponse {
   status: number;
   statusText: string;
+  data: Record<string, unknown>;
 }
 
 export interface CentralHttpResponse<DataType> {

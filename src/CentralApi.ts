@@ -11,6 +11,7 @@ import {
   ToggleRunningAction,
   CentralGroup,
   CentralStream,
+  CentralDeviceAuditReport,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -403,5 +404,15 @@ export default class CentralApi {
     callback: (group: Partial<CentralGroup>) => void,
   ): SocketEventOff {
     return this.socket.groupOnUpdate(callback);
+  }
+
+  async deviceAuditGetDeviceReports(
+    deviceId: string,
+    from?: Date,
+    to?: Date,
+  ): Promise<
+    CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
+  > {
+    return this.http.deviceAuditGetDeviceReports(deviceId, from, to);
   }
 }

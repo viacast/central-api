@@ -123,7 +123,7 @@ export interface CentralDevice {
   id: string;
   displayName: string;
   serial: string;
-  user: CentralUser;
+  userId: string;
   model: string;
   group: CentralGroup;
   serviceIds: string[];
@@ -146,6 +146,16 @@ export interface CentralUser {
   organization: string;
   group: CentralGroup;
   deviceIds: string[];
+}
+
+export interface CentralDeviceAuditReport {
+  id: string;
+  type: string;
+  when: Date;
+  extra: string;
+  auth: CentralAuth;
+  deviceId: string;
+  serviceId: string;
 }
 
 export interface ServiceConfigOption {

@@ -8,6 +8,7 @@ import {
 import {
   AuthInfo,
   CentralDevice,
+  CentralDeviceAuditReport,
   CentralGroup,
   CentralService,
   CentralStream,
@@ -354,5 +355,21 @@ export default class HttpClient {
 
   async groupDelete(groupId: string): Promise<CentralHttpResponse<null>> {
     return this.axios.delete(`/group/${groupId}`);
+  }
+
+  async deviceAuditGetDeviceReports(
+    deviceId: string,
+    from?: Date,
+    to?: Date,
+  ): Promise<
+    CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
+  > {
+    return this.axios.get(`/device-audit-report`, {
+      data: {
+        deviceId,
+        from,
+        to,
+      },
+    });
   }
 }

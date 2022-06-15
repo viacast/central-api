@@ -357,11 +357,15 @@ export default class HttpClient {
     return this.axios.delete(`/group/${groupId}`);
   }
 
-  async deviceAuditGetDeviceReports(
-    deviceId?: string,
-    from?: Date,
-    to?: Date,
-  ): Promise<
+  async deviceAuditGetDeviceReports({
+    deviceId,
+    from,
+    to,
+  }: {
+    deviceId?: string;
+    from?: Date;
+    to?: Date;
+  }): Promise<
     CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
   > {
     return this.axios.get(`/device-audit-report`, {

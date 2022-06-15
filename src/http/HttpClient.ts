@@ -357,11 +357,7 @@ export default class HttpClient {
     return this.axios.delete(`/group/${groupId}`);
   }
 
-  async deviceAuditGetDeviceReports({
-    deviceId,
-    from,
-    to,
-  }: {
+  async deviceAuditGetDeviceReports(options?: {
     deviceId?: string;
     from?: Date;
     to?: Date;
@@ -369,11 +365,7 @@ export default class HttpClient {
     CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
   > {
     return this.axios.get(`/device-audit-report`, {
-      params: {
-        deviceId,
-        from,
-        to,
-      },
+      params: options,
     });
   }
 }

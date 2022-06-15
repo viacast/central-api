@@ -407,7 +407,7 @@ export default class CentralApi {
   }
 
   async deviceAuditGetDeviceReports(
-    deviceId: string,
+    deviceId?: string,
     from?: Date,
     to?: Date,
   ): Promise<
@@ -419,7 +419,7 @@ export default class CentralApi {
         ...r,
         data: {
           ...r.data,
-          deviceAuditReports: r.data.deviceAuditReports.map(rr => ({
+          deviceAuditReports: r.data?.deviceAuditReports?.map(rr => ({
             ...rr,
             when: new Date(rr.when),
           })),

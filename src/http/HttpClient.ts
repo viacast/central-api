@@ -358,7 +358,7 @@ export default class HttpClient {
   }
 
   async deviceAuditGetDeviceReports(
-    deviceId: string,
+    deviceId?: string,
     from?: Date,
     to?: Date,
   ): Promise<

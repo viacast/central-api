@@ -418,7 +418,7 @@ export default class CentralApi {
     CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
   > {
     return this.http
-      .deviceAuditGetDeviceReports(deviceId, from, to)
+      .deviceAuditGetDeviceReports({ deviceId, from, to })
       .then(r => ({
         ...r,
         data: {

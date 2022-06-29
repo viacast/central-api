@@ -69,8 +69,9 @@ export default class HttpClient {
       }),
       error => {
         const { status, statusText, data } = error.response || {
-          status: 500,
-          statusText: error.errno,
+          status: 408,
+          statusText: 'request timeout',
+          data: { message: 'requestTimeout' },
         };
         return {
           success: false,

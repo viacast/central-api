@@ -411,7 +411,10 @@ export default class CentralApi {
     reportsPerPage: number;
     filter?: string;
   }): Promise<
-    CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
+    CentralHttpResponse<{
+      deviceAuditReports: CentralDeviceAuditReport[];
+      totalCount: number;
+    }>
   > {
     return this.http.deviceAuditGetDeviceReports(options).then(r => ({
       ...r,

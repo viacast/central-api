@@ -407,9 +407,9 @@ export default class CentralApi {
   }
 
   async deviceAuditGetDeviceReports(options?: {
-    deviceId?: string;
-    from?: Date;
-    to?: Date;
+    page: number;
+    reportsPerPage: number;
+    filter?: string;
   }): Promise<
     CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
   > {

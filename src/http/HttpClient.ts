@@ -359,11 +359,14 @@ export default class HttpClient {
   }
 
   async deviceAuditGetDeviceReports(options?: {
-    deviceId?: string;
-    from?: Date;
-    to?: Date;
+    page: number;
+    reportsPerPage: number;
+    filter?: string;
   }): Promise<
-    CentralHttpResponse<{ deviceAuditReports: CentralDeviceAuditReport[] }>
+    CentralHttpResponse<{
+      deviceAuditReports: CentralDeviceAuditReport[];
+      totalCount: number;
+    }>
   > {
     return this.axios.get(`/device-audit-report`, {
       params: options,

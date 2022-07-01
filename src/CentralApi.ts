@@ -406,7 +406,7 @@ export default class CentralApi {
     return this.socket.groupOnUpdate(callback);
   }
 
-  async deviceAuditGetDeviceReports(options?: {
+  async deviceAuditGetDeviceReports(options: {
     page: number;
     reportsPerPage: number;
     filter?: string;

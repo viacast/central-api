@@ -358,7 +358,7 @@ export default class HttpClient {
     return this.axios.delete(`/group/${groupId}`);
   }
 
-  async deviceAuditGetDeviceReports(options?: {
+  async deviceAuditGetDeviceReports(options: {
     page: number;
     reportsPerPage: number;
     filter?: string;

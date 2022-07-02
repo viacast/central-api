@@ -406,17 +406,20 @@ export default class CentralApi {
     return this.socket.groupOnUpdate(callback);
   }
 
-  async deviceAuditGetDeviceReports(options: {
-    page: number;
-    reportsPerPage: number;
-    filter?: string;
-  }): Promise<
+  async deviceAuditGetDeviceReports(
+    options: {
+      page: number;
+      reportsPerPage: number;
+      filter?: string;
+    },
+    signal?: AbortSignal,
+  ): Promise<
     CentralHttpResponse<{
       deviceAuditReports: CentralDeviceAuditReport[];
       totalCount: number;
     }>
   > {
-    return this.http.deviceAuditGetDeviceReports(options).then(r => ({
+    return this.http.deviceAuditGetDeviceReports(options, signal).then(r => ({
       ...r,
       data: {
         ...r.data,

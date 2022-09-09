@@ -262,8 +262,9 @@ export default class CentralApi {
 
   async serviceUpdate(
     service: Partial<CentralService>,
+    targetServiceId?: string,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {
-    return this.http.serviceUpdate(service);
+    return this.http.serviceUpdate(service, targetServiceId);
   }
 
   async serviceUpdateStatus(

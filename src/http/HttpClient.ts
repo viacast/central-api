@@ -275,9 +275,11 @@ export default class HttpClient {
 
   async serviceUpdate(
     service: Partial<CentralService>,
+    targetServiceId?: string,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {
     return this.axios.patch(`/service/${service.id}`, {
       ...service,
+      targetServiceId,
     });
   }
 

@@ -159,6 +159,35 @@ export default class SocketClient {
     return promise;
   }
 
+  async deviceUpdateStatistics(
+    deviceId: string,
+    statistics: Record<string, unknown>,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(DeviceSocketEvent.DEVICE_UPDATE_STATISTICS, {
+      deviceId,
+      statistics,
+    });
+  }
+
+  async deviceSubscribeStatistics(
+    deviceIds: string | string[],
+  ): Promise<CentralSocketResponse<{ subscriptions: string[] }>> {
+    return this.asyncEmit<{ subscriptions: string[] }>(
+      UserSocketEvent.DEVICE_SUBSCRIBE_STATISTICS,
+      {
+        deviceIds,
+      },
+    );
+  }
+
+  async deviceUnsubscribeStatistics(
+    deviceIds?: string | string[],
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(UserSocketEvent.DEVICE_UNSUBSCRIBE_STATISTICS, {
+      deviceIds,
+    });
+  }
+
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
@@ -173,6 +202,17 @@ export default class SocketClient {
     return this.on(
       ServerSocketEvent.DEVICE_UPDATED,
       (r: { device: Partial<CentralDevice> }) => callback(r.device),
+    );
+  }
+
+  deviceOnUpdateStatistics(
+    callback: (statistics: string, deviceId: string) => void,
+  ): SocketEventOff {
+    return this.on(
+      ServerSocketEvent.DEVICE_STATISTICS_UPDATED,
+      (r: { statistics: string; deviceId: string }) =>
+        callback(r.statistics, r.deviceId),
+      false,
     );
   }
 

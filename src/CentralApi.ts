@@ -222,6 +222,25 @@ export default class CentralApi {
     return this.http.deviceUpdate(device);
   }
 
+  async deviceUpdateStatistics(
+    deviceId: string,
+    statistics: Record<string, unknown>,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUpdateStatistics(deviceId, statistics);
+  }
+
+  async deviceSubscribeStatistics(
+    deviceIds: string | string[],
+  ): Promise<CentralSocketResponse<{ subscriptions: string[] }>> {
+    return this.socket.deviceSubscribeStatistics(deviceIds);
+  }
+
+  async deviceUnsubscribeStatistics(
+    deviceIds?: string | string[],
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUnsubscribeStatistics(deviceIds);
+  }
+
   async deviceUpdateStatus(
     status: CentralDeviceStatus,
   ): Promise<CentralSocketResponse<null>> {
@@ -236,6 +255,12 @@ export default class CentralApi {
     callback: (device: Partial<CentralDevice>) => void,
   ): SocketEventOff {
     return this.socket.deviceOnUpdate(callback);
+  }
+
+  deviceOnUpdateStatistics(
+    callback: (statistics: string, deviceId: string) => void,
+  ): SocketEventOff {
+    return this.socket.deviceOnUpdateStatistics(callback);
   }
 
   deviceOnUpdateStatus(

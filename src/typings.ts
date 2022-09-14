@@ -144,11 +144,11 @@ interface NetworkInterface {
 }
 
 interface SystemInfo {
+  serial: string;
   model: string;
   date: number;
-  uptime: string;
-  serial: string;
-  battery: string;
+  uptime: number;
+  battery: number;
   cpu: {
     clock: number;
     temperature: number;

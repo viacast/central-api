@@ -12,6 +12,7 @@ import {
   CentralGroup,
   CentralStream,
   CentralDeviceAuditReport,
+  CentralDeviceStatistics,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -224,7 +225,7 @@ export default class CentralApi {
 
   async deviceUpdateStatistics(
     deviceId: string,
-    statistics: Record<string, unknown>,
+    statistics: CentralDeviceStatistics,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateStatistics(deviceId, statistics);
   }
@@ -258,7 +259,7 @@ export default class CentralApi {
   }
 
   deviceOnUpdateStatistics(
-    callback: (statistics: string, deviceId: string) => void,
+    callback: (statistics: CentralDeviceStatistics, deviceId: string) => void,
   ): SocketEventOff {
     return this.socket.deviceOnUpdateStatistics(callback);
   }

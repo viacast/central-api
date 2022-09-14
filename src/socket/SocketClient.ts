@@ -9,6 +9,7 @@ import {
   CentralService,
   CentralServiceStatus,
   ToggleRunningAction,
+  CentralDeviceStatistics,
 } from '../typings';
 import { promisify } from '../utils';
 
@@ -161,7 +162,7 @@ export default class SocketClient {
 
   async deviceUpdateStatistics(
     deviceId: string,
-    statistics: Record<string, unknown>,
+    statistics: CentralDeviceStatistics,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(DeviceSocketEvent.DEVICE_UPDATE_STATISTICS, {
       deviceId,
@@ -206,11 +207,11 @@ export default class SocketClient {
   }
 
   deviceOnUpdateStatistics(
-    callback: (statistics: string, deviceId: string) => void,
+    callback: (statistics: CentralDeviceStatistics, deviceId: string) => void,
   ): SocketEventOff {
     return this.on(
       ServerSocketEvent.DEVICE_STATISTICS_UPDATED,
-      (r: { statistics: string; deviceId: string }) =>
+      (r: { statistics: CentralDeviceStatistics; deviceId: string }) =>
         callback(r.statistics, r.deviceId),
       false,
     );

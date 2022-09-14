@@ -132,6 +132,41 @@ export interface CentralDevice {
   receiver: Partial<CentralReceiver>;
 }
 
+interface NetworkInterface {
+  name: string;
+  address: string;
+  mac: string;
+  state: 'unknown' | 'down' | 'up';
+  txRate: number;
+  rxRate: number;
+  speed: string;
+  duplex: string;
+}
+
+interface SystemInfo {
+  model: string;
+  date: number;
+  uptime: string;
+  serial: string;
+  battery: string;
+  cpu: {
+    clock: number;
+    temperature: number;
+    usage: number;
+    processCount: number;
+  };
+  memory: {
+    total: number;
+    free: number;
+    usage: number;
+  };
+}
+
+export interface CentralDeviceStatistics {
+  network: NetworkInterface[];
+  system: SystemInfo;
+}
+
 export interface CentralDeviceStatus {
   status: CentralDeviceStatusType;
   id?: string;

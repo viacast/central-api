@@ -123,6 +123,7 @@ export interface CentralDevice {
   id: string;
   displayName: string;
   serial: string;
+  user: CentralUser;
   userId: string;
   model: string;
   group: CentralGroup;

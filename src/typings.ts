@@ -163,7 +163,7 @@ interface SystemInfo {
 }
 
 export interface CentralDeviceStatistics {
-  network: NetworkInterface[];
+  network: { interfaces: NetworkInterface[] };
   system: SystemInfo;
 }
 

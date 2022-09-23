@@ -163,6 +163,7 @@ export interface CentralSystemInfo {
 }
 
 export enum CentralModemTechnology {
+  NONE = 'NONE',
   _G = 'G',
   _2G = '2G',
   _3G = '3G',

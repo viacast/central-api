@@ -132,7 +132,7 @@ export interface CentralDevice {
   receiver: Partial<CentralReceiver>;
 }
 
-interface NetworkInterface {
+export interface CentralNetworkInterface {
   name: string;
   address: string;
   mac: string;
@@ -143,7 +143,7 @@ interface NetworkInterface {
   duplex: string;
 }
 
-interface SystemInfo {
+export interface CentralSystemInfo {
   serial: string;
   model: string;
   date: number;
@@ -162,9 +162,27 @@ interface SystemInfo {
   };
 }
 
+export interface CentralModemInfo {
+  interfaceName: string;
+  model: string;
+  state: string;
+  signal: number;
+  registration: {
+    state: number;
+    technology: string;
+    carrier: string;
+  };
+  sim: {
+    imsi: string;
+    carrier: string;
+    carrierName: string;
+  };
+}
+
 export interface CentralDeviceStatistics {
-  network: { interfaces: NetworkInterface[] };
-  system: SystemInfo;
+  network: { interfaces: CentralNetworkInterface[] };
+  system: CentralSystemInfo;
+  modems: CentralModemInfo[];
 }
 
 export interface CentralDeviceStatus {

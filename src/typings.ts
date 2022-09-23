@@ -162,6 +162,16 @@ export interface CentralSystemInfo {
   };
 }
 
+export enum CentralModemTechnology {
+  _G = 'G',
+  _2G = '2G',
+  _3G = '3G',
+  E = 'E',
+  H = 'H',
+  H_PLUS = 'H+',
+  _4G = '4G',
+}
+
 export interface CentralModemInfo {
   interfaceName: string;
   model: string;

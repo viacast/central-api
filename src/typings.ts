@@ -180,7 +180,7 @@ export interface CentralModemInfo {
   signal: number;
   registration: {
     state: number;
-    technology: string;
+    technology: CentralModemTechnology;
     carrier: string;
   };
   sim: {

@@ -265,6 +265,15 @@ export default class HttpClient {
     return this.axios.patch(`/device/${id}/refresh-client`);
   }
 
+  async deviceTransferOwnership(
+    id: string,
+    recipientEmail: string,
+  ): Promise<CentralHttpResponse<{ recipient: Partial<CentralUser> }>> {
+    return this.axios.patch(`/device/${id}/transfer-ownership`, {
+      recipientEmail,
+    });
+  }
+
   async serviceRegister(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {

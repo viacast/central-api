@@ -252,6 +252,13 @@ export default class CentralApi {
     return this.http.deviceRefreshClient(id);
   }
 
+  async deviceTransferOwnership(
+    id: string,
+    recipientEmail: string,
+  ): Promise<CentralHttpResponse<{ recipient: Partial<CentralUser> }>> {
+    return this.http.deviceTransferOwnership(id, recipientEmail);
+  }
+
   deviceOnUpdate(
     callback: (device: Partial<CentralDevice>) => void,
   ): SocketEventOff {

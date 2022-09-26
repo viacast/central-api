@@ -265,6 +265,12 @@ export default class HttpClient {
     return this.axios.patch(`/device/${id}/refresh-client`);
   }
 
+  async deviceResetPassword(
+    id: string,
+  ): Promise<CentralHttpResponse<{ newPassword: string }>> {
+    return this.axios.patch(`/device/${id}/reset-password`);
+  }
+
   async deviceTransferOwnership(
     id: string,
     recipientEmail: string,

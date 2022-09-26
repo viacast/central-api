@@ -252,6 +252,12 @@ export default class CentralApi {
     return this.http.deviceRefreshClient(id);
   }
 
+  async deviceResetPassword(
+    id: string,
+  ): Promise<CentralHttpResponse<{ newPassword: string }>> {
+    return this.http.deviceResetPassword(id);
+  }
+
   async deviceTransferOwnership(
     id: string,
     recipientEmail: string,

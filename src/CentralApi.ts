@@ -140,6 +140,12 @@ export default class CentralApi {
     return this.http.userMe();
   }
 
+  async userOrganizationAll(): Promise<
+    CentralHttpResponse<{ users: CentralUser[] }>
+  > {
+    return this.http.usersOrganization();
+  }
+
   async userUpdateMe(
     user: Partial<CentralUser>,
   ): Promise<CentralHttpResponse<{ user: CentralUser }>> {

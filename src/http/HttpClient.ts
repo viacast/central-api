@@ -124,6 +124,18 @@ export default class HttpClient {
       });
   }
 
+  async allUser(): Promise<CentralHttpResponse<AuthInfo>> {
+    return this.axios
+      .get<unknown, CentralHttpResponse<AuthInfo>>('/')
+      .then(r => {
+        if (r.success) {
+          this.axios.defaults.headers.Authorization = `Bearer ${r.data.token}`;
+          this._authenticated = true;
+        }
+        return r;
+      });
+  }
+
   async authRequestVerificationCode(): Promise<CentralHttpResponse<null>> {
     return this.axios.get('/auth/verification-code');
   }
@@ -170,6 +182,12 @@ export default class HttpClient {
 
   async userMe(): Promise<CentralHttpResponse<{ user: CentralUser }>> {
     return this.axios.get('/user/me');
+  }
+
+  async usersOrganization(): Promise<
+    CentralHttpResponse<{ users: CentralUser[] }>
+  > {
+    return this.axios.get('/user/organization/all');
   }
 
   async userUpdateMe(

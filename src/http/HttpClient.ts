@@ -280,6 +280,10 @@ export default class HttpClient {
     });
   }
 
+  async deviceRemove(id: string): Promise<CentralHttpResponse<null>> {
+    return this.axios.delete(`/device/${id}`);
+  }
+
   async serviceRegister(
     service: Partial<CentralService>,
   ): Promise<CentralHttpResponse<{ service: CentralService }>> {

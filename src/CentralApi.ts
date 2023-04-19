@@ -293,8 +293,8 @@ export default class CentralApi {
     return this.socket.deviceOnRefreshClient(callback);
   }
 
-  async deviceRemove(id: string): Promise<CentralHttpResponse<null>> {
-    return this.http.deviceRemove(id);
+  async deviceDelete(id: string): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceDelete(id);
   }
 
   async serviceRegister(

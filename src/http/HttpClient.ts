@@ -280,8 +280,11 @@ export default class HttpClient {
     });
   }
 
-  async deviceRemove(id: string): Promise<CentralHttpResponse<null>> {
-    return this.axios.delete(`/device/${id}`);
+  async deviceDelete(id: string): Promise<CentralHttpResponse<null>> {
+    if (id !== '' && id !== null) {
+      return this.axios.delete(`/device/${id}`);
+    }
+    return null;
   }
 
   async serviceRegister(

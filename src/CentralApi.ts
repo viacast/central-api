@@ -258,6 +258,10 @@ export default class CentralApi {
     return this.http.deviceResetPassword(id);
   }
 
+  async deviceDelete(id: string): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceDelete(id);
+  }
+
   async deviceTransferOwnership(
     id: string,
     recipientEmail: string,

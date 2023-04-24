@@ -271,6 +271,10 @@ export default class HttpClient {
     return this.axios.patch(`/device/${id}/reset-password`);
   }
 
+  async deviceDelete(id: string): Promise<CentralHttpResponse<null>> {
+    return this.axios.delete(`/device/${id}`);
+  }
+
   async deviceTransferOwnership(
     id: string,
     recipientEmail: string,

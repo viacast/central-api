@@ -250,3 +250,114 @@ export interface ServiceConfigField {
 export interface ServiceConfig {
   config: { field: ServiceConfigField[] };
 }
+
+export enum VideoInfoShortNameType {
+  NTSC = 'ntsc',
+  NTSC2398 = 'nt23',
+  PAL = 'pal ',
+  NTSCp = 'ntsp',
+  PALp = 'palp',
+
+  /* HD 1080 Modes */
+  HD1080p2398 = '23ps',
+  HD1080p24 = '24ps',
+  HD1080p25 = 'Hp25',
+  HD1080p2997 = 'Hp29',
+  HD1080p30 = 'Hp30',
+  HD1080i50 = 'Hi50',
+  HD1080i5994 = 'Hi59',
+  HD1080i6000 = 'Hi60',
+  HD1080p50 = 'Hp50',
+  HD1080p5994 = 'Hp59',
+  HD1080p6000 = 'Hp60',
+
+  /* HD 720 Modes */
+  HD720p50 = 'hp50',
+  HD720p5994 = 'hp59',
+  HD720p60 = 'hp60',
+
+  /* 2k Modes */
+  QHD2398 = '2k23',
+  QHD24 = '2k24',
+  QHD25 = '2k25',
+
+  /* DCI Modes */
+  QHDDCI2398 = '2d23',
+  QHDDCI24 = '2d24',
+  QHDDCI25 = '2d25',
+
+  /* 4k Modes */
+  UHD2160p2398 = '4k23',
+  UHD2160p24 = '4k24',
+  UHD2160p25 = '4k25',
+  UHD2160p2997 = '4k29',
+  UHD2160p30 = '4k30',
+  UHD2160p50 = '4k50',
+  UHD2160p5994 = '4k59',
+  UHD2160p60 = '4k60',
+
+  /* DCI Modes  */
+  UHDDCI2398 = '4d23',
+  UHDDCI24 = '4d24',
+  UHDDCI25 = '4d25',
+
+  UNKNOW = 'unknow',
+}
+
+export enum VideoInfoNameType {
+  NTSC = 'NTSC',
+  NTSC2398 = 'NTSC',
+  PAL = 'PAL',
+  NTSCp = 'NTSC',
+  PALp = 'PALp',
+
+  /* HD 1080 Modes */
+  HD1080p2398 = '1080p23.98',
+  HD1080p24 = '1080p24',
+  HD1080p25 = '1080p25',
+  HD1080p2997 = '1080p2997',
+  HD1080p30 = '1080p30',
+  HD1080i50 = '1080i50',
+  HD1080i5994 = '1080i59.94',
+  HD1080i6000 = '1080i60',
+  HD1080p50 = '1080p50',
+  HD1080p5994 = '1080p59.94',
+  HD1080p6000 = '1080p60',
+
+  /* HD 720 Modes */
+  HD720p50 = '720p50',
+  HD720p5994 = '720p59.94',
+  HD720p60 = '720p60',
+
+  /* 2k Modes */
+  QHD2398 = '1080p23.98_2k',
+  QHD24 = '1080p24_2k',
+  QHD25 = '1080p25_2k',
+
+  /* DCI Modes */
+  QHDDCI2398 = '1080p23.98_DCI_2K',
+  QHDDCI24 = '1080p24_DCI_2K',
+  QHDDCI25 = '1080p25_DCI_2K',
+
+  /* 4k Modes */
+  UHD2160p2398 = '2160p23.98',
+  UHD2160p24 = '2160p24',
+  UHD2160p25 = '2160p25',
+  UHD2160p2997 = '2160p29.97',
+  UHD2160p30 = '2160p30',
+  UHD2160p50 = '2160p50',
+  UHD2160p5994 = '2160p59.94',
+  UHD2160p60 = '2160p60',
+
+  /* DCI Modes  */
+  UHDDCI2398 = '2160p23.98',
+  UHDDCI24 = '2160p24',
+  UHDDCI25 = '2160p25',
+
+  UNKNOW = 'Unknow',
+}
+
+export interface VideoInfo {
+  name?: VideoInfoNameType;
+  shortName?: VideoInfoShortNameType;
+}

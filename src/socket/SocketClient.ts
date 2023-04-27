@@ -10,6 +10,7 @@ import {
   CentralServiceStatus,
   ToggleRunningAction,
   CentralDeviceStatistics,
+  VideoInfo,
 } from '../typings';
 import { promisify } from '../utils';
 
@@ -241,9 +242,11 @@ export default class SocketClient {
 
   async serviceUpdateStatus(
     status: CentralServiceStatus,
+    videoInfo: VideoInfo,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(DeviceSocketEvent.SERVICE_UPDATE_STATUS, {
       status,
+      videoInfo,
     });
   }
 

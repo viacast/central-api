@@ -1,6 +1,6 @@
 {
-  "name": "@viacast/central-api",
-  "version": "0.6.11",
+  "name": "@viacast/central-api-modedet",
+  "version": "0.6.12",
   "description": "Central API",
   "repository": "https://github.com/gabrieljablonski/central-api.git",
   "author": "gabrieljablonski <gabriel.g.jablonski@gmail.com>",

@@ -309,9 +309,9 @@ export default class CentralApi {
 
   async serviceUpdateStatus(
     status: CentralServiceStatus,
-    videoInfo: VideoInfo,
+    modeDet: VideoInfo,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.serviceUpdateStatus(status, videoInfo);
+    return this.socket.serviceUpdateStatus(status, modeDet);
   }
 
   async serviceToggleRunning(

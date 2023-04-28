@@ -242,11 +242,11 @@ export default class SocketClient {
 
   async serviceUpdateStatus(
     status: CentralServiceStatus,
-    videoInfo: VideoInfo,
+    modeDet: VideoInfo,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(DeviceSocketEvent.SERVICE_UPDATE_STATUS, {
       status,
-      videoInfo,
+      modeDet,
     });
   }
 

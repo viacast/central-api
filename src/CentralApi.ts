@@ -13,6 +13,7 @@ import {
   CentralStream,
   CentralDeviceAuditReport,
   CentralDeviceStatistics,
+  VideoInfo,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -308,8 +309,9 @@ export default class CentralApi {
 
   async serviceUpdateStatus(
     status: CentralServiceStatus,
+    modeDet: VideoInfo,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.serviceUpdateStatus(status);
+    return this.socket.serviceUpdateStatus(status, modeDet);
   }
 
   async serviceToggleRunning(

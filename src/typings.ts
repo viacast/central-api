@@ -102,6 +102,7 @@ export interface CentralService {
   id: string;
   name: string;
   displayName: string;
+  createdAt: string;
   config: string;
   configLayout: string;
   subserviceId: string;
@@ -122,6 +123,7 @@ export type CentralServiceWithStatus = CentralService & CentralServiceStatus;
 export interface CentralDevice {
   id: string;
   displayName: string;
+  createdAt: string;
   serial: string;
   user: CentralUser;
   userId: string;

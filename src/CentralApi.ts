@@ -203,6 +203,13 @@ export default class CentralApi {
     return this.http.deviceRequestOwnership(serial);
   }
 
+  async deviceRequestIperf(
+    device: Partial<CentralDevice>,
+    serialClient?: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceRequestIperf(device, serialClient);
+  }
+
   async deviceSubmitOwnershipCode(
     serial: string,
     code: string,
@@ -287,6 +294,12 @@ export default class CentralApi {
     callback: (code: { code: string; expiration: number }) => void,
   ): SocketEventOff {
     return this.socket.deviceOnRequestOwnership(callback);
+  }
+
+  deviceOnRequestIperf(
+    callback: (iperf: { server: boolean; ipAdress?: string }) => void,
+  ): SocketEventOff {
+    return this.socket.deviceOnRequestIperf(callback);
   }
 
   deviceOnRefreshClient(callback: () => void): SocketEventOff {

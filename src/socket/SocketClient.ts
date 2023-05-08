@@ -239,6 +239,16 @@ export default class SocketClient {
     return this.on(ServerSocketEvent.DEVICE_REFRESH_CLIENT, () => callback());
   }
 
+  deviceOnRequestIperf(
+    callback: (iperf: { server: boolean; ipAdress?: string }) => void,
+  ): SocketEventOff {
+    return this.on(
+      ServerSocketEvent.DEVICE_REQUEST_IPERF,
+      (r: { iperf: { server: boolean; ipAdress?: string } }) =>
+        callback(r.iperf),
+    );
+  }
+
   async serviceUpdateStatus(
     status: CentralServiceStatus,
   ): Promise<CentralSocketResponse<null>> {

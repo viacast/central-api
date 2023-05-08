@@ -26,6 +26,7 @@ export enum ServerSocketEvent {
   SERVICE_PREVIEW_UPDATED = 'service-preview-updated',
   GROUP_UPDATED = 'group-updated',
   DEVICE_REQUEST_OWNERSHIP = 'device-request-ownership',
+  DEVICE_REQUEST_IPERF = 'device-request-iperf',
   SERVICE_TOGGLE_RUNNING = 'service-toggle-running',
   USER_UPDATED = 'user-updated',
 }

@@ -251,11 +251,6 @@ export interface ServiceConfig {
   config: { field: ServiceConfigField[] };
 }
 
-enum IperfAction {
-  SERVER = 'server',
-  CLIENT = 'client',
-}
-
 /* eslint-disable camelcase */
 
 export interface ConnectedInfo {

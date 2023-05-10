@@ -13,6 +13,7 @@ import {
   CentralStream,
   CentralDeviceAuditReport,
   CentralDeviceStatistics,
+  IperfResult,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -205,9 +206,9 @@ export default class CentralApi {
 
   async deviceRequestIperf(
     device: Partial<CentralDevice>,
-    serialClient?: string,
+    serialRemote?: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.http.deviceRequestIperf(device, serialClient);
+    return this.http.deviceRequestIperf(device, serialRemote);
   }
 
   async deviceSubmitOwnershipCode(
@@ -235,6 +236,13 @@ export default class CentralApi {
     statistics: CentralDeviceStatistics,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateStatistics(deviceId, statistics);
+  }
+
+  async deviceUpdateIperf(
+    deviceId: string,
+    iperfResponse: IperfResult,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUpdateIperf(deviceId, iperfResponse);
   }
 
   async deviceSubscribeStatistics(

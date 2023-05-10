@@ -251,9 +251,9 @@ export default class HttpClient {
 
   async deviceRequestIperf(
     device: Partial<CentralDevice>,
-    serialClient: string,
+    serialRemote: string,
   ): Promise<CentralHttpResponse<null>> {
-    return this.axios.post(`/device/${device.id}/iperf`, { serialClient });
+    return this.axios.post(`/device/${device.id}/iperf`, { serialRemote });
   }
 
   async deviceSubmitOwnershipCode(

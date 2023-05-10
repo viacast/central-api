@@ -173,7 +173,7 @@ export default class SocketClient {
 
   async deviceUpdateIperf(
     deviceId: string,
-    iperfResponse: IperfResult,
+    iperfResponse: Partial<IperfResult>,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(DeviceSocketEvent.DEVICE_UPDATE_IPERF, {
       deviceId,

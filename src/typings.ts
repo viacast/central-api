@@ -257,6 +257,7 @@ enum IperfAction {
 }
 
 /* eslint-disable camelcase */
+
 export interface ConnectedInfo {
   socket: number;
   local_host: string;
@@ -298,7 +299,7 @@ export interface StartInfo {
   sndbuf_actual: number;
   rcvbuf_actual: number;
   timestamp: TimestampInfo;
-  accepted_connection: AcceptedConnectionInfo;
+  connecting_to: AcceptedConnectionInfo;
   cookie: string;
   tcp_mss_default: number;
   target_bitrate?: number;
@@ -310,6 +311,7 @@ export interface IperfInterval {
   streams: IperfStream[];
   sum: IperfStreamSummary;
   sum_bidir: IperfStreamSummary;
+  sum_bidir_reverse: IperfStreamSummary;
   sum_sent: IperfStreamSummary;
   sum_received: IperfStreamSummary;
 }
@@ -341,8 +343,7 @@ export interface IperfStreamSummary {
   omitted: boolean;
   sender: boolean;
 }
-
-interface Sender {
+export interface Sender {
   socket: number;
   start: number;
   end: number;
@@ -357,8 +358,7 @@ interface Sender {
   min_rtt?: number;
   mean_rtt?: number;
 }
-
-interface Receiver {
+export interface Receiver {
   socket: number;
   start: number;
   end: number;
@@ -367,13 +367,11 @@ interface Receiver {
   bits_per_second: number;
   sender: boolean;
 }
-
-interface Stream {
+export interface Stream {
   sender: Sender;
   receiver: Receiver;
 }
-
-interface End {
+export interface End {
   streams: Stream[];
   sum_sent: Sender;
   sum_received: Receiver;
@@ -388,6 +386,7 @@ interface End {
     remote_system: number;
   };
   sender_tcp_congestion: string;
+  receiver_tcp_congestion?: string;
 }
 
 export interface IperfResult {

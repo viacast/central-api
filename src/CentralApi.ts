@@ -240,7 +240,7 @@ export default class CentralApi {
 
   async deviceUpdateIperf(
     deviceId: string,
-    iperfResponse: IperfResult,
+    iperfResponse: Partial<IperfResult>,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateIperf(deviceId, iperfResponse);
   }

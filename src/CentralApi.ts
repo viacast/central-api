@@ -375,6 +375,10 @@ export default class CentralApi {
     return this.socket.serviceOnToggleRunning(callback);
   }
 
+  async getVersion(): Promise<CentralHttpResponse<{ version: string }>> {
+    return this.http.getVersion();
+  }
+
   async groupCreate(
     group: Partial<CentralGroup>,
   ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {

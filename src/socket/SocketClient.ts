@@ -347,6 +347,16 @@ export default class SocketClient {
     );
   }
 
+  deviceOnUpdateIperf(
+    callback: (iperfResponse: IperfResult) => void,
+  ): SocketEventOff {
+    return this.on(
+      ServerSocketEvent.DEVICE_IPERF_UPDATED,
+      (r: { iperfResponse: IperfResult }) => callback(r.iperfResponse),
+      false,
+    );
+  }
+
   serviceOnToggleRunning(
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
   ): SocketEventOff {

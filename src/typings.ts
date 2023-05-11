@@ -389,3 +389,27 @@ export interface IperfResult {
   intervals: IperfInterval[];
   end: End;
 }
+
+export interface upDown {
+  upload: IperfNormalizedStream;
+  download: IperfNormalizedStream;
+}
+
+export interface IperfNormalizedStream {
+  start: number;
+  end: number;
+  seconds: number;
+  bytes: number;
+  bitsPerSecond: number;
+}
+export interface IperfNormalizedResult {
+  start: {
+    timestamp: { time: string };
+    connectingTo: AcceptedConnectionInfo;
+  };
+  intervals: upDown[];
+  end: {
+    sumUpload: IperfNormalizedStream;
+    sumDownload: IperfNormalizedStream;
+  };
+}

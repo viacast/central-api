@@ -14,6 +14,7 @@ import {
   CentralDeviceAuditReport,
   CentralDeviceStatistics,
   IperfResult,
+  IperfNormalizedResult,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -240,9 +241,9 @@ export default class CentralApi {
 
   async deviceUpdateIperf(
     deviceId: string,
-    iperfResponse: Partial<IperfResult>,
+    iperfNormalizedResponse: IperfNormalizedResult,
   ): Promise<CentralSocketResponse<null>> {
-    return this.socket.deviceUpdateIperf(deviceId, iperfResponse);
+    return this.socket.deviceUpdateIperf(deviceId, iperfNormalizedResponse);
   }
 
   async deviceSubscribeStatistics(

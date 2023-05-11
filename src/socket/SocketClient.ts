@@ -11,6 +11,7 @@ import {
   ToggleRunningAction,
   CentralDeviceStatistics,
   IperfResult,
+  IperfNormalizedResult,
 } from '../typings';
 import { promisify } from '../utils';
 
@@ -173,11 +174,11 @@ export default class SocketClient {
 
   async deviceUpdateIperf(
     deviceId: string,
-    iperfResponse: Partial<IperfResult>,
+    iperfNormalizedResponse: IperfNormalizedResult,
   ): Promise<CentralSocketResponse<null>> {
     return this.asyncEmit<null>(DeviceSocketEvent.DEVICE_UPDATE_IPERF, {
       deviceId,
-      iperfResponse,
+      iperfNormalizedResponse,
     });
   }
 

@@ -390,6 +390,12 @@ export default class CentralApi {
     return this.socket.serviceOnUpdateVu(callback);
   }
 
+  deviceOnUpdateIperf(
+    callback: (iperfResponse: IperfResult) => void,
+  ): SocketEventOff {
+    return this.socket.deviceOnUpdateIperf(callback);
+  }
+
   serviceOnToggleRunning(
     callback: (args: { id: string; action: ToggleRunningAction }) => void,
   ): SocketEventOff {

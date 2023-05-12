@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@viacast/central-api": {
+      "signature": "6b8f7aac921c043f069d6f20db0677c2",
+      "file": true
+    }
+  }
+}

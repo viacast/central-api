@@ -349,11 +349,12 @@ export default class SocketClient {
   }
 
   deviceOnUpdateIperf(
-    callback: (iperfResponse: IperfResult) => void,
+    callback: (iperfNormalizedResponse: IperfNormalizedResult) => void,
   ): SocketEventOff {
     return this.on(
       ServerSocketEvent.DEVICE_IPERF_UPDATED,
-      (r: { iperfResponse: IperfResult }) => callback(r.iperfResponse),
+      (r: { iperfNormalizedResponse: IperfNormalizedResult }) =>
+        callback(r.iperfNormalizedResponse),
       false,
     );
   }

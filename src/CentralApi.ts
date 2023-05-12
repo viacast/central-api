@@ -392,7 +392,7 @@ export default class CentralApi {
   }
 
   deviceOnUpdateIperf(
-    callback: (iperfResponse: IperfResult) => void,
+    callback: (iperfNormalizedResponse: IperfNormalizedResult) => void,
   ): SocketEventOff {
     return this.socket.deviceOnUpdateIperf(callback);
   }

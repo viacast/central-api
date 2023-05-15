@@ -1,6 +1,6 @@
 {
   "name": "@viacast/central-api",
-  "version": "0.6.13",
+  "version": "0.6.14",
   "description": "Central API",
   "repository": "https://github.com/gabrieljablonski/central-api.git",
   "author": "gabrieljablonski <gabriel.g.jablonski@gmail.com>",
@@ -23,7 +23,6 @@
     "typescript": "^4.4.3"
   },
   "dependencies": {
-    "@viacast/central-api": "file:.yalc/@viacast/central-api",
     "axios": "^0.22.0",
     "emittery": "^0.10.0",
     "socket.io-client": "^4.2.0"

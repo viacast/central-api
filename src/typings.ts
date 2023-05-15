@@ -94,6 +94,7 @@ export interface CentralReceiver {
   id: string;
   maxStreams: number;
   hosts: string;
+  externalAddresses?: string;
   streams?: CentralStream[];
   streamIds?: string[];
 }

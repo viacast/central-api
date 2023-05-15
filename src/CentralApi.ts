@@ -306,7 +306,12 @@ export default class CentralApi {
   }
 
   deviceOnRequestIperf(
-    callback: (iperf: { server: boolean; ipAdress?: string }) => void,
+    callback: (iperf: {
+      server: boolean;
+      ipAdress?: string;
+      serialServer?: string;
+      serialClient?: string;
+    }) => void,
   ): SocketEventOff {
     return this.socket.deviceOnRequestIperf(callback);
   }

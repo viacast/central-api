@@ -404,6 +404,8 @@ export interface IperfNormalizedStream {
 }
 export interface IperfNormalizedResult {
   start: {
+    serialServer: string;
+    serialClient: string;
     timestamp: { time: string };
     connectingTo: AcceptedConnectionInfo;
   };

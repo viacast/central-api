@@ -252,12 +252,24 @@ export default class SocketClient {
   }
 
   deviceOnRequestIperf(
-    callback: (iperf: { server: boolean; ipAdress?: string }) => void,
+    callback: (iperf: {
+      server: boolean;
+      ipAdress?: string;
+      serialServer?: string;
+      serialClient?: string;
+    }) => void,
   ): SocketEventOff {
     return this.on(
       ServerSocketEvent.DEVICE_REQUEST_IPERF,
-      (r: { iperf: { server: boolean; ipAdress?: string } }) =>
-        callback(r.iperf),
+      (r: {
+        iperf: {
+          server: boolean;
+          ipAdress?: string;
+          serialServer?: string;
+          serialClient?: string;
+          status: 'ok';
+        };
+      }) => callback(r.iperf),
     );
   }
 

@@ -10,6 +10,8 @@ import {
   CentralServiceStatus,
   ToggleRunningAction,
   CentralDeviceStatistics,
+  IperfResult,
+  IperfNormalizedResult,
 } from '../typings';
 import { promisify } from '../utils';
 
@@ -170,6 +172,16 @@ export default class SocketClient {
     });
   }
 
+  async deviceUpdateIperf(
+    deviceId: string,
+    iperfNormalizedResponse: IperfNormalizedResult,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.asyncEmit<null>(DeviceSocketEvent.DEVICE_UPDATE_IPERF, {
+      deviceId,
+      iperfNormalizedResponse,
+    });
+  }
+
   async deviceSubscribeStatistics(
     deviceIds: string | string[],
   ): Promise<CentralSocketResponse<{ subscriptions: string[] }>> {
@@ -237,6 +249,28 @@ export default class SocketClient {
 
   deviceOnRefreshClient(callback: () => void): SocketEventOff {
     return this.on(ServerSocketEvent.DEVICE_REFRESH_CLIENT, () => callback());
+  }
+
+  deviceOnRequestIperf(
+    callback: (iperf: {
+      server: boolean;
+      ipAdress?: string;
+      serialServer?: string;
+      serialClient?: string;
+    }) => void,
+  ): SocketEventOff {
+    return this.on(
+      ServerSocketEvent.DEVICE_REQUEST_IPERF,
+      (r: {
+        iperf: {
+          server: boolean;
+          ipAdress?: string;
+          serialServer?: string;
+          serialClient?: string;
+          status: 'ok';
+        };
+      }) => callback(r.iperf),
+    );
   }
 
   async serviceUpdateStatus(
@@ -322,6 +356,17 @@ export default class SocketClient {
       ServerSocketEvent.SERVICE_VU_UPDATED,
       (r: { volumes: number[]; serviceId: string }) =>
         callback(r.volumes, r.serviceId),
+      false,
+    );
+  }
+
+  deviceOnUpdateIperf(
+    callback: (iperfNormalizedResponse: IperfNormalizedResult) => void,
+  ): SocketEventOff {
+    return this.on(
+      ServerSocketEvent.DEVICE_IPERF_UPDATED,
+      (r: { iperfNormalizedResponse: IperfNormalizedResult }) =>
+        callback(r.iperfNormalizedResponse),
       false,
     );
   }

@@ -251,3 +251,168 @@ export interface ServiceConfigField {
 export interface ServiceConfig {
   config: { field: ServiceConfigField[] };
 }
+
+/* eslint-disable camelcase */
+
+export interface ConnectedInfo {
+  socket: number;
+  local_host: string;
+  local_port: number;
+  remote_host: string;
+  remote_port: number;
+}
+
+export interface TimestampInfo {
+  time: string;
+  timesecs: number;
+}
+
+export interface AcceptedConnectionInfo {
+  host: string;
+  port: number;
+}
+
+export interface TestStartInfo {
+  protocol: 'TCP' | 'UDP';
+  num_streams: number;
+  blksize: number;
+  omit: number;
+  duration: number;
+  bytes: number;
+  blocks: number;
+  reverse: number;
+  tos: number;
+  target_bitrate?: number;
+  bidir?: number;
+  fqrate?: number;
+}
+
+export interface StartInfo {
+  connected: ConnectedInfo[];
+  version: string;
+  system_info: string;
+  sock_bufsize: number;
+  sndbuf_actual: number;
+  rcvbuf_actual: number;
+  timestamp: TimestampInfo;
+  connecting_to: AcceptedConnectionInfo;
+  cookie: string;
+  tcp_mss_default: number;
+  target_bitrate?: number;
+  fq_rate?: number;
+  test_start: TestStartInfo;
+}
+
+export interface IperfInterval {
+  streams: IperfStream[];
+  sum: IperfStreamSummary;
+  sum_bidir: IperfStreamSummary;
+  sum_bidir_reverse: IperfStreamSummary;
+  sum_sent: IperfStreamSummary;
+  sum_received: IperfStreamSummary;
+}
+
+export interface IperfStream {
+  socket: number;
+  start: number;
+  end: number;
+  seconds: number;
+  bytes: number;
+  bits_per_second: number;
+  retransmits?: number;
+  omitted: boolean;
+  sender: boolean;
+  snd_cwnd?: number;
+  snd_wnd?: number;
+  rtt?: number;
+  rttvar?: number;
+  pmtu?: number;
+}
+
+export interface IperfStreamSummary {
+  start: number;
+  end: number;
+  seconds: number;
+  bytes: number;
+  bits_per_second: number;
+  retransmits?: number;
+  omitted: boolean;
+  sender: boolean;
+}
+export interface Sender {
+  socket: number;
+  start: number;
+  end: number;
+  seconds: number;
+  bytes: number;
+  bits_per_second: number;
+  sender: boolean;
+  retransmits?: number;
+  max_snd_cwnd?: number;
+  max_snd_wnd?: number;
+  max_rtt?: number;
+  min_rtt?: number;
+  mean_rtt?: number;
+}
+export interface Receiver {
+  socket: number;
+  start: number;
+  end: number;
+  seconds: number;
+  bytes: number;
+  bits_per_second: number;
+  sender: boolean;
+}
+export interface Stream {
+  sender: Sender;
+  receiver: Receiver;
+}
+export interface End {
+  streams: Stream[];
+  sum_sent: Sender;
+  sum_received: Receiver;
+  sum_sent_bidir_reverse?: Sender;
+  sum_received_bidir_reverse?: Receiver;
+  cpu_utilization_percent: {
+    host_total: number;
+    host_user: number;
+    host_system: number;
+    remote_total: number;
+    remote_user: number;
+    remote_system: number;
+  };
+  sender_tcp_congestion: string;
+  receiver_tcp_congestion?: string;
+}
+
+export interface IperfResult {
+  start: StartInfo;
+  intervals: IperfInterval[];
+  end: End;
+}
+
+export interface upDown {
+  upload: IperfNormalizedStream;
+  download: IperfNormalizedStream;
+}
+
+export interface IperfNormalizedStream {
+  start: number;
+  end: number;
+  seconds: number;
+  bytes: number;
+  bitsPerSecond: number;
+}
+export interface IperfNormalizedResult {
+  start: {
+    serialServer: string;
+    serialClient: string;
+    timestamp: { time: string };
+    connectingTo: AcceptedConnectionInfo;
+  };
+  intervals: upDown[];
+  end: {
+    sumUpload: IperfNormalizedStream;
+    sumDownload: IperfNormalizedStream;
+  };
+}

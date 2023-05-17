@@ -309,6 +309,10 @@ export default class HttpClient {
     return this.axios.patch(`/service/${id}/running`, { action });
   }
 
+  async getVersion(): Promise<CentralHttpResponse<{ version: string }>> {
+    return this.axios.get('/version');
+  }
+
   async groupCreate(
     group: Partial<CentralGroup>,
   ): Promise<CentralHttpResponse<{ group: CentralGroup }>> {

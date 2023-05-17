@@ -52,6 +52,10 @@ export interface CentralGroupUserRole {
   roleId: string;
 }
 
+export interface Version {
+  version: string;
+}
+
 export interface CentralGroup {
   id: string;
   displayName: string;

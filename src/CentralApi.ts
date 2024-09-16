@@ -13,6 +13,8 @@ import {
   CentralStream,
   CentralDeviceAuditReport,
   CentralDeviceStatistics,
+  IperfResult,
+  IperfNormalizedResult,
 } from './typings';
 import SocketClient, { SocketEventOff } from './socket/SocketClient';
 import HttpClient from './http/HttpClient';
@@ -203,6 +205,13 @@ export default class CentralApi {
     return this.http.deviceRequestOwnership(serial);
   }
 
+  async deviceRequestIperf(
+    device: Partial<CentralDevice>,
+    serialRemote?: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.http.deviceRequestIperf(device, serialRemote);
+  }
+
   async deviceSubmitOwnershipCode(
     serial: string,
     code: string,
@@ -228,6 +237,13 @@ export default class CentralApi {
     statistics: CentralDeviceStatistics,
   ): Promise<CentralSocketResponse<null>> {
     return this.socket.deviceUpdateStatistics(deviceId, statistics);
+  }
+
+  async deviceUpdateIperf(
+    deviceId: string,
+    iperfNormalizedResponse: IperfNormalizedResult,
+  ): Promise<CentralSocketResponse<null>> {
+    return this.socket.deviceUpdateIperf(deviceId, iperfNormalizedResponse);
   }
 
   async deviceSubscribeStatistics(
@@ -291,6 +307,17 @@ export default class CentralApi {
     callback: (code: { code: string; expiration: number }) => void,
   ): SocketEventOff {
     return this.socket.deviceOnRequestOwnership(callback);
+  }
+
+  deviceOnRequestIperf(
+    callback: (iperf: {
+      server: boolean;
+      ipAdress?: string;
+      serialServer?: string;
+      serialClient?: string;
+    }) => void,
+  ): SocketEventOff {
+    return this.socket.deviceOnRequestIperf(callback);
   }
 
   deviceOnRefreshClient(callback: () => void): SocketEventOff {
@@ -371,6 +398,12 @@ export default class CentralApi {
     callback: (volumes: number[], serviceId: string) => void,
   ): SocketEventOff {
     return this.socket.serviceOnUpdateVu(callback);
+  }
+
+  deviceOnUpdateIperf(
+    callback: (iperfNormalizedResponse: IperfNormalizedResult) => void,
+  ): SocketEventOff {
+    return this.socket.deviceOnUpdateIperf(callback);
   }
 
   serviceOnToggleRunning(

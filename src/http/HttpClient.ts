@@ -152,6 +152,14 @@ export default class HttpClient {
       });
   }
 
+  async authResetPassword(
+    email: string,
+  ): Promise<CentralHttpResponse<null>> {
+    return this.axios.get('/auth/reset-password', {
+      email
+    });
+  }
+
   async authChangePassword(
     oldPassword: string,
     newPassword: string,
